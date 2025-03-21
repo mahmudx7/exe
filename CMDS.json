@@ -1,4 +1,4 @@
 {
-  "https://raw.githubusercontent.com/mahmudx7/exe/main/jan.js",
-  "https://raw.githubusercontent.com/mahmudx7/exe/main/jan_teach.js"
+  "jan": "https://raw.githubusercontent.com/mahmudx7/exe/main/jan.js",
+  "jan_teach": "https://raw.githubusercontent.com/mahmudx7/exe/main/jan_teach.js"
 }
