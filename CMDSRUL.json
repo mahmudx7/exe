@@ -1,18 +1,18 @@
 {
   "cmdName": [
     {
-      "cmd": "jan",
+      "cmd": "jan.js",
       "author": "MahMUD",
       "update": "22-03-2025"
 
     },
     {
-"cmd": "jan_teach",
+"cmd": "jan_teach.js",
       "author": "MahMUD",
       "update": "22-03-2025"
     },
     {
- "cmd": "style",
+ "cmd": "style.js",
       "author": "MahMUD",
       "update": "22/03/2025"
 
