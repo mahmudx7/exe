@@ -1,10 +1,16 @@
 const fetch = require('node-fetch');
 
+require("axios");
+const fs = require("fs");
+const baseApiUrl = async () => {
+  const base = 'https://mahmud-age.onrender.com';
+  return base;
+};
 module.exports = {
     config: {
         name: "age",
-        version: "1.2",
-        author: "RL",
+        version: "1.7",
+        author: "MahMUD",
         category: "utility",
         guide: {
             en: "Usage: age <YYYY-MM-DD>"
@@ -19,7 +25,8 @@ module.exports = {
         const inputDate = args[0];
 
         try {
-            const response = await fetch(`https://mahmud-age.onrender.com/age/font3/${inputDate}`, {
+            const apiUrl = await baseApiUrl();
+      const response = await axios.get(`$/age/font3/${inputDate}`, {
                 method: 'GET',
             });
 
