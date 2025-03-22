@@ -12,11 +12,16 @@
       "update": "22-03-2025"
     },
     {
- "cmd": "style",
+ "cmd": "font",
       "author": "MahMUD",
       "update": "22-03-2025"
 
-    }
+    },
+   {
+"cmd": "namaz",
+      "author": "MahMUD",
+      "update": "22-03-2025"
+   }
 
     ]
 }
