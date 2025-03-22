@@ -19,7 +19,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
   const uid = event.senderID;
 
   if (!args[0]) {
-    const responses = ["Bolo baby", "hum", "type help baby", "type !baby hi"];
+    const responses = ["𝐛𝐨𝐥𝐨 𝐣𝐚𝐧", "𝐛𝐨𝐥𝐨 𝐛𝐚𝐛𝐲", "𝐡𝐞𝐥𝐥𝐨 𝐛𝐚𝐛𝐲", "𝐇𝐮𝐦𝐦 𝐛𝐨𝐥𝐨"];
     return api.sendMessage(responses[Math.floor(Math.random() * responses.length)], event.threadID, event.messageID);
   }
 
