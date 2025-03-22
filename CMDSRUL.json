@@ -4,24 +4,21 @@
       "cmd": "jan",
       "author": "MahMUD",
       "update": "22-03-2025"
-
     },
     {
-"cmd": "jan_teach",
+      "cmd": "jan_teach",
       "author": "MahMUD",
       "update": "22-03-2025"
     },
     {
- "cmd": "font",
+      "cmd": "font",
       "author": "MahMUD",
       "update": "22-03-2025"
-
     },
-   {
-"cmd": "namaz",
+    {
+      "cmd": "namaz",
       "author": "MahMUD",
       "update": "22-03-2025"
-   }
-
-    ]
+    }
+  ]
 }
