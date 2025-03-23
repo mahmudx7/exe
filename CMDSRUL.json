@@ -25,7 +25,18 @@
       "cmd": "animeinfo",
       "author": "MahMUD",
       "update": "22-03-2025"  
-    
+    },
+    {
+"cmd": "age",
+      "author": "leon",
+      "update": "23-03-2025"  
+  },
+    {
+"cmd": "album",
+      "author": "MahMUD",
+      "update": "23-03-2025"
+
+      
     }
   ]
 }
