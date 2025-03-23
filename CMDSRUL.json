@@ -25,17 +25,21 @@
       "cmd": "animeinfo",
       "author": "MahMUD",
       "update": "22-03-2025"  
-    },
-    {
-"cmd": "age",
+     },
+     {
+     "cmd": "age",
       "author": "leon",
       "update": "23-03-2025"  
-  },
-    {
-"cmd": "album",
+     },
+     {
+     "cmd": "album",
       "author": "MahMUD",
       "update": "23-03-2025"
-
+     },
+     {
+      "cmd": "emojimix",
+      "author": "MahMUD",
+      "update": "24-03-2025"
       
     }
   ]
