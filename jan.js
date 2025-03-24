@@ -26,7 +26,7 @@ module.exports = {
   getBotResponse: async function (message) {
     try {
       const base = await baseApiUrl();
-      const response = await axios.get(`${base}/jan/font11/${encodeURIComponent(message)}`);
+      const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(message)}`);
       return response.data?.message || "error try Again later";
     } catch (error) {
       console.error("API Error:", error.message || error);
@@ -99,7 +99,7 @@ module.exports = {
         
      try {
        const base = await baseApiUrl();
-       const response = await axios.get(`${base}/jan/font11/${encodeURIComponent(userText)}`);
+       const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(userText)}`);
        const botResponse = response.data?.message || "error try Again later";
           
          api.sendMessage(botResponse, event.threadID, (err, info) => {
