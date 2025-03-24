@@ -20,7 +20,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, event, args }) {
-    const apiUrl = await baseApiUrl();
+      const apiUrl = await baseApiUrl();
 
       if (args[0] === "add") {
       if (!args[1]) {
@@ -43,16 +43,16 @@ module.exports = {
           return api.sendMessage(response.data.message, event.threadID, event.messageID);
         } catch (error) {
           return api.sendMessage(`❌ Failed to upload video.\nError: ${error.message}`, event.threadID, event.messageID);
+          }
         }
-      }
 
-      if (!args[2]) {
-      return api.sendMessage("❌ Please provide a video URL or reply to a video message.", event.threadID, event.messageID);
-      }
-
-      const videoUrl = args[2];
-      try {
-       const response = await axios.post(`${apiUrl}/album/add`, {
+        if (!args[2]) {
+        return api.sendMessage("❌ Please provide a video URL or reply to a video message.", event.threadID, event.messageID);
+         }
+ 
+        const videoUrl = args[2];
+        try {
+        const response = await axios.post(`${apiUrl}/album/add`, {
           category,
           videoUrl,
         });
@@ -94,7 +94,7 @@ module.exports = {
         "\n━━━━━━━━━━━━━━━━━━━━━" +
         `\n♻ | 𝐏𝐚𝐠𝐞 [${page}/${totalPages}]<😘\nℹ | 𝐓𝐲𝐩𝐞 !album ${page + 1} - 𝐭𝐨 𝐬𝐞𝐞 𝐧𝐞𝐱𝐭 𝐩𝐚𝐠𝐞.`.repeat(page < totalPages);
 
-      await api.sendMessage(message, event.threadID, (error, info) => {
+        await api.sendMessage(message, event.threadID, (error, info) => {
         global.GoatBot.onReply.set(info.messageID, {
           commandName: this.config.name,
           type: "reply",
