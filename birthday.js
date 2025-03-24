@@ -18,7 +18,7 @@ module.exports = {
 
     const taggedUserName = event.mentions[mention[0]].replace('@', '');
     try {
-      const response = await fetch(`https://mahmud-wish.onrender.com/wish/font1?taggedUserName=${taggedUserName}`);
+      const response = await fetch(`https://mahmud-wish.onrender.com/wish/font3?taggedUserName=${taggedUserName}`);
       const data = await response.json();
       if (data.status === "success") {
         api.sendMessage(data.response, event.threadID, event.messageID);
