@@ -1,6 +1,7 @@
 module.exports = {
   config: {
-    name: "wish",
+    name: "birthday",
+    aliases: ["wish"],
     version: "1.7",
     role: 0,
     author: "Mahmud",
