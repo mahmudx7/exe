@@ -40,7 +40,12 @@
       "cmd": "emojimix",
       "author": "MahMUD",
       "update": "24-03-2025"
-      
+     },
+     {
+      "cmd": "cdp",
+      "author": "MahMUD",
+      "update": "24-03-2025"
+       
     }
   ]
 }
