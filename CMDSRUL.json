@@ -45,6 +45,12 @@
       "cmd": "cdp",
       "author": "MahMUD",
       "update": "24-03-2025"
+     },
+     {
+      "cmd": "birthday",
+      "author": "MahMUD",
+      "update": "24-03-2025"
+
        
     }
   ]
