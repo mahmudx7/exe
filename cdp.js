@@ -30,7 +30,7 @@ module.exports = {
 			attachments.push(await global.utils.getStreamFromURL(female));
 
 			const sentMessage = await message.reply({
-				body: `${apiMessage} (Message ID: ${message.messageID})`,
+				body: `${apiMessage}`,
 				attachment: attachments
 			});
 
