@@ -50,7 +50,11 @@
       "cmd": "birthday",
       "author": "MahMUD",
       "update": "24-03-2025"
-
+     },
+     {
+      "cmd": "cmds",
+      "author": "MahMUD",
+      "update": "25-03-2025"  
        
     }
   ]
