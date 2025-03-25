@@ -109,5 +109,6 @@ cmds is a command for GoatBot v2 that provides a paginated list of available com
 If you find any issues, please report them!
 
 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤: <a href="https://www.facebook.com/mahmud.x07" style="color: black;">MahMUD</a></h3></div>
+
 **Gmail**: mahmudx077@gmail.com
 
