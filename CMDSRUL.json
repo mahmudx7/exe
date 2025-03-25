@@ -22,12 +22,12 @@
    
     },
     {
-      "cmd": "animeinfo",
+      "cmd": "age",
       "author": "MahMUD",
       "update": "22-03-2025"  
      },
      {
-     "cmd": "age",
+     "cmd": "sing",
       "author": "leon",
       "update": "23-03-2025"  
      },
@@ -57,7 +57,7 @@
       "update": "25-03-2025"  
     },
      {
-      "cmd": "sing",
+      "cmd": "animeinfo",
       "author": "MahMUD",
       "update": "26-03-2025"  
 
