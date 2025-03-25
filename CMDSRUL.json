@@ -55,6 +55,13 @@
       "cmd": "cmds",
       "author": "MahMUD",
       "update": "25-03-2025"  
+    },
+     {
+      "cmd": "sing",
+      "author": "MahMUD",
+      "update": "26-03-2025"  
+
+
        
     }
   ]
