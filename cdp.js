@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const baseApiUrl = async () => {
 const base = await axios.get(
-`https://raw.githubusercontent.com/rockexe77/Cmds-store/main/APIRUL.json',
+`https://raw.githubusercontent.com/mahmudx7/exe/main/APIRUL.json',
   );
   return base.data.api;
 };
