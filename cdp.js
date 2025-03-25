@@ -1,12 +1,5 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => {
-const base = await axios.get(
-`https://raw.githubusercontent.com/mahmudx7/exe/main/APIRUL.json',
-  );
-  return base.data.api;
-};
-
 module.exports = {
   config: {
     name: "copuledp",
@@ -36,10 +29,11 @@ module.exports = {
         await global.utils.getStreamFromURL(female)
       ];
 
-      await message.reply({ body: response.data.message, attachment: attachments });
+      await message.reply({ body: "Here is your couple DP!", attachment: attachments });
 
     } catch (error) {
-      message.reply(error.response?.data?.error || "Error fetching couple DP. Please try again later.");
+      console.error(error);
+      message.reply("Error fetching couple DP. Please try again later.");
     }
   }
 };
