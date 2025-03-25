@@ -25,7 +25,7 @@ module.exports = {
             const query = encodeURIComponent(args.join(" "));
             const apiUrl = `${await baseApiUrl()}/sing?query=${query}`;
 
-            message.reply("⏳ Fetching your song...");
+            message.reply("wait janu 😘");
 
             const response = await axios.get(apiUrl, {
                 responseType: "stream",
