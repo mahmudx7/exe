@@ -9,10 +9,10 @@
  
 
 <div align="center">
-			<h3>𝐌𝐲 𝐑𝐞𝐩𝐥𝐢𝐭 𝐀𝐜𝐜𝐨𝐮𝐧𝐭
+			<h3>𝐑𝐞𝐩𝐥𝐢𝐭:
 			<a href="naii" style="color: green;">@loading</a>
 				<br>
-	𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 <a href="https://www.facebook.com/mahmud.x07" style="color: black;">MahMUD</a></h3></div>
+	𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤: <a href="https://www.facebook.com/mahmud.x07" style="color: black;">MahMUD</a></h3></div>
 
 <img align="center" src="https://i.imgur.com/UM3ekFf.jpeg"/>
 
