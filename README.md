@@ -73,7 +73,7 @@ cmds is a command for GoatBot v2 that provides a paginated list of available com
 - After running `!cmds`, reply with the command number to get its URL.
 - Example:
   ```
-  !cs3
+  !cmds
   ```
   *Bot response:*  
   ```
@@ -84,5 +84,28 @@ cmds is a command for GoatBot v2 that provides a paginated list of available com
   ```
   - Reply with 1 to get the URL for "jan".
 
-## Example Output
+## Example OutputOutput
+
+
+## Dependencies
+- [`axios`](https://www.npmjs.com/package/axios) - Used to fetch the command list and URLs from GitHub.
+
+## Installation
+1. Make sure `axios` is installed in your project:
+
+
+2. Add the `cmds` command file to your GoatBot `commands` directory.
+
+## Notes
+- The command fetches data from:  
+- Commands List: [`CMDSRUL.json`](https://raw.githubusercontent.com/mahmudx7/exe/main/CMDSRUL.json)  
+- Command URLs: [`CMDS.json`](https://raw.githubusercontent.com/mahmudx7/exe/main/CMDS.json)  
+- If a command is not found, an error message is shown.
+- Pagination ensures that only 10 commands are displayed per page.
+
+---
+
+**Maintained by:** MahMUD  
+If you find any issues, please report them!
+
 
