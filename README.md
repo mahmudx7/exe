@@ -28,9 +28,9 @@
 cmds is a command for GoatBot v2 that provides a paginated list of available commands stored in a remote JSON file. It allows users to search for commands by name, first letter, or page number. Users can also retrieve command URLs.
 
 ## Command Information
-- **Name:** cs3
+- **Name:** cmds
 - **Author:** MahMUD
-- **Version:** 0.1
+- **Version:** 1.7
 - **Category:** General
 - **Role Required:** 0 (Everyone)
 - **Cooldown:** 3 seconds
