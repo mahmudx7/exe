@@ -23,7 +23,7 @@ module.exports = {
   onStart: async function ({ message }) {
     try {
       const response = await axios.get("https://mahmud-cdp.onrender.com/dp", {
-        headers: { "MahMUD": module.exports.config.author }
+        headers: { "author": module.exports.config.author }
       });
 
       if (response.data.error) return message.reply(response.data.error);
