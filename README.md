@@ -42,5 +42,47 @@ cmds is a command for GoatBot v2 that provides a paginated list of available com
 
 ## Usage
 
+### Detailed Usage Instructions:
+#### 1. **View the first page of commands**
 
+
+- Displays the first 10 commands along with their author and last update.  
+- Includes pagination details and a tip to see the next page.
+
+#### 2. **View a specific page (e.g., page 2)**
+
+
+- Shows the next set of 10 commands.  
+- If the page number is invalid, an error message is displayed.
+
+#### 3. **Search for a command by its full name**
+
+
+- Returns details of the command if found.  
+- If no matching command exists, it returns an error message.
+
+#### 4. **Search commands starting with a specific letter**
+
+
+
+
+- Displays all commands that start with "a".  
+- If no commands match, it returns an error.
+
+#### 5. **Retrieve a command’s URL**  
+- After running `!cmds`, reply with the command number to get its URL.
+- Example:
+  ```
+  !cs3
+  ```
+  *Bot response:*  
+  ```
+  ╭─‣ 1: jan
+  ├‣ Author: MahMUD
+  ├‣ Update: 21-03-2025
+  ╰────────────◊
+  ```
+  - Reply with 1 to get the URL for "jan".
+
+## Example Output
 
