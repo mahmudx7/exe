@@ -3,12 +3,13 @@
   "jan_teach": "https://raw.githubusercontent.com/mahmudx7/exe/main/jan_teach.js",
   "font": "https://raw.githubusercontent.com/mahmudx7/exe/main/font.js",
   "namaz": "https://raw.githubusercontent.com/mahmudx7/exe/main/namaz.js",
-  "animeinfo": "https://raw.githubusercontent.com/mahmudx7/exe/main/animeinfo.js",
   "age": "https://raw.githubusercontent.com/mahmudx7/exe/main/age.js",
+  "sing": "https://raw.githubusercontent.com/mahmudx7/exe/main/sing.js",
   "album": "https://raw.githubusercontent.com/mahmudx7/exe/main/album.js",
   "emojimix": "https://raw.githubusercontent.com/mahmudx7/exe/main/emojimix.js",
   "cdp": "https://raw.githubusercontent.com/mahmudx7/exe/main/cdp.js",
   "birthday": "https://raw.githubusercontent.com/mahmudx7/exe/main/birthday.js",
-  "cmds": "https://raw.githubusercontent.com/mahmudx7/exe/main/cmds.js"
+  "cmds": "https://raw.githubusercontent.com/mahmudx7/exe/main/cmds.js",
+  "animeinfo": "https://raw.githubusercontent.com/mahmudx7/exe/main/animeinfo.js"
 
 }
