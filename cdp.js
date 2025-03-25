@@ -1,42 +1,45 @@
 const axios = require("axios");
-const baseApiUrl = async () => "https://mahmud-cdp.onrender.com";
+
+const baseApiUrl = async () => {
+const base = await axios.get(
+`https://raw.githubusercontent.com/rockexe77/Cmds-store/main/APIRUL.json',
+  );
+  return base.data.api;
+};
 
 module.exports = {
-	config: {
-		name: "copuledp",
-		aliases: ["cdp"],
-		version: "1.7",
-		author: "MahMUD",
-		countDown: 2,
-		role: 0,
-		longDescription: "random couple DP for nibba and nibbi",
-		category: "image",
-		guide: "{pn}"
-	}, 
+  config: {
+    name: "copuledp",
+    aliases: ["cdp"],
+    version: "1.7",
+    author: "MahMUD",
+    countDown: 2,
+    role: 0,
+    longDescription: "Fetch a random couple DP for nibba and nibbi",
+    category: "image",
+    guide: "{pn}"
+  },
 
-	onStart: async function ({ message }) {
-		try {
-			const base = await baseApiUrl();
-			const response = await axios.get(`${base}/dp`);
+  onStart: async function ({ message }) {
+    try {
+      const response = await axios.get("https://mahmud-cdp.onrender.com/dp", {
+        headers: { "MahMUD": module.exports.config.author }
+      });
 
-			const { message: apiMessage, male, female } = response.data;
+      if (response.data.error) return message.reply(response.data.error);
 
-			if (!male || !female) {
-				return message.reply("Couldn't fetch couple DP. Try again later.");
-			}
+      const { male, female } = response.data;
+      if (!male || !female) return message.reply("Couldn't fetch couple DP. Try again later.");
 
-			let attachments = [];
-			attachments.push(await global.utils.getStreamFromURL(male));
-			attachments.push(await global.utils.getStreamFromURL(female));
+      let attachments = [
+        await global.utils.getStreamFromURL(male),
+        await global.utils.getStreamFromURL(female)
+      ];
 
-			const sentMessage = await message.reply({
-				body: `${apiMessage}`,
-				attachment: attachments
-			});
+      await message.reply({ body: response.data.message, attachment: attachments });
 
-		} catch (error) {
-			console.error("Error details:", error.response ? error.response.data : error.message);
-			message.reply("Error fetching couple DP. Please try again later.");
-		}
-	}
+    } catch (error) {
+      message.reply(error.response?.data?.error || "Error fetching couple DP. Please try again later.");
+    }
+  }
 };
