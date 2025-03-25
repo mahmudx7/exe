@@ -22,3 +22,26 @@
 
 
 
+# Commands Store of MahMUD
+
+## Description
+cmds is a command for GoatBot v2 that provides a paginated list of available commands stored in a remote JSON file. It allows users to search for commands by name, first letter, or page number. Users can also retrieve command URLs.
+
+## Command Information
+- **Name:** cs3
+- **Author:** MahMUD
+- **Version:** 0.1
+- **Category:** General
+- **Role Required:** 0 (Everyone)
+- **Cooldown:** 3 seconds
+
+## Features
+✅ View all available commands with pagination  
+✅ Search commands by name or starting letter  
+✅ Retrieve command details (author, last update)  
+✅ Get the command’s URL by replying with its number  
+
+## Usage
+
+
+
