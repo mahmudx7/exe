@@ -65,6 +65,11 @@
       "cmd": "say",
       "author": "MahMUD",
       "update": "27-03-2025"  
+},
+     {
+      "cmd": "gemini",
+      "author": "MahMUD",
+      "update": "27-03-2025"  
 
        
     }
