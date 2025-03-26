@@ -10,6 +10,7 @@
   "cdp": "https://raw.githubusercontent.com/mahmudx7/exe/main/cdp.js",
   "sing": "https://raw.githubusercontent.com/mahmudx7/exe/main/sing.js",
   "cmds": "https://raw.githubusercontent.com/mahmudx7/exe/main/cmds.js",
-  "animeinfo": "https://raw.githubusercontent.com/mahmudx7/exe/main/animeinfo.js"
+  "animeinfo": "https://raw.githubusercontent.com/mahmudx7/exe/main/animeinfo.js",
+  "say": "https://raw.githubusercontent.com/mahmudx7/exe/main/say.js"
 
 }
