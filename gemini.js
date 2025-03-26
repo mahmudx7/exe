@@ -1,5 +1,10 @@
 const axios = require("axios");
 
+const baseApiUrl = async () => {
+  const base = 'https://mahmud-geminii.onrender.com';
+  return base;
+};
+
 module.exports = {
   config: {
     name: "gemini",
@@ -15,7 +20,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, args, event }) {
-    const apiUrl = "https://mahmud-geminii.onrender.com/gemini"; // Replace with your API URL
+    const apiUrl = `${await baseApiUrl()}/gemini`;
     const prompt = args.join(" ");
 
     if (!prompt) {
@@ -39,7 +44,7 @@ module.exports = {
       const response = await axios.post(apiUrl, requestBody, {
         headers: { 
           "Content-Type": "application/json",
-          "author": module.exports.config.author // Authorization Header
+          "author": module.exports.config.author
         }
       });
 
@@ -69,7 +74,7 @@ module.exports = {
   onReply: async function ({ api, args, event, Reply }) {
     if (Reply.author !== event.senderID) return;
 
-    const apiUrl = "https://mahmud-geminii.onrender.com/gemini"; // Replace with your API URL
+    const apiUrl = `${await baseApiUrl()}/gemini`;
     const prompt = args.join(" ");
 
     if (!prompt) return;
@@ -78,7 +83,7 @@ module.exports = {
       const response = await axios.post(apiUrl, { prompt }, {
         headers: { 
           "Content-Type": "application/json",
-          "author": module.exports.config.author // Authorization Header
+          "author": module.exports.config.author
         }
       });
 
