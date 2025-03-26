@@ -8,7 +8,7 @@ const baseApiUrl = async () => {
 module.exports = {
   config: {
     name: "say",
-    version: "1.3",
+    version: "1.7",
     author: "MahMUD",
     countDown: 5,
     role: 0,
@@ -36,7 +36,7 @@ module.exports = {
       });
 
       if (response.data.error) {
-        return message.reply(`❌ **Error:** ${response.data.error}`);
+        return message.reply(`❌ Error: ${response.data.error}`);
       }
 
       message.reply({
