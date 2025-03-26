@@ -1,0 +1,52 @@
+const axios = require("axios");
+
+const baseApiUrl = async () => {
+  const base = 'https://mahmud-say.onrender.com';
+  return base;
+};
+
+module.exports = {
+  config: {
+    name: "say",
+    version: "1.3",
+    author: "MahMUD",
+    countDown: 5,
+    role: 0,
+    category: "media",
+    guide: "{pn} <text> (or reply to a message)",
+  },
+
+  onStart: async function ({ api, message, args, event }) {
+    let text = args.join(" ");
+
+    if (event.type === "message_reply" && event.messageReply.body) {
+      text = event.messageReply.body;
+    }
+
+    if (!text) {
+      return message.reply("⚠️ দয়া করে কিছু লিখুন বা একটি মেসেজে রিপ্লাই দিন!");
+    }
+
+    try {
+      const baseUrl = await baseApiUrl();
+      const response = await axios.get(`${baseUrl}/say`, {
+        params: { text },
+        headers: { "Author": module.exports.config.author },
+        responseType: "stream",
+      });
+
+      if (response.data.error) {
+        return message.reply(`❌ **Error:** ${response.data.error}`);
+      }
+
+      message.reply({
+        body: "",
+        attachment: response.data,
+      });
+
+    } catch (e) {
+      console.error("API Error:", e.response ? e.response.data : e.message);
+      message.reply("🐥 দুঃখিত, কিছু একটা সমস্যা হয়েছে!\n\nfix Author name\n" + (e.response?.data?.error || e.message));
+    }
+  },
+};
