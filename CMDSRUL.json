@@ -27,7 +27,7 @@
       "update": "22-03-2025"  
      },
      {
-     "cmd": "sing",
+     "cmd": "birthday",
       "author": "MahMUD",
       "update": "26-03-2025"  
      },
@@ -47,9 +47,9 @@
       "update": "24-03-2025"
      },
      {
-      "cmd": "birthday",
+      "cmd": "sing",
       "author": "MahMUD",
-      "update": "24-03-2025"
+      "update": "26-03-2025"
      },
      {
       "cmd": "cmds",
