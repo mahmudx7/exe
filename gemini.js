@@ -8,7 +8,7 @@ const baseApiUrl = async () => {
 module.exports = {
   config: {
     name: "gemini",
-    version: "1.2",
+    version: "1.7",
     author: "MahMUD",
     description: "Ask Gemini AI anything",
     countDown: 5,
@@ -106,7 +106,7 @@ module.exports = {
       }, event.messageID);
     } catch (error) {
       console.error("Error:", error);
-      api.sendMessage("An error occurred. Please try again later.", event.threadID, event.messageID);
+      api.sendMessage("error janu, Please try again later 🥹", event.threadID, event.messageID);
     }
   }
 };
