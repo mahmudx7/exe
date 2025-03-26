@@ -25,14 +25,14 @@ module.exports = {
             const query = encodeURIComponent(args.join(" "));
             const apiUrl = `${await baseApiUrl()}/sing?query=${query}`;
 
-            message.reply("wait janu 😘");
+            message.reply("𝐖𝐚𝐢𝐭 𝐤𝐨𝐫𝐨 𝐣𝐚𝐧 <😘");
 
             const response = await axios.get(apiUrl, {
                 responseType: "stream",
                 headers: { "author": module.exports.config.author }
             });
 
-            console.log("Response:", response);  // Log response to check if it has data
+            console.log("Response:", response);
 
             if (response.data.error) {
                 return message.reply(`❌ Error: ${response.data.error}`);
