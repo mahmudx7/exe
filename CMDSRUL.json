@@ -60,14 +60,19 @@
       "cmd": "animeinfo",
       "author": "MahMUD",
       "update": "26-03-2025"  
-   },
+    },
      {
       "cmd": "say",
       "author": "MahMUD",
       "update": "27-03-2025"  
-},
+     },
      {
       "cmd": "gemini",
+      "author": "MahMUD",
+      "update": "27-03-2025"  
+     },
+     {
+      "cmd": "ai",
       "author": "MahMUD",
       "update": "27-03-2025"  
 
