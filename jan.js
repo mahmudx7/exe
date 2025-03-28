@@ -1,5 +1,17 @@
 const axios = require("axios");
-const baseApiUrl = async () => "https://mahmud-x8mi.onrender.com";
+
+const baseApiUrl = async () => "https://mahmud-x8mi.onrender.com/jan/font3";
+
+async function getBotResponse(message) {
+  try {
+    const base = await baseApiUrl();
+    const response = await axios.get(`${base}/${encodeURIComponent(message)}`);
+    return response.data?.message || "আমি বুঝতে পারছি না, আবার চেষ্টা করুন!";
+  } catch (error) {
+    console.error("API Error:", error.message || error);
+    return "error janu 🥲";
+  }
+}
 
 module.exports = {
   config: {
@@ -7,49 +19,36 @@ module.exports = {
     version: "1.7",
     author: "MahMUD",
     role: 0,
+    description: { en: "no prefix command." },
     category: "ai",
-    guide: {
-     en: "type jan"
-    },
+    guide: { en: "just type jan" },
   },
 
   onStart: async function () {},
-    removePrefix: function (str, prefixes) {
+
+  removePrefix: function (str, prefixes) {
     for (const prefix of prefixes) {
-    if (str.startsWith(prefix)) {
-    return str.slice(prefix.length).trim();
+      if (str.startsWith(prefix)) {
+        return str.slice(prefix.length).trim();
       }
     }
     return str;
   },
 
-  getBotResponse: async function (message) {
-    try {
-      const base = await baseApiUrl();
-      const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(message)}`);
-      return response.data?.message || "error try Again later";
-    } catch (error) {
-      console.error("API Error:", error.message || error);
-      return "error try Again later";
-    }
-  },
-
   onReply: async function ({ api, event }) {
-      if (event.type === "message_reply") {
+    if (event.type === "message_reply") {
       let message = event.body.toLowerCase();
       message = this.removePrefix(message, ["jan"]) || "opp2";
-   
       if (message) {
-      const replyMessage = await this.getBotResponse(message);
-      api.sendMessage(replyMessage, event.threadID, (err, info) => {
-      if (!err) {
-      
-       global.GoatBot.onReply.set(info.messageID, {
-       commandName: "bot2",
-       type: "reply",
-       messageID: info.messageID,
-       author: event.senderID,
-       text: replyMessage,
+        const replyMessage = await getBotResponse(message);
+        api.sendMessage(replyMessage, event.threadID, (err, info) => {
+          if (!err) {
+            global.GoatBot.onReply.set(info.messageID, {
+              commandName: "bot2",
+              type: "reply",
+              messageID: info.messageID,
+              author: event.senderID,
+              text: replyMessage,
             });
           }
         }, event.messageID);
@@ -72,51 +71,41 @@ module.exports = {
       "𝗜 𝗵𝗮𝘁𝗲 𝘆𝗼𝘂__😏😏",
     ];
 
-     let message = event.body ? event.body.toLowerCase() : "";
-     const words = message.split(" ");
-     const wordCount = words.length;
+    let message = event.body ? event.body.toLowerCase() : "";
+    const words = message.split(" ");
+    const wordCount = words.length;
 
-     if (event.type !== "message_reply" && message.startsWith("jan")) {
-     api.setMessageReaction("😍", event.messageID, () => {}, true);
-     api.sendTypingIndicator(event.threadID, true);
+    if (event.type !== "message_reply" && message.startsWith("jan")) {
+      api.setMessageReaction("😍", event.messageID, () => {}, true);
+      api.sendTypingIndicator(event.threadID, true);
 
-     if (wordCount === 1) {
-     api.sendMessage({ body: responses[Math.floor(Math.random() * responses.length)] }, event.threadID, (err, info) => {
-     if (!err) {
-  
-      global.GoatBot.onReply.set(info.messageID, {
-      commandName: "bot2",
-      type: "reply",
-      messageID: info.messageID,
-      author: event.senderID,
-      link: responses[Math.floor(Math.random() * responses.length)],
+      if (wordCount === 1) {
+        api.sendMessage({ body: responses[Math.floor(Math.random() * responses.length)] }, event.threadID, (err, info) => {
+          if (!err) {
+            global.GoatBot.onReply.set(info.messageID, {
+              commandName: "bot2",
+              type: "reply",
+              messageID: info.messageID,
+              author: event.senderID,
+              link: responses[Math.floor(Math.random() * responses.length)],
             });
           }
-    }, event.messageID);
-     } else {
-       words.shift();
-       const userText = words.join(" ");
-        
-     try {
-       const base = await baseApiUrl();
-       const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(userText)}`);
-       const botResponse = response.data?.message || "error try Again later";
-          
-         api.sendMessage(botResponse, event.threadID, (err, info) => {
-         if (!err) {
-         global.GoatBot.onReply.set(info.messageID, {
-         commandName: "bot2",
-         type: "reply",
-         messageID: info.messageID,
-         author: event.senderID,
-         text: botResponse,
-              });
-            }
-          }, event.messageID);
-        } catch (error) {
-          console.error("API Error:", error.message || error);
-          api.sendMessage("error janu 🥲", event.threadID);
-        }
+        }, event.messageID);
+      } else {
+        words.shift();
+        const userText = words.join(" ");
+        const botResponse = await getBotResponse(userText);
+        api.sendMessage(botResponse, event.threadID, (err, info) => {
+          if (!err) {
+            global.GoatBot.onReply.set(info.messageID, {
+              commandName: "bot2",
+              type: "reply",
+              messageID: info.messageID,
+              author: event.senderID,
+              text: botResponse,
+            });
+          }
+        }, event.messageID);
       }
     }
   },
