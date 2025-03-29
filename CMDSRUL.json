@@ -75,6 +75,11 @@
       "cmd": "ai",
       "author": "MahMUD",
       "update": "27-03-2025"  
+     },
+     {
+      "cmd": "anisr",
+      "author": "MahMUD",
+      "update": "30-03-2025"  
 
        
     }
