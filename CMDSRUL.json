@@ -80,7 +80,11 @@
       "cmd": "anisr",
       "author": "MahMUD",
       "update": "30-03-2025"  
-
+     },
+     {
+      "cmd": "time",
+      "author": "MahMUD",
+      "update": "02-04-2025"
        
     }
   ]
