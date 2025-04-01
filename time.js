@@ -15,14 +15,21 @@ module.exports = {
   onStart: async function ({ message, args }) {
     const country = args[0]?.toLowerCase() || 'bangladesh';
 
-     if (country === 'list') {
-     return message.reply(
-    `⚠️ Use the API at https://mahmud-time.onrender.com/time/list to see the available countries.`
+    if (country === 'list') {
+      return message.reply(
+        `⚠️ Use the API at https://mahmud-time.onrender.com/time/list to see the available countries.`
       );
     }
 
     try {
-      const response = await axios.get(`https://mahmud-time.onrender.com/time/${country}`);
+      const response = await axios.get(`https://mahmud-time.onrender.com/time/${country}`, {
+        headers: { "author": module.exports.config.author }
+      });
+
+      if (response.data.error) {
+        return message.reply(response.data.error);
+      }
+
       message.reply(response.data.message);
     } catch (error) {
       message.reply(`⚠️ An error occurred. Please try again later.`);
