@@ -13,12 +13,22 @@ module.exports = {
   },
 
   onStart: async function ({ message, args }) {
-    const country = args[0]?.toLowerCase() || 'bangladesh';
+    const country = args[0]?.toLowerCase();
 
     if (country === 'list') {
-      return message.reply(
-        `⚠️ Use the API at https://mahmud-time.onrender.com/time/list to see the available countries.`
-      );
+      try {
+        const response = await axios.get('https://mahmud-time.onrender.com/time/list', {
+          headers: { "author": module.exports.config.author }
+        });
+
+        if (response.data.message) {
+          return message.reply(response.data.message);
+        } else {
+          return message.reply("⚠️ Unable to fetch country list.");
+        }
+      } catch (error) {
+        message.reply(`⚠️ An error occurred. Please try again later.`);
+      }
     }
 
     try {
