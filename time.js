@@ -13,7 +13,7 @@ module.exports = {
   },
 
   onStart: async function ({ message, args }) {
-    const country = args[0]?.toLowerCase();
+    let country = args[0]?.toLowerCase() || "bangladesh";
 
     if (country === 'list') {
       try {
@@ -21,13 +21,11 @@ module.exports = {
           headers: { "author": module.exports.config.author }
         });
 
-        if (response.data.message) {
-          return message.reply(response.data.message);
-        } else {
-          return message.reply("⚠️ Unable to fetch country list.");
-        }
+        return response.data.message 
+          ? message.reply(response.data.message) 
+          : message.reply("⚠️ Unable to fetch country list.");
       } catch (error) {
-        message.reply(`⚠️ An error occurred. Please try again later.`);
+        return message.reply("⚠️ An error occurred. Please try again later.");
       }
     }
 
@@ -36,13 +34,11 @@ module.exports = {
         headers: { "author": module.exports.config.author }
       });
 
-      if (response.data.error) {
-        return message.reply(response.data.error);
-      }
-
-      message.reply(response.data.message);
+      return response.data.error 
+        ? message.reply(response.data.error) 
+        : message.reply(response.data.message);
     } catch (error) {
-      message.reply(`⚠️ An error occurred. Please try again later.`);
+      return message.reply("⚠️ An error occurred. Please try again later.");
     }
   }
 };
