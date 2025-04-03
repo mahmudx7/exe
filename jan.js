@@ -6,7 +6,7 @@ async function getBotResponse(message) {
   try {
     const base = await baseApiUrl();
     const response = await axios.get(`${base}/${encodeURIComponent(message)}`);
-    return response.data?.message || "আমি বুঝতে পারছি না, আবার চেষ্টা করুন!";
+    return response.data?.message || "try Again";
   } catch (error) {
     console.error("API Error:", error.message || error);
     return "error janu 🥲";
@@ -25,20 +25,9 @@ module.exports = {
   },
 
   onStart: async function () {},
-
-  removePrefix: function (str, prefixes) {
-    for (const prefix of prefixes) {
-      if (str.startsWith(prefix)) {
-        return str.slice(prefix.length).trim();
-      }
-    }
-    return str;
-  },
-
   onReply: async function ({ api, event }) {
     if (event.type === "message_reply") {
-      let message = event.body.toLowerCase();
-      message = this.removePrefix(message, ["jan"]) || "opp2";
+      let message = event.body.toLowerCase() || "opp2";
       if (message) {
         const replyMessage = await getBotResponse(message);
         api.sendMessage(replyMessage, event.threadID, (err, info) => {
