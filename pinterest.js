@@ -4,14 +4,13 @@ const fs = require("fs");
 
 module.exports = {
     config: {
-        name: "pinterest",
-        aliases: ["pin", "pic"],
+        name: "pin",
         version: "1.7",
         author: "MahMUD",
         role: 0,
         category: "media",
         guide: {
-            en: "{pn} goku Ultra - 10"
+            en: "{pn} <search query> <number of images>\nExample: {pn} goku Ultra - 10"
         }
     },
 
@@ -50,7 +49,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            api.sendMessage(`An error occurred: ${error.message}`, event.threadID, event.messageID);
+            api.sendMessage(`error baby: ${error.message}`, event.threadID, event.messageID);
         }
     }
 };
