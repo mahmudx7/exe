@@ -21,7 +21,12 @@ module.exports = {
       const limit = Math.min(20, parseInt(numberSearch) || 6);
       const apiUrl = `https://mahmud-unsplash.onrender.com/search-images?query=${encodeURIComponent(keySearchs)}&number=${limit}`;
       
-      const { data } = await axios.get(apiUrl);
+      const { data } = await axios.get(apiUrl, {
+        headers: {
+          "author": module.exports.config.author
+        }
+      });
+      
       const imgData = [];
       const cacheDir = path.join(__dirname, "cache");
 
