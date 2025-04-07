@@ -15,7 +15,7 @@ module.exports = {
   onStart: async function ({ api, event, args }) {
     try {
       const keySearch = args.join(" ");
-      if (!keySearch.includes("-")) return api.sendMessage("Please enter the search query and number of images\nExample: {pn} cat - 10", event.threadID, event.messageID);
+      if (!keySearch.includes("-")) return api.sendMessage("Wrong use baby\nExample: {pn} cat - 10", event.threadID, event.messageID);
       
       const [keySearchs, numberSearch] = keySearch.split("-").map(val => val.trim());
       const limit = Math.min(20, parseInt(numberSearch) || 6);
