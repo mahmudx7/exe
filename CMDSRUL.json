@@ -96,8 +96,11 @@
       "cmd": "poli",
       "author": "MahMUD",
       "update": "07-04-2025"
-
-     
+     },
+     {
+      "cmd": "unsplash",
+      "author": "MahMUD",
+      "update": "07-04-2025"
      
      }
   ]
