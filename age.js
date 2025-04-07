@@ -9,8 +9,8 @@ const baseApiUrl = async () => {
 module.exports = {
     config: {
         name: "age",
-        version: "1.2",
-        author: "Leon",
+        version: "1.7",
+        author: "MahMUD",
         category: "utility",
         guide: {
             en: "Usage: age <YYYY-MM-DD>"
