@@ -19,89 +19,86 @@
       "cmd": "namaz",
       "author": "MahMUD",
       "update": "22-03-2025"
-   
     },
     {
       "cmd": "age",
       "author": "MahMUD",
-      "update": "22-03-2025"  
-     },
-     {
-     "cmd": "birthday",
+      "update": "22-03-2025"
+    },
+    {
+      "cmd": "birthday",
       "author": "MahMUD",
-      "update": "26-03-2025"  
-     },
-     {
-     "cmd": "album",
+      "update": "26-03-2025"
+    },
+    {
+      "cmd": "album",
       "author": "MahMUD",
       "update": "23-03-2025"
-     },
-     {
+    },
+    {
       "cmd": "emojimix",
       "author": "MahMUD",
       "update": "24-03-2025"
-     },
-     {
+    },
+    {
       "cmd": "cdp",
       "author": "MahMUD",
       "update": "24-03-2025"
-     },
-     {
+    },
+    {
       "cmd": "sing",
       "author": "MahMUD",
       "update": "26-03-2025"
-     },
-     {
+    },
+    {
       "cmd": "cmds",
       "author": "MahMUD",
-      "update": "25-03-2025"  
+      "update": "25-03-2025"
     },
-     {
+    {
       "cmd": "animeinfo",
       "author": "MahMUD",
-      "update": "26-03-2025"  
+      "update": "26-03-2025"
     },
-     {
+    {
       "cmd": "say",
       "author": "MahMUD",
-      "update": "27-03-2025"  
-     },
-     {
+      "update": "27-03-2025"
+    },
+    {
       "cmd": "gemini",
       "author": "MahMUD",
-      "update": "27-03-2025"  
-     },
-     {
+      "update": "27-03-2025"
+    },
+    {
       "cmd": "ai",
       "author": "MahMUD",
-      "update": "27-03-2025"  
-     },
-     {
+      "update": "27-03-2025"
+    },
+    {
       "cmd": "anisr",
       "author": "MahMUD",
-      "update": "30-03-2025"  
-     },
-     {
+      "update": "30-03-2025"
+    },
+    {
       "cmd": "time",
       "author": "MahMUD",
       "update": "02-04-2025"
-
-       },
-     {
+    },
+    {
       "cmd": "pinterest",
       "author": "MahMUD",
       "update": "06-04-2025"
     },
-     {
+    {
       "cmd": "poli",
       "author": "MahMUD",
       "update": "07-04-2025"
-     },
-     {
+    },
+    {
       "cmd": "unsplash",
       "author": "MahMUD",
       "update": "07-04-2025"
-     
-     }
+    }
   ]
 }
