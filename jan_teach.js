@@ -37,7 +37,7 @@ if (!args[0]) {
   });  
 
   const userName = await usersData.getName(uid) || "Unknown User";  
-  return api.sendMessage(`✅ Added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID);  
+  return api.sendMessage(`✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID);  
 }  
 
   if (args[0] === "remove") {  
