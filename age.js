@@ -1,9 +1,8 @@
 const axios = require("axios");
-const fs = require("fs");
 
 const baseApiUrl = async () => {
-    const base = 'https://mahmud-age.onrender.com';
-    return base;
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.age;
 };
 
 module.exports = {
@@ -25,9 +24,8 @@ module.exports = {
         const inputDate = args[0];
 
         try {
-            const base = await baseApiUrl();
-            const response = await axios.get(`${base}/age/font3/${inputDate}`);
-
+            const apiUrl = await baseApiUrl();
+            const response = await axios.get(`${await baseApiUrl()}/age/font3/${inputDate}`);
             const data = response.data;
 
             if (data.error) {
