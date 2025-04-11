@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-style.onrender.com';
+  const base = 'https://mahmud-style-api.onrender.com';
   return base;
 };
 
