@@ -22,7 +22,7 @@ module.exports = {
         }
 
         const numberSearch = count ? Math.min(parseInt(count), 20) : 6;
-        const apiUrl = `https://mahmud-pin.onrender.com/pin?search=${encodeURIComponent(keySearch)}&count=${numberSearch}`;
+        const apiUrl = `https://mahmud-pin-api.onrender.com/pin?search=${encodeURIComponent(keySearch)}&count=${numberSearch}`;
 
         try {
             const { data } = await axios.get(apiUrl);
