@@ -1,8 +1,8 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-style-api.onrender.com';
-  return base;
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.font;
 };
 
 module.exports.config = {
@@ -33,44 +33,43 @@ module.exports.onStart = async function ({ message, args }) {
     }
   }
 
-  const number = args[0];
-  const text = args.slice(1).join(" ");
+      const number = args[0];
+      const text = args.slice(1).join(" ");
 
-  if (!text || isNaN(number)) {
-    return message.reply("Invalid command. Usage: style <number> <text>");
+      if (!text || isNaN(number)) {
+      return message.reply("Invalid command. Usage: style <number> <text>");
   }
 
-  try {
-    const response = await axios.post(`${await baseApiUrl()}/font`, {
+      try {
+      const response = await axios.post(`${await baseApiUrl()}/font`, {
       number: number,
       text: text
     });
 
-    const fontData = response.data.data;
-    const fontStyle = fontData[number];
-
-    if (!fontStyle) {
+      const fontData = response.data.data;
+      const fontStyle = fontData[number];
+      if (!fontStyle) {
       return message.reply(`Font style ${number} does not exist. Please choose a valid font number.`);
     }
 
-    let convertedText = "";
-    for (const char of text) {
+      let convertedText = "";
+      for (const char of text) {
       if (fontStyle[char]) {
-        convertedText += fontStyle[char];
-      } else {
-        convertedText += char;
+      convertedText += fontStyle[char];
+     } else {
+      convertedText += char;
       }
     }
 
-    if (!convertedText) {
+      if (!convertedText) {
       return message.reply("Error: Could not convert the text with the specified style.");
     }
 
-    await message.reply(convertedText);
-  } catch (error) {
-    console.error("Error sending data to the API:", error);
+      await message.reply(convertedText);
+    } catch (error) {
+      console.error("Error sending data to the API:", error);
 
-    if (error.response) {
+      if (error.response) {
       console.error("API Error Response:", error.response.data);
       await message.reply(`API Error: ${error.response.data.message || "An unknown error occurred."}`);
     } else {
