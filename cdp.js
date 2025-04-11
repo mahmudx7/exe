@@ -1,4 +1,9 @@
 const axios = require("axios");
+ 
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.dp;
+};
 
 module.exports = {
   config: {
@@ -6,7 +11,7 @@ module.exports = {
     aliases: ["cdp"],
     version: "1.7",
     author: "MahMUD",
-    countDown: 2,
+    countDown: 10,
     role: 0,
     longDescription: "Fetch a random couple DP for nibba and nibbi",
     category: "image",
@@ -15,21 +20,26 @@ module.exports = {
 
   onStart: async function ({ message }) {
     try {
-      const response = await axios.get("https://mahmud-cdp-api.onrender.com/dp", {
+        const response = await axios.get(`${await baseApiUrl()}/dp`, {
         headers: { "author": module.exports.config.author }
       });
 
-      if (response.data.error) return message.reply(response.data.error);
+      if (response.data.error)
+        return message.reply(response.data.error);
 
       const { male, female } = response.data;
-      if (!male || !female) return message.reply("Couldn't fetch couple DP. Try again later.");
+      if (!male || !female)
+        return message.reply("Couldn't fetch couple DP. Try again later.");
 
-      let attachments = [
+      const attachments = [
         await global.utils.getStreamFromURL(male),
         await global.utils.getStreamFromURL(female)
       ];
 
-      await message.reply({ body: "Here is your couple DP!", attachment: attachments });
+      await message.reply({
+        body: "Here is your cdp <😘",
+        attachment: attachments
+      });
 
     } catch (error) {
       console.error(error);
