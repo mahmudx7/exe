@@ -1,7 +1,8 @@
 const axios = require("axios");
-
+ 
 const baseApiUrl = async () => {
-  return 'https://mahmud-emojimix-api.onrender.com';
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.emojimix;
 };
 
 module.exports = {
@@ -34,9 +35,9 @@ module.exports = {
     return message.reply({
     body: getLang("success", emoji1, emoji2),
     attachment: image
-    });
-  }
-};
+      });
+     }
+   };
 
 async function generateEmojimix(emoji1, emoji2) {
    try {
