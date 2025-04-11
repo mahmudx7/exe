@@ -15,7 +15,7 @@ module.exports = {
 
   onStart: async function ({ message }) {
     try {
-      const response = await axios.get("https://mahmud-cdp.onrender.com/dp", {
+      const response = await axios.get("https://mahmud-cdp-api.onrender.com/dp", {
         headers: { "author": module.exports.config.author }
       });
 
