@@ -1,8 +1,8 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-sing.onrender.com';
-  return base;
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.sing;
 };
 
 module.exports = {
@@ -28,28 +28,28 @@ module.exports = {
             message.reply("𝐖𝐚𝐢𝐭 𝐤𝐨𝐫𝐨 𝐣𝐚𝐧 <😘");
 
             const response = await axios.get(apiUrl, {
-                responseType: "stream",
-                headers: { "author": module.exports.config.author }
+            responseType: "stream",
+            headers: { "author": module.exports.config.author }
             });
 
             console.log("Response:", response);
 
             if (response.data.error) {
-                return message.reply(`❌ Error: ${response.data.error}`);
+            return message.reply(`❌ Error: ${response.data.error}`);
             }
 
             message.reply({
-                body: `✅ Here's your song: ${args.join(" ")}`,
-                attachment: response.data
+            body: `✅ Here's your song: ${args.join(" ")}`,
+            attachment: response.data
             });
 
-        } catch (error) {
+          } catch (error) {
             console.error("Error:", error.message);
 
             if (error.response) {
-                console.error("Response error data:", error.response.data);
-                console.error("Response status:", error.response.status);
-                return message.reply(`❌ Error: ${error.response.data.error || error.message}`);
+            console.error("Response error data:", error.response.data);
+            console.error("Response status:", error.response.status);
+            return message.reply(`❌ Error: ${error.response.data.error || error.message}`);
             }
 
             message.reply("❌ An error occurred while processing your request.");
