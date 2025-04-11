@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-album.onrender.com';
+  const base = 'https://mahmud-album-api.onrender.com';
   return base;
 };
 
