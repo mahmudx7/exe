@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  return 'https://mahmud-emojimix.onrender.com';
+  return 'https://mahmud-emojimix-api.onrender.com';
 };
 
 module.exports = {
