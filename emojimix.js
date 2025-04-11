@@ -18,7 +18,7 @@ module.exports = {
 
   langs: {
     en: {
-      error: "Sorry, emoji %1 and %2 can't mix.",
+      error: "Sorry, emoji %1 and %2 can't be mixed.",
       success: "Emoji %1 and %2 mixed successfully!"
     }
   },
@@ -31,21 +31,28 @@ module.exports = {
     const image = await generateEmojimix(emoji1, emoji2);
     if (!image) return message.reply(getLang("error", emoji1, emoji2));
 
-    message.reply({
-      body: getLang("success", emoji1, emoji2),
-      attachment: image
+    return message.reply({
+    body: getLang("success", emoji1, emoji2),
+    attachment: image
     });
   }
 };
 
 async function generateEmojimix(emoji1, emoji2) {
-  try {
+   try {
     const apiUrl = `${await baseApiUrl()}/mix?emoji1=${encodeURIComponent(emoji1)}&emoji2=${encodeURIComponent(emoji2)}`;
-    const response = await axios.get(apiUrl, { responseType: "stream" });
+    const response = await axios.get(apiUrl, {
+    headers: { "Author": module.exports.config.author },
+    responseType: "stream"
+    });
 
-    response.data.path = `emojimix_${Date.now()}.png`;
+    if (response.data.error) {
+      return null; 
+    }
+
     return response.data;
   } catch (error) {
+    console.error("Failed to fetch emojimix:", error.message);
     return null;
   }
 }
