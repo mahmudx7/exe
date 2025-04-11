@@ -32,7 +32,7 @@ module.exports = {
 
       for (let i = 0; i < 4; i++) {
         const enhancedPrompt = `${prompt}, ${styles[i % styles.length]}`;
-        const response = await axios.post("https://mahmud-poli.onrender.com/generate", {
+        const response = await axios.post("https://mahmud-poli-api.onrender.com/generate", {
           prompt: enhancedPrompt
         }, {
           responseType: "arraybuffer",
