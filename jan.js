@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => "https://mahmud-api.onrender.com/jan/font3";
+const baseApiUrl = async () => "https://mahmud-jan-api.onrender.com/jan/font3";
 
 async function getBotResponse(message) {
   try {
