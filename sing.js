@@ -13,7 +13,7 @@ module.exports = {
         countDown: 10,
         role: 0,
         category: "music",
-        guide: "{p}sing [query]"
+        guide: "{p}sing mood"
     },
 
     onStart: async function ({ api, event, args, message }) {
