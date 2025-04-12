@@ -99,6 +99,12 @@
       "cmd": "unsplash",
       "author": "MahMUD",
       "update": "07-04-2025"
+  },
+    {
+      "cmd": "flag",
+      "author": "MahMUD",
+      "update": "12-04-2025"
+    
     }
   ]
 }
