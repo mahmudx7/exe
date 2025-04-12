@@ -3,7 +3,7 @@ const axios = require("axios");
 module.exports = {
   config: {
     name: "flag",
-    version: "2.0",
+    version: "1.7",
     author: "MahMUD",
     countDown: 10,
     role: 0,
