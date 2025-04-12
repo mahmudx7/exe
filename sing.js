@@ -52,7 +52,7 @@ module.exports = {
             return message.reply(`❌ Error: ${error.response.data.error || error.message}`);
             }
 
-            message.reply("❌ An error occurred while processing your request.");
+            message.reply("error🥺");
         }
     }
 };
