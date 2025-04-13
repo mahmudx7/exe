@@ -30,7 +30,7 @@ module.exports = {
     }
 
     try {
-      const response = await axios.get(`https://mahmud-time.onrender.com/time/${country}`, {
+      const response = await axios.get(`https://mahmud-time-api.onrender.com/time/${country}`, {
         headers: { "author": module.exports.config.author }
       });
 
