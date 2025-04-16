@@ -104,7 +104,12 @@
       "cmd": "flag",
       "author": "MahMUD",
       "update": "12-04-2025"
-    
+    },
+    {
+      "cmd": "prompt",
+      "author": "MahMUD",
+      "update": "16-04-2025"
+
     }
   ]
 }
