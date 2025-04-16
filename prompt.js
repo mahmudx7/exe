@@ -1,7 +1,9 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => 'https://mahmud-prompt.onrender.com';
-
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.prompt;
+};
 module.exports = {
   config: {
     name: "prompt",
@@ -25,7 +27,7 @@ module.exports = {
     prompt
      }, {
     headers: { "Content-Type": "application/json", "author": module.exports.config.author }
-   });
+    });
 
     return api.sendMessage(response.data.error || response.data.response || "No response", event.threadID, event.messageID);
   } catch (error) {
