@@ -4,6 +4,7 @@ const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
   return base.data.prompt;
 };
+
 module.exports = {
   config: {
     name: "prompt",
@@ -25,16 +26,19 @@ module.exports = {
     const response = await axios.post(apiUrl, {
     imageUrl: event.messageReply.attachments[0].url,
     prompt
-     }, {
+    }, {
     headers: { "Content-Type": "application/json", "author": module.exports.config.author }
     });
+    const reply = response.data.error || response.data.response || "No response";
+    api.sendMessage(reply, event.threadID, event.messageID);
+    return api.setMessageReaction("🪽", event.messageID, () => {}, true);
 
-    return api.sendMessage(response.data.error || response.data.response || "No response", event.threadID, event.messageID);
   } catch (error) {
-    return api.sendMessage("An error occurred. Please try again later.", event.threadID, event.messageID);
+    api.sendMessage("An error occurred. Please try again later.", event.threadID, event.messageID);
+    return api.setMessageReaction("❌", event.messageID, () => {}, true);
+      }
     }
-   }
 
-    return api.sendMessage("Please reply with an image.", event.threadID, event.messageID);
+    api.sendMessage("Please reply with an image.", event.threadID, event.messageID);
   }
 };
