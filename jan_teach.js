@@ -12,7 +12,7 @@ en: "{pn} [message] OR\nteach [trigger] - [response1], [response2]... OR\nremove
 }
 };
 
-const baseApiUrl = "https://mahmud-teach-api.onrender.com/api";
+const baseApiUrl = "https://mahmud-teach-apis.onrender.com/api";
 
 module.exports.onStart = async ({ api, event, args, usersData }) => {
 try {
