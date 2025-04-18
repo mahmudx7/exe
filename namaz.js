@@ -14,7 +14,7 @@ module.exports = {
     countDown: 5,
     role: 0,
     category: "Islamic",
-    guide: "{pn} <city>\n\n- {pn}: <city> Example: {pn} Dhaka"
+    guide: "{pn} <city>\nExample: {pn} Dhaka"
   },
 
   onStart: async function ({ message, args }) {
@@ -26,25 +26,18 @@ module.exports = {
         headers: { "author": module.exports.config.author }
       });
 
-      if (response.data.error) {
-        return message.reply(`❌ ${response.data.error}`);
+      if (response.data?.error) {
+        return message.reply(`${response.data.error}`);
       }
 
-      if (response.data && response.data.message) {
-        message.reply(response.data.message);
-      } else {
-        message.reply(`❌ No prayer times available for ${city}. Please try again later.`);
+      if (response.data?.message) {
+        return message.reply(response.data.message);
       }
+
+      return message.reply(`No prayer times available for ${city}.`);
     } catch (error) {
       console.error(error);
-
-      if (error.response) {
-        return message.reply(`${error.response.data.error || "Unknown error."}`);
-      } else if (error.request) {
-        return message.reply(` No response from API. Please check the API status.`);
-      } else {
-        return message.reply(` Error fetching prayer times. Please try again later.`);
-      }
+      return message.reply("Error fetching prayer times. Please try again later.");
     }
   }
 };
