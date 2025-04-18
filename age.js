@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.age;
+  return base.data.api;
 };
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
 
         try {
             const apiUrl = await baseApiUrl();
-            const response = await axios.get(`${await baseApiUrl()}/age/font3/${inputDate}`);
+            const response = await axios.get(`${apiUrl}/api/age/font3?dob=${inputDate}`);
             const data = response.data;
 
             if (data.error) {
@@ -33,7 +33,6 @@ module.exports = {
             }
 
             return message.reply(data.message);
-
         } catch (error) {
             return message.reply("❌ Error connecting to the age calculator API.");
         }
