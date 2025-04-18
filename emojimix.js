@@ -2,7 +2,7 @@ const axios = require("axios");
  
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.emojimix;
+  return base.data.api;
 };
 
 module.exports = {
@@ -41,7 +41,7 @@ module.exports = {
 
 async function generateEmojimix(emoji1, emoji2) {
    try {
-    const apiUrl = `${await baseApiUrl()}/mix?emoji1=${encodeURIComponent(emoji1)}&emoji2=${encodeURIComponent(emoji2)}`;
+    const apiUrl = `${await baseApiUrl()}/api/emojimix?emoji1=${encodeURIComponent(emoji1)}&emoji2=${encodeURIComponent(emoji2)}`;
     const response = await axios.get(apiUrl, {
     headers: { "Author": module.exports.config.author },
     responseType: "stream"
