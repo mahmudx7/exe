@@ -1,8 +1,8 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-ai.onrender.com';
-  return base;
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.api
 };
 
 module.exports = {
@@ -12,8 +12,6 @@ module.exports = {
     author: "MahMUD",
     countDown: 5,
     role: 0,
-    shortDescription: "AI chatbot",
-    longDescription: "Ask AI anything and get a response using a custom API",
     category: "ai",
     guide: "{pn} <question>"
   },
@@ -24,22 +22,22 @@ module.exports = {
     }
 
     const query = args.join(" ");
-    const apiUrl = `${await baseApiUrl()}/ask`;
+    const apiUrl = `${await baseApiUrl()}/api/ai`;
 
     try {
       const response = await axios.post(
-        apiUrl,
-        { question: query },
+      apiUrl,
+     { question: query },
         {
-          headers: {
-            "Content-Type": "application/json",
-            "author": module.exports.config.author
+      headers: {
+      "Content-Type": "application/json",
+     "author": module.exports.config.author
           }
         }
       );
 
       if (response.data.error) {
-        return api.sendMessage(response.data.error, event.threadID, event.messageID);
+       return api.sendMessage(response.data.error, event.threadID, event.messageID);
       }
 
       api.sendMessage(response.data.response || "Sorry, I couldn't generate a response.", event.threadID, event.messageID);
