@@ -1,8 +1,8 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-say.onrender.com';
-  return base;
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.api
 };
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
 
     try {
       const baseUrl = await baseApiUrl();
-      const response = await axios.get(`${baseUrl}/say`, {
+      const response = await axios.get(`${baseUrl}/api/say`, {
         params: { text },
         headers: { "Author": module.exports.config.author },
         responseType: "stream",
