@@ -2,7 +2,7 @@ const axios = require("axios");
  
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.dp;
+  return base.data.api;
 };
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
 
   onStart: async function ({ message }) {
     try {
-        const response = await axios.get(`${await baseApiUrl()}/dp`, {
+        const response = await axios.get(`${await baseApiUrl()}/api/cdp`, {
         headers: { "author": module.exports.config.author }
       });
 
