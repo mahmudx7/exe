@@ -1,8 +1,8 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = 'https://mahmud-gemini-api.onrender.com';
-  return base;
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.api
 };
 
 module.exports = {
@@ -10,7 +10,6 @@ module.exports = {
     name: "gemini",
     version: "1.7",
     author: "MahMUD",
-    description: "Ask Gemini AI anything",
     countDown: 5,
     role: 0,
     category: "ai",
@@ -20,7 +19,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, args, event }) {
-    const apiUrl = `${await baseApiUrl()}/gemini`;
+    const apiUrl = `${await baseApiUrl()}/api/gemini`;
     const prompt = args.join(" ");
 
     if (!prompt) {
@@ -74,7 +73,7 @@ module.exports = {
   onReply: async function ({ api, args, event, Reply }) {
     if (Reply.author !== event.senderID) return;
 
-    const apiUrl = `${await baseApiUrl()}/gemini`;
+    const apiUrl = `${await baseApiUrl()}/api/gemini`;
     const prompt = args.join(" ");
 
     if (!prompt) return;
