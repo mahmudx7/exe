@@ -1,7 +1,8 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  return 'https://mahmud-namaz.onrender.com';
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.api;
 };
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
 
   onStart: async function ({ message, args }) {
     const city = args.join(" ") || "Dhaka";
-    const apiUrl = `${await baseApiUrl()}/font3/${encodeURIComponent(city)}`;
+    const apiUrl = `${await baseApiUrl()}/api/namaz/font3/${encodeURIComponent(city)}`;
 
     try {
       const response = await axios.get(apiUrl, {
@@ -38,11 +39,11 @@ module.exports = {
       console.error(error);
 
       if (error.response) {
-        return message.reply(`❌ API Error: ${error.response.data.error || "Unknown error."}`);
+        return message.reply(`${error.response.data.error || "Unknown error."}`);
       } else if (error.request) {
-        return message.reply(`❌ No response from API. Please check the API status.`);
+        return message.reply(` No response from API. Please check the API status.`);
       } else {
-        return message.reply(`❌ Error fetching prayer times. Please try again later.`);
+        return message.reply(` Error fetching prayer times. Please try again later.`);
       }
     }
   }
