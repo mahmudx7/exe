@@ -2,6 +2,11 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.api;
+};
+
 module.exports = {
   config: {
     name: "poli",
@@ -32,7 +37,8 @@ module.exports = {
 
       for (let i = 0; i < 4; i++) {
         const enhancedPrompt = `${prompt}, ${styles[i % styles.length]}`;
-        const response = await axios.post("https://mahmud-poli-api.onrender.com/generate", {
+
+        const response = await axios.post(`${await baseApiUrl()}/api/poli/generate`, {
           prompt: enhancedPrompt
         }, {
           responseType: "arraybuffer",
@@ -40,10 +46,6 @@ module.exports = {
             "author": module.exports.config.author
           }
         });
-
-        if (response.data.error) {
-          return message.reply(`❌ | ${response.data.error}`);
-        }
 
         const filePath = path.join(cacheDir, `generated_${Date.now()}_${i}.png`);
         fs.writeFileSync(filePath, response.data);
