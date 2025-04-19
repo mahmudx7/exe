@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => (await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json")).data.api;
+const baseApiUrl = async () => (await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json")).data.mahmud;
 
 module.exports.config = {
   name: "style",
