@@ -22,7 +22,7 @@ module.exports = {
     try {
       const baseUrl = await baseApiUrl();
 
-      const response = await axios.get(`${baseUrl}/time/${country}`, {
+      const response = await axios.get(`${baseUrl}/api/time/${country}`, {
       headers: { "author": module.exports.config.author }
       });
 
