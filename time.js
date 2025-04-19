@@ -10,8 +10,9 @@ module.exports = {
     name: "time",
     version: "1.7",
     author: "MahMUD",
-    countDown: 5,
+    countDown: 2,
     role: 0,
+    longDescription: "Fetch the current time in different countries.",
     category: "utility",
     guide: "{pn} [country] | {pn} list\n\nExamples:\n{pn} bangladesh\n{pn} london\n{pn} list"
   },
@@ -19,18 +20,28 @@ module.exports = {
   onStart: async function ({ message, args }) {
     const country = args[0]?.toLowerCase() || "bangladesh";
 
-    try {
-      const baseUrl = await baseApiUrl();
+   try {
+    const baseUrl = await baseApiUrl();
 
-      const response = await axios.get(`${baseUrl}/api/time/${country}`, {
+    if (country === "list") {
+    const listRes = await axios.get(`${baseUrl}/api/time/list`, {
+    headers: { "author": module.exports.config.author }
+        });
+
+     return listRes.data.message
+   ? message.reply(listRes.data.message)
+   : message.reply("⚠️ Unable to fetch country list.");
+    }
+
+      const timeRes = await axios.get(`${baseUrl}/api/time/${country}`, {
       headers: { "author": module.exports.config.author }
-      });
+    });
 
-      return response.data.message
-     ? message.reply(response.data.message)
-     : message.reply("⚠️ Unable to fetch time.");
+      return timeRes.data.message
+    ? message.reply(timeRes.data.message)
+    : message.reply("⚠️ Unable to fetch time.");
     } catch (error) {
-      return message.reply("An error occurred. Please try again later.");
+      return message.reply("⚠️ An error occurred. Please try again later.");
     }
   }
 };
