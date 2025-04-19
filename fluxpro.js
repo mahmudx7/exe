@@ -12,7 +12,7 @@ module.exports = {
     author: "MahMUD",
     countDown: 10,
     role: 0,
-    category: "ai",
+    category: "Image gen",
     guide: "{pn} [prompt]"
   },
 
@@ -30,10 +30,12 @@ module.exports = {
 
       const imageStream = await global.utils.getStreamFromURL(res.data.imageUrl);
 
-      return api.sendMessage({
+      const message = await api.sendMessage({
         body: "✅ Here is your generated image",
         attachment: imageStream
       }, event.threadID, event.messageID);
+
+      api.setMessageReaction("🪽", message.messageID, () => {}, true);
 
     } catch (err) {
       return api.sendMessage("An error occurred while generating the image.", event.threadID, event.messageID);
