@@ -1,45 +1,39 @@
 const axios = require("axios");
 
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.mahmud;
+};
 module.exports = {
   config: {
     name: "animeinfo",
     aliases: ["aniinfo"],
-    version: "1.7",
+    version: "1.0",
     category: "anime",
-    description: "Fetches detailed information about an anime.",
-    usage: "animeinfo <anime name>",
+    description: "Anime info fetcher",
+    usage: "af <anime name>",
     cooldown: 5,
     author: "MahMUD"
   },
 
-  onStart: async function ({ api, event, args }) {  
-    if (!args.length) {
-      return api.sendMessage("⚠️ Please provide an anime name!", event.threadID, event.messageID);
-    }
-
-    const query = encodeURIComponent(args.join(" "));
-    const url = `https://mahmud-animeinfo.onrender.com/animeinfo?animeName=${query}`;
+  onStart: async function ({ api, event, args }) {
+    if (!args[0]) return api.sendMessage("⚠️ Please a Enter anime name", event.threadID, event.messageID);
 
     try {
-      const response = await axios.get(url);
-      const animeInfo = response.data;
+      const url = `${await baseApiUrl()}/api/animeinfo?animeName=${encodeURIComponent(args.join(" "))}`;
+      const res = await axios.get(url);
+      const { formatted_message, data } = res.data;
 
-      if (!animeInfo || !animeInfo.data) {
-        return api.sendMessage("❌ Anime not found!", event.threadID, event.messageID);
-      }
+      if (!res.data || !data) return api.sendMessage("❌ Not found", event.threadID, event.messageID);
 
-      const { formatted_message, data } = animeInfo;
-      
-      const message = {
+      api.sendMessage({
         body: formatted_message,
         attachment: await global.utils.getStreamFromURL(data.image_url)
-      };
+      }, event.threadID, event.messageID);
 
-      api.sendMessage(message, event.threadID, event.messageID);
-      
-    } catch (error) {
-      console.error(error);
-      api.sendMessage("⚠️ Error fetching anime information. Try again later!", event.threadID, event.messageID);
+    } catch (e) {
+      console.error(e);
+      api.sendMessage("🥹error fetching info", event.threadID, event.messageID);
     }
   }
 };
