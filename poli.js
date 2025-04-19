@@ -4,7 +4,7 @@ const path = require("path");
 
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.api;
+  return base.data.mahmud;
 };
 
 module.exports = {
