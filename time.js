@@ -12,7 +12,6 @@ module.exports = {
     author: "MahMUD",
     countDown: 2,
     role: 0,
-    longDescription: "Fetch the current time in different countries.",
     category: "utility",
     guide: "{pn} [country] | {pn} list\n\nExamples:\n{pn} bangladesh\n{pn} london\n{pn} list"
   },
