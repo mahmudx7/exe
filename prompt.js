@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.prompt;
+  return base.data.mahmud;
 };
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   onStart: async function ({ api, args, event }) {
-    const apiUrl = `${await baseApiUrl()}/prompt`;
+    const apiUrl = `${await baseApiUrl()}/api/prompt`;
     let prompt = args.join(" ") || "Describe this image";
 
     if (event.type === "message_reply" && event.messageReply.attachments[0]?.type === "photo") {
