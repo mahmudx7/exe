@@ -109,6 +109,12 @@
       "cmd": "prompt",
       "author": "MahMUD",
       "update": "16-04-2025"
+},
+    {
+      "cmd": "fluxpro",
+      "author": "MahMUD",
+      "update": "19-04-2025"
+
 
     }
   ]
