@@ -2,7 +2,7 @@ onst axios = require("axios");
 
  const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.api + "/api/jan";
+  return base.data.mahmud + "/api/jan";
 };
 
 module.exports.config = {
