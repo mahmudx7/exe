@@ -1,5 +1,10 @@
 const axios = require("axios");
 
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.mahmud;
+};
+
 module.exports = {
   config: {
     name: "flag",
@@ -15,7 +20,7 @@ module.exports = {
 
   onReply: async function ({ api, event, Reply, usersData }) {
     const { flag, author } = Reply;
-    const getCoin = 1000;
+    const getCoin = 500;
     const getExp = 121;
     const userData = await usersData.get(event.senderID);
 
@@ -32,13 +37,13 @@ module.exports = {
       await usersData.set(event.senderID, userData);
 
       api.sendMessage(
-        `🎉 | Correct answer.\nYou have earned ${getCoin} coins and ${getExp} exp.`,
+        `🎉 | Correct answe baby.\nYou have earned ${getCoin} coins and ${getExp} exp.`,
         event.threadID,
         event.messageID
       );
     } else {
       api.sendMessage(
-        `🥺 | Wrong Answer!\nCorrect answer was: ${flag}`,
+        `🥺 | Wrong Answer baby\nCorrect answer was: ${flag}`,
         event.threadID,
         event.messageID
       );
@@ -47,9 +52,8 @@ module.exports = {
 
   onStart: async function ({ api, event }) {
     try {
-      const response = await axios({
-        method: "GET",
-        url: "https://mahmud-flag-api.onrender.com/api/random-flag",
+      const apiUrl = await baseApiUrl();
+      const response = await axios.get(`${apiUrl}/api/flag`, {
         responseType: "json",
         headers: {
           'User-Agent': 'Mozilla/5.0'
