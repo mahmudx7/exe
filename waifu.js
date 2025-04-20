@@ -7,7 +7,8 @@ const baseApiUrl = async () => {
 
 module.exports = {
   config: {
-    name: "waifu",
+    name: "waifugame",
+    aliases: ["waifu"],
     version: "1.7",
     author: "MahMUD",
     countDown: 10,
