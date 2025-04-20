@@ -7,7 +7,8 @@ const baseApiUrl = async () => {
 
 module.exports = {
   config: {
-    name: "flag",
+    name: "flaggame",
+    aliases:["flag"],
     version: "1.7",
     author: "MahMUD",
     countDown: 10,
