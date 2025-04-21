@@ -125,6 +125,11 @@
       "cmd": "fluxpro",
       "author": "MahMUD",
       "update": "19-04-2025"
+    },
+    {
+      "cmd": "gpt",
+      "author": "MahMUD",
+      "update": "20-04-2025"
 
     }
   ]
