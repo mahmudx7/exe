@@ -1,11 +1,14 @@
 const axios = require("axios");
-
-const baseApiUrl = async () => "https://mahmud-jan-apis.onrender.com/jan/font3";
+ 
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.jan;
+};
 
 async function getBotResponse(message) {
   try {
     const base = await baseApiUrl();
-    const response = await axios.get(`${base}/${encodeURIComponent(message)}`);
+    const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(message)}`);
     return response.data?.message || "try Again";
   } catch (error) {
     console.error("API Error:", error.message || error);
@@ -25,6 +28,7 @@ module.exports = {
   },
 
   onStart: async function () {},
+
   onReply: async function ({ api, event }) {
     if (event.type === "message_reply") {
       let message = event.body.toLowerCase() || "opp2";
@@ -60,23 +64,25 @@ module.exports = {
       "𝗜 𝗵𝗮𝘁𝗲 𝘆𝗼𝘂__😏😏",
     ];
 
+    const mahmuds = ["jan", "jaan", "জান", "hinata"];
     let message = event.body ? event.body.toLowerCase() : "";
     const words = message.split(" ");
     const wordCount = words.length;
 
-    if (event.type !== "message_reply" && message.startsWith("jan")) {
-      api.setMessageReaction("😍", event.messageID, () => {}, true);
+    if (event.type !== "message_reply" && mahmuds.some(mahmud => message.startsWith(mahmud))) {
+      api.setMessageReaction("🪽", event.messageID, () => {}, true);
       api.sendTypingIndicator(event.threadID, true);
 
       if (wordCount === 1) {
-        api.sendMessage({ body: responses[Math.floor(Math.random() * responses.length)] }, event.threadID, (err, info) => {
+        const randomMsg = responses[Math.floor(Math.random() * responses.length)];
+        api.sendMessage({ body: randomMsg }, event.threadID, (err, info) => {
           if (!err) {
             global.GoatBot.onReply.set(info.messageID, {
               commandName: "bot2",
               type: "reply",
               messageID: info.messageID,
               author: event.senderID,
-              link: responses[Math.floor(Math.random() * responses.length)],
+              link: randomMsg,
             });
           }
         }, event.messageID);
