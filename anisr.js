@@ -1,57 +1,50 @@
 const axios = require('axios');
 
 module.exports = {
-    config: {
+  config: {
     name: "anisr",
-    aliases: ["tiksr", "tiktoksr"],
-    author: "MahMUD",
+    aliases: ["tiksr", "animesr"],
     version: "1.7",
-    category: "meida",
-    guide: { en: "{p}{n} [query]" },
+    author: "MahMUD",
+    countDown: 10,
+    role: 0,
+    category: "anime",
+    guide: {
+      en: "{pn} <anime name>"
+    }
   },
+
   onStart: async function ({ api, event, args }) {
-    async function fetchTikTokVideos(query) {
+    if (!args[0]) {
+      return api.sendMessage("❌ | Please provide an anime name to search.", event.threadID, event.messageID);
+    }
+
+    const query = args.join(" ");
+
     try {
-    const response = await axios.post(
-   'https://mahmud-anisr-api.onrender.com/api/anisr/vid', 
-    { query },
-    { headers: { "author": module.exports.config.author } }
-     );
-    return response.data; 
-  } catch (error) {
-    console.error('Error🥹', error);
-    return null;
+      const response = await axios.post("https://mahmud-exe-apis.onrender.com/api/anisr", { query }, {
+        headers: { 
+          "Content-Type": "application/json",
+          "author": module.exports.config.author
+        }
+      });
+
+      const { title, videoUrl } = response.data;
+
+      if (!videoUrl) {
+        throw new Error("Video URL not found in API response.");
       }
+
+      const msg = {
+        body: `✅ | 𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐯𝐢𝐝𝐞𝐨`,
+        attachment: await global.utils.getStreamFromURL(videoUrl)
+      };
+
+      api.sendMessage(msg, event.threadID, event.messageID);
+
+    } catch (error) {
+      console.error("error:", error?.response?.data || error.message);
+      api.sendMessage("❌ | Failed to fetch anime video. Try again later.", event.threadID, event.messageID);
     }
-
-    api.setMessageReaction("😘", event.messageID, () => {}, true);
-    const query = args.join(' ');
-
-    if (!query) {
-    api.sendMessage({ body: "Please provide a search query." }, event.threadID, event.messageID);
-    return;
-    }
-
-    const modifiedQuery = `${query} anime edit`;
-    const response = await fetchTikTokVideos(modifiedQuery);
-
-    if (!response || !response.videoUrl) {
-    api.sendMessage({ body: `No video found for query: ${query}.` }, event.threadID, event.messageID);
-    return;
-    }
-
-    const title = response.title || "No title available";
-    const videoUrl = response.videoUrl;
-
-    try {
-    const videoStream = await axios.get(videoUrl, { responseType: 'stream' });
-    api.sendMessage({
-    body: `𝐍𝐚𝐰 𝐛𝐚𝐛𝐲 𝐞𝐝𝐢𝐭𝐳 𝐯𝐢𝐝𝐞𝐨 <😘`,
-    attachment: videoStream.data,
-    }, event.threadID, event.messageID);
-   } catch (error) {
-    console.error(error);
-    api.sendMessage({ body: 'error Please try again later.' }, event.threadID, event.messageID);
-    }
-  },
+  }
 };
