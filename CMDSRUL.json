@@ -106,6 +106,12 @@
       "update": "12-04-2025"  
     },
     {
+      "cmd": "quiz",
+      "author": "MahMUD",
+      "update": "27-04-2025"
+
+    },
+    {
       "cmd": "waifu",
       "author": "MahMUD",
       "update": "20-04-2025"
