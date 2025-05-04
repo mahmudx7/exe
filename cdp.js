@@ -20,7 +20,7 @@ module.exports = {
 
   onStart: async function ({ message }) {
     try {
-        const response = await axios.get(`${await baseApiUrl()}/api/cdp`, {
+        const response = await axios.get(`${await baseApiUrl()}/api/cdp2`, {
         headers: { "author": module.exports.config.author }
       });
 
