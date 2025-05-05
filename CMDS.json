@@ -4,7 +4,6 @@
   "font": "https://raw.githubusercontent.com/mahmudx7/exe/main/font.js",
   "namaz": "https://raw.githubusercontent.com/mahmudx7/exe/main/namaz.js",
   "age": "https://raw.githubusercontent.com/mahmudx7/exe/main/age.js",
-  "birthday": "https://raw.githubusercontent.com/mahmudx7/exe/main/birthday.js",
   "album": "https://raw.githubusercontent.com/mahmudx7/exe/main/album.js",
   "emojimix": "https://raw.githubusercontent.com/mahmudx7/exe/main/emojimix.js",
   "cdp": "https://raw.githubusercontent.com/mahmudx7/exe/main/cdp.js",
@@ -13,6 +12,7 @@
   "animeinfo": "https://raw.githubusercontent.com/mahmudx7/exe/main/animeinfo.js",
   "say": "https://raw.githubusercontent.com/mahmudx7/exe/main/say.js",
 "gemini": "https://raw.githubusercontent.com/mahmudx7/exe/main/gemini.js",
+"gpt": "https://raw.githubusercontent.com/mahmudx7/exe/main/gpt.js",
 "ai": "https://raw.githubusercontent.com/mahmudx7/exe/main/ai.js", 
 "anisr": "https://raw.githubusercontent.com/mahmudx7/exe/main/anisr.js",  
 "time": "https://raw.githubusercontent.com/mahmudx7/exe/main/time.js",
@@ -26,6 +26,7 @@
 "prompt": "https://raw.githubusercontent.com/mahmudx7/exe/main/prompt.js",
 "fluxpro": "https://raw.githubusercontent.com/mahmudx7/exe/main/fluxpro.js",
 "xlnub": "https://raw.githubusercontent.com/mahmudx7/exe/main/xlnub.js",
-"gpt": "https://raw.githubusercontent.com/mahmudx7/exe/main/gpt.js"
-
+  "birthday": "https://raw.githubusercontent.com/mahmudx7/exe/main/birthday.js",   
+ "meme": "https://raw.githubusercontent.com/mahmudx7/exe/main/meme.js"
+ 
 }
