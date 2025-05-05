@@ -148,6 +148,12 @@
       "cmd": "meme",
       "author": "MahMUD",
       "update": "05-05-2025"
+},
+    {
+
+      "cmd": "inbox",
+      "author": "MahMUD",
+      "update": "05-05-2025"
 
     }
   ]
