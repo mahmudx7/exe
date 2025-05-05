@@ -142,6 +142,12 @@
       "cmd": "gpt",
       "author": "MahMUD",
       "update": "20-04-2025"
+    },
+    {
+
+      "cmd": "meme",
+      "author": "MahMUD",
+      "update": "05-05-2025"
 
     }
   ]
