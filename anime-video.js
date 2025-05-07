@@ -2,12 +2,15 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 
-const mahmud = async () => (await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json")).data.album;
+const mahmud = async () => {
+  const response = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return response.data.album;
+};
 
 module.exports = {
   config: {
-    name: "animevideo",
-    
+    name: "anime",
+    aliases: ["anivid", "animevideo"],
     version: "1.7",
     role: 0,
     author: "MahMUD",
@@ -17,7 +20,7 @@ module.exports = {
     }
   },
 
-  onStart: async function ({ api, event, message }) {
+  onStart: async function ({ api, event, message, args }) {
     try {
       const loadingMessage = await message.reply({
         body: "𝗟𝗼𝗮𝗱𝗶𝗻𝗴 𝗿𝗮𝗻𝗱𝗼𝗺 𝗮𝗻𝗶𝗺𝗲 𝘃𝗶𝗱𝗲𝗼...𝘄𝗮𝗶𝘁 𝗯𝗮𝗯𝘆 🐤",
@@ -60,7 +63,8 @@ module.exports = {
       writer.on("error", () => {
         api.sendMessage("❌ | Download error.", event.threadID, event.messageID);
       });
-    } catch {
+    } catch (e) {
+      console.error("ERROR:", e);
       api.sendMessage("❌ | Failed to fetch or send video.", event.threadID, event.messageID);
     }
   }
