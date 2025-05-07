@@ -154,6 +154,12 @@
       "cmd": "inbox",
       "author": "MahMUD",
       "update": "05-05-2025"
+},
+    {
+
+      "cmd": "caption",
+      "author": "MahMUD",
+      "update": "07-05-2025"
 
     }
   ]
