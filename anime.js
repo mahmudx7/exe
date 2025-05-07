@@ -16,12 +16,28 @@ module.exports = {
     author: "MahMUD",
     category: "media",
     guide: {
-      en: "Use {pn} to get a random anime video."
+      en: "Use {pn} to get a random anime video or {pn} list to see total anime count."
     }
   },
 
   onStart: async function ({ api, event, message, args }) {
     try {
+      if (args[0] === "list") {
+        const apiUrl = await mahmud();
+        const response = await axios.get(`${apiUrl}/album/list`);
+        const lines = response.data.message.split("\n");
+        const animeCategories = lines.filter(line =>
+          /anime/i.test(line) && !/hanime/i.test(line) && !/Total\s*anime/i.test(line)
+        );
+
+        if (animeCategories.length === 0) {
+          return api.sendMessage("❌ | No anime categories found.", event.threadID, event.messageID);
+        }
+
+        const body = `${animeCategories.join("\n")}`;
+        return api.sendMessage(body, event.threadID, event.messageID);
+      }
+
       const loadingMessage = await message.reply({
         body: "𝗟𝗼𝗮𝗱𝗶𝗻𝗴 𝗿𝗮𝗻𝗱𝗼𝗺 𝗮𝗻𝗶𝗺𝗲 𝘃𝗶𝗱𝗲𝗼...𝘄𝗮𝗶𝘁 𝗯𝗮𝗯𝘆 🐤",
       });
