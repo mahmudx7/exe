@@ -160,6 +160,12 @@
       "cmd": "caption",
       "author": "MahMUD",
       "update": "07-05-2025"
+},
+    {
+
+      "cmd": "anime",
+      "author": "MahMUD",
+      "update": "08-05-2025"
 
     }
   ]
