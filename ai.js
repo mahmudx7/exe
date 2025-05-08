@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => {
+const mahmud = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.mahmud
+  return base.data.mahmud;
 };
 
 module.exports = {
@@ -22,22 +22,22 @@ module.exports = {
     }
 
     const query = args.join(" ");
-    const apiUrl = `${await baseApiUrl()}/api/ai`;
+    const apiUrl = `${await mahmud()}/api/ai`;
 
     try {
       const response = await axios.post(
-      apiUrl,
-     { question: query },
+        apiUrl,
+        { question: query },
         {
-      headers: {
-      "Content-Type": "application/json",
-     "author": module.exports.config.author
+          headers: {
+            "Content-Type": "application/json",
+            "author": module.exports.config.author
           }
         }
       );
 
       if (response.data.error) {
-       return api.sendMessage(response.data.error, event.threadID, event.messageID);
+        return api.sendMessage(response.data.error, event.threadID, event.messageID);
       }
 
       api.sendMessage(response.data.response || "Sorry, I couldn't generate a response.", event.threadID, event.messageID);
