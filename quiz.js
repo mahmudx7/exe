@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => {
+const mahmud = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
   return base.data.mahmud;
 };
@@ -24,7 +24,7 @@ module.exports = {
       const input = args.join("").toLowerCase() || "bn";
       const category = input === "en" || input === "english" ? "english" : "bangla";
 
-      const apiUrl = await baseApiUrl();
+      const apiUrl = await mahmud();
       const res = await axios.get(`${apiUrl}/api/quiz?category=${category}`);
       const quiz = res.data;
 
