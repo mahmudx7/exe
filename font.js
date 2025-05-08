@@ -1,8 +1,8 @@
 const axios = require("axios");
 
-const baseApiUrl = async () => {
+const mahmud = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.mahmud
+  return base.data.mahmud;
 };
 
 module.exports.config = {
@@ -17,26 +17,26 @@ module.exports.config = {
 };
 
 module.exports.onStart = async function ({ message, args }) {
-  const apiUrl = await baseApiUrl();
+  const apiUrl = await mahmud();
 
   if (args[0] === "list") {
     try {
-   const fontList = (await axios.get(`${apiUrl}/api/font/list`)).data.replace("Available Font Styles:", "").trim();
-   return fontList ? message.reply(`Available Font Styles:\n${fontList}`) : message.reply("No font styles found.");
- } catch {
-   return message.reply("Error fetching font styles.");
+      const fontList = (await axios.get(`${apiUrl}/api/font/list`)).data.replace("Available Font Styles:", "").trim();
+      return fontList ? message.reply(`Available Font Styles:\n${fontList}`) : message.reply("No font styles found.");
+    } catch {
+      return message.reply("Error fetching font styles.");
     }
   }
 
-    const [number, ...textParts] = args;
-    const text = textParts.join(" ");
-    if (!text || isNaN(number)) return message.reply("Invalid usage. Format: style <number> <text>");
+  const [number, ...textParts] = args;
+  const text = textParts.join(" ");
+  if (!text || isNaN(number)) return message.reply("Invalid usage. Format: style <number> <text>");
 
   try {
     const { data: { data: fontData } } = await axios.post(`${apiUrl}/api/font`, { number, text });
     const fontStyle = fontData[number];
     const convertedText = text.split("").map(char => fontStyle[char] || char).join("");
-    return convertedText ? message.reply(convertedText) : message.reply("Error converting text.");
+    return message.reply(convertedText);
   } catch {
     return message.reply("Error processing your request.");
   }
