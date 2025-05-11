@@ -18,7 +18,7 @@ module.exports = {
 
   onStart: async function ({ api, event, args }) {
     if (!args.length) {
-      return api.sendMessage("Please provide a question!", event.threadID, event.messageID);
+      return api.sendMessage("Please provide a question", event.threadID, event.messageID);
     }
 
     const query = args.join(" ");
