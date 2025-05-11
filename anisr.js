@@ -22,7 +22,7 @@ module.exports = {
     const query = args.join(" ");
 
     try {
-      const response = await axios.post("https://mahmud-exe-apis.onrender.com/api/anisr", { query }, {
+      const response = await axios.post("https://mahmud-global-apis.onrender.com/api/anisr", { query }, {
         headers: { 
           "Content-Type": "application/json",
           "author": module.exports.config.author
