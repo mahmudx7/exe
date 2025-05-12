@@ -8,7 +8,7 @@ const mahmud = async () => {
 module.exports = {
   config: {
     name: "profile",
-    aliases: ["pfp", "pp"],
+    aliases: ["pp","dp", "pfp"],
     version: "1.7",
     author: "MahMUD",
     role: 0,
