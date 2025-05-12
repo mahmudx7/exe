@@ -172,6 +172,12 @@
       "cmd": "removebg",
       "author": "MahMUD",
       "update": "13-05-2025"
+},
+    {
+
+      "cmd": "profile",
+      "author": "MahMUD",
+      "update": "13-05-2025"
 
     }
   ]
