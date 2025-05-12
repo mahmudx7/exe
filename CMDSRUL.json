@@ -166,6 +166,12 @@
       "cmd": "anime",
       "author": "MahMUD",
       "update": "08-05-2025"
+},
+    {
+
+      "cmd": "removebg",
+      "author": "MahMUD",
+      "update": "13-05-2025"
 
     }
   ]
