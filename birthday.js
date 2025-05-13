@@ -1,3 +1,10 @@
+const axios = require("axios");
+
+const mahmhd = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.mahmud;
+};
+
 module.exports = {
   config: {
     name: "birthday",
@@ -17,9 +24,13 @@ module.exports = {
     }
 
     const taggedUserName = event.mentions[mention[0]].replace('@', '');
+
     try {
-      const response = await fetch(`https://mahmud-wish.onrender.com/wish/font3?taggedUserName=${taggedUserName}`);
-      const data = await response.json();
+      const baseApi = await mahmhd();
+      const apiUrl = `${baseApi}/api/wish/font3?taggedUserName=${encodeURIComponent(taggedUserName)}`;
+      const response = await axios.get(apiUrl);
+      const data = response.data;
+
       if (data.status === "success") {
         api.sendMessage(data.response, event.threadID, event.messageID);
       } else {
