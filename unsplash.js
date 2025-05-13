@@ -2,7 +2,7 @@ const axios = require("axios");
 const path = require("path");
 const fs = require("fs");
 
-const baseApiUrl = async () => {
+const mahmud = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
   return base.data.mahmud;
 };
@@ -25,7 +25,7 @@ module.exports = {
       const [query, number] = input.split("-").map(x => x.trim());
       const limit = Math.min(20, parseInt(number) || 6);
 
-      const apiBase = await baseApiUrl();
+      const apiBase = await mahmud();
       const apiUrl = `${apiBase}/api/unsplash?query=${encodeURIComponent(query)}&number=${limit}`;
 
       const { data } = await axios.get(apiUrl, {
