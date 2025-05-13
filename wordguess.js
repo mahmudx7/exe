@@ -21,7 +21,7 @@ module.exports = {
 
   onStart: async function ({ message, event, commandName }) {
     try {
-      const apiUrl = await baseApiUrl();  // Get the API URL dynamically
+      const apiUrl = await baseApiUrl();  
       const response = await axios.get(`${apiUrl}/api/word/random`);
       const randomWord = response.data.word;
       const shuffledWord = shuffleWord(randomWord);
