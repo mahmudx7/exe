@@ -4,7 +4,7 @@ const path = require("path");
 
 const mahmud = async () => {
   const response = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return response.data.album;
+  return response.data.mahmud;
 };
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
     try {
       if (args[0] === "list") {
         const apiUrl = await mahmud();
-        const response = await axios.get(`${apiUrl}/album/list`);
+        const response = await axios.get(`${apiUrl}/api/album/list`);
         const lines = response.data.message.split("\n");
         const animeCategories = lines.filter(line =>
           /anime/i.test(line) && !/hanime/i.test(line) && !/Total\s*anime/i.test(line)
@@ -35,14 +35,14 @@ module.exports = {
         return api.sendMessage(animeCategories.join("\n"), event.threadID, event.messageID);
       }
 
-      const loadingMessage = await message.reply("𝗟𝗼𝗮𝗱𝗶𝗻𝗴 𝗿𝗮𝗻𝗱𝗼𝗺 𝗮𝗻𝗶𝗺𝗲 𝘃𝗶𝗱𝗲𝗼...");
+      const loadingMessage = await message.reply("🐤 | 𝗟𝗼𝗮𝗱𝗶𝗻𝗴 𝗿𝗮𝗻𝗱𝗼𝗺 𝗮𝗻𝗶𝗺𝗲 𝘃𝗶𝗱𝗲𝗼...𝗣𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁..!!");
 
       setTimeout(() => {
         api.unsendMessage(loadingMessage.messageID);
       }, 5000);
 
       const apiUrl = await mahmud();
-      const res = await axios.get(`${apiUrl}/videos/anime?userID=${event.senderID}`);
+      const res = await axios.get(`${apiUrl}/api/album/videos/anime?userID=${event.senderID}`);
       if (!res.data.success || !res.data.videos.length)
         return api.sendMessage("❌ | No videos found.", event.threadID, event.messageID);
 
