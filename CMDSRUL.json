@@ -190,6 +190,12 @@
       "cmd": "cat-image",
       "author": "MahMUD",
       "update": "17-05-2025"
+},
+    {
+
+      "cmd": "cat-video",
+      "author": "MahMUD",
+      "update": "17-05-2025"
 
     }
   ]
