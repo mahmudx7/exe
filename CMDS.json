@@ -1,6 +1,6 @@
 {
   "jan": "https://raw.githubusercontent.com/mahmudx7/exe/main/jan.js",
-  "jan_teach": "https://raw.githubusercontent.com/mahmudx7/exe/main/jan_teach.js",
+  "jan-teach": "https://raw.githubusercontent.com/mahmudx7/exe/main/jan-teach.js",
   "font": "https://raw.githubusercontent.com/mahmudx7/exe/main/font.js",
   "namaz": "https://raw.githubusercontent.com/mahmudx7/exe/main/namaz.js",
   "age": "https://raw.githubusercontent.com/mahmudx7/exe/main/age.js",
@@ -34,6 +34,6 @@
  "removebg": "https://raw.githubusercontent.com/mahmudx7/exe/main/removebg.js",
   "profile": "https://raw.githubusercontent.com/mahmudx7/exe/main/profile.js",
  "ffvideo": "https://raw.githubusercontent.com/mahmudx7/exe/main/ffvideo.js",
-  "cat-image": "https://raw.githubusercontent.com/mahmudx7/exe/main/cat-image.js"
- 
+  "cat-image": "https://raw.githubusercontent.com/mahmudx7/exe/main/cat-image.js",
+ "cat-video": "https://raw.githubusercontent.com/mahmudx7/exe/main/cat-video.js"
 }
