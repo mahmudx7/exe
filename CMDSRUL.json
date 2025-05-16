@@ -184,6 +184,12 @@
       "cmd": "ffvideo",
       "author": "MahMUD",
       "update": "14-05-2025"
+},
+    {
+
+      "cmd": "cat-image",
+      "author": "MahMUD",
+      "update": "17-05-2025"
 
     }
   ]
