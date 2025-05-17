@@ -196,7 +196,12 @@
       "cmd": "cat-video",
       "author": "MahMUD",
       "update": "17-05-2025"
+},
+    {
 
+      "cmd": "uptime",
+      "author": "MahMUD",
+      "update": "17-05-2025"
     }
   ]
 }
