@@ -202,6 +202,13 @@
       "cmd": "uptime",
       "author": "MahMUD",
       "update": "17-05-2025"
+ },
+    {
+
+      "cmd": "sing2",
+      "author": "MahMUD",
+      "update": "19-05-2025"
+
     }
   ]
 }
