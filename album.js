@@ -4,7 +4,7 @@ const path = require("path");
 
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.album;
+  return base.data.mahmud;
 };
 
 module.exports = { 
@@ -52,7 +52,7 @@ module.exports = {
       if (!imgurLink) throw new Error("Imgur upload failed");
 
       try {
-      const uploadResponse = await axios.post(`${apiUrl}/album/add`, {
+      const uploadResponse = await axios.post(`${apiUrl}/api/album/add`, {
       category,
       videoUrl: imgurLink,
       });
@@ -85,7 +85,7 @@ module.exports = {
 
     } else if (args[0] === "list") {
       try {
-      const response = await axios.get(`${apiUrl}/album/list`);
+      const response = await axios.get(`${apiUrl}/api/album/list`);
       api.sendMessage(response.data.message, event.threadID, event.messageID);
      } catch (error) {
       api.sendMessage(`❌ Error: ${error.message}`, event.threadID, event.messageID);
@@ -190,7 +190,7 @@ module.exports = {
 
     try {
     const apiUrl = await baseApiUrl();
-    const response = await axios.get(`${apiUrl}/videos/${category}?userID=${userID}`);
+    const response = await axios.get(`${apiUrl}/api/album/videos/${category}?userID=${userID}`);
 
     if (!response.data.success) {
     return api.sendMessage(response.data.message, event.threadID, event.messageID);
