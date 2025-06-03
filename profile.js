@@ -8,7 +8,7 @@ const mahmud = async () => {
 module.exports = {
   config: {
     name: "profile",
-    aliases: ["pp","dp", "pfp"],
+    aliases: ["pp", "dp", "pfp"],
     version: "1.7",
     author: "MahMUD",
     role: 0,
@@ -34,10 +34,11 @@ module.exports = {
     try {
       const facebookUrl = args.find(arg => arg.includes("facebook.com"));
       if (facebookUrl) {
-        if (facebookUrl.includes("profile.php?id=")) {
-          uid = facebookUrl.split("profile.php?id=")[1].split("&")[0];
+        const match = facebookUrl.match(/facebook\.com\/(?:profile\.php\?id=)?(\d{5,})/);
+        if (match) {
+          uid = match[1];
         } else {
-          return message.reply("Username URLs are not supported yet. Use profile.php?id= format.");
+          return message.reply("❌ Could not extract user ID from the Facebook URL. Only numeric ID links are supported.");
         }
       }
 
@@ -49,8 +50,8 @@ module.exports = {
         body: "😘 𝐇𝐞𝐫𝐞 𝐢𝐬 𝐭𝐡𝐞 𝐩𝐫𝐨𝐟𝐢𝐥𝐞 𝐢𝐦𝐚𝐠𝐞",
         attachment: avatarStream
       });
-    } catch {
-      message.reply("Failed to fetch the profile image. Please check the input and try again.");
+    } catch (e) {
+      message.reply("❌ Failed to fetch the profile image. Please check the input and try again.");
     }
   }
 };
