@@ -105,7 +105,7 @@ module.exports = {
       );
     } catch (error) {
       console.error("Error:", error.message);
-      api.sendMessage("Failed to start cricket game.", event.threadID, event.messageID);
+      api.sendMessage("🥹error, contact MahMUD.", event.threadID, event.messageID);
     }
   }
 };
