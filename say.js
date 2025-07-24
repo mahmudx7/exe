@@ -36,7 +36,7 @@ module.exports = {
       });
 
       if (response.data.error) {
-        return message.reply(`❌ Error: ${response.data.error}`);
+        return message.reply(`${response.data.error}`);
       }
 
       message.reply({
@@ -46,7 +46,7 @@ module.exports = {
 
     } catch (e) {
       console.error("API Error:", e.response ? e.response.data : e.message);
-      message.reply("🐥 দুঃখিত, কিছু একটা সমস্যা হয়েছে!\n\nfix Author name\n" + (e.response?.data?.error || e.message));
+      message.reply("🥹error, contact MahMUD.\n" + (e.response?.data?.error || e.message));
     }
   },
 };
