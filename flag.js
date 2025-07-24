@@ -8,7 +8,7 @@ const baseApiUrl = async () => {
 module.exports = {
   config: {
     name: "flaggame",
-    aliases:["flag"],
+    aliases: ["flag"],
     version: "1.7",
     author: "MahMUD",
     countDown: 10,
@@ -20,13 +20,18 @@ module.exports = {
   },
 
   onReply: async function ({ api, event, Reply, usersData }) {
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("❌ You are not authorized to change the author name.", event.threadID, event.messageID);
+    }
+
     const { flag, author } = Reply;
     const getCoin = 500;
     const getExp = 121;
     const userData = await usersData.get(event.senderID);
 
     if (event.senderID !== author) {
-      return api.sendMessage("𝐓𝐡𝐢𝐬 𝐢𝐬 𝐧𝐨𝐭 𝐲𝐨𝐮𝐫 𝐟𝐥𝐚𝐠 𝐛𝐚𝐛𝐲 >🐸", event.threadID, event.messageID);
+      return api.sendMessage("❌ This is not your flag, baby >🐸", event.threadID, event.messageID);
     }
 
     const reply = event.body.toLowerCase();
@@ -37,14 +42,14 @@ module.exports = {
       userData.exp += getExp;
       await usersData.set(event.senderID, userData);
 
-      api.sendMessage(
-        `🎉 | Correct answe baby.\nYou have earned ${getCoin} coins and ${getExp} exp.`,
+      return api.sendMessage(
+        `✅ | Correct answer, baby!\nYou have earned ${getCoin} coins and ${getExp} exp.`,
         event.threadID,
         event.messageID
       );
     } else {
-      api.sendMessage(
-        `🥺 | Wrong Answer baby\nCorrect answer was: ${flag}`,
+      return api.sendMessage(
+        `🥺 | Wrong Answer, baby!\nCorrect answer was: ${flag}`,
         event.threadID,
         event.messageID
       );
@@ -56,9 +61,7 @@ module.exports = {
       const apiUrl = await baseApiUrl();
       const response = await axios.get(`${apiUrl}/api/flag`, {
         responseType: "json",
-        headers: {
-          'User-Agent': 'Mozilla/5.0'
-        }
+        headers: { 'User-Agent': 'Mozilla/5.0' }
       });
 
       const { link, country } = response.data;
@@ -67,20 +70,20 @@ module.exports = {
         method: "GET",
         url: link,
         responseType: "stream",
-        headers: {
-          'User-Agent': 'Mozilla/5.0'
-        }
+        headers: { 'User-Agent': 'Mozilla/5.0' }
       });
 
       api.sendMessage(
         {
-          body: "🌍 A random flag has appeared! Guess the flag name.",
+          body: "🌍 A random flag has appeared! Guess the country name.",
           attachment: imageStream.data
         },
         event.threadID,
-        (error, info) => {
+        (err, info) => {
+          if (err) return api.sendMessage("❌ Failed to send flag image.", event.threadID);
+
           global.GoatBot.onReply.set(info.messageID, {
-            commandName: this.config.name,
+            commandName: module.exports.config.name,
             type: "reply",
             messageID: info.messageID,
             author: event.senderID,
@@ -89,13 +92,13 @@ module.exports = {
 
           setTimeout(() => {
             api.unsendMessage(info.messageID);
-          }, 40000);
+          }, 40000); 
         },
         event.messageID
       );
     } catch (error) {
-      console.error(`Error: ${error.message}`);
-      api.sendMessage(`Error fetching flag: ${error.message}`, event.threadID, event.messageID);
+      console.error("FlagGame Error:", error.message);
+      api.sendMessage(`🥹error, contact MahMUD.: ${error.message}`, event.threadID, event.messageID);
     }
   }
 };
