@@ -3,7 +3,7 @@ src="https://i.imgur.com/XN11Cm1.jpeg" alt="banner">
 
 <h1 align="center">
   <img src="https://i.imgur.com/ZfuZrPc.jpeg" width="22px" alt="icon">
-  Goat Bot - Bot Chat Messenger
+  Hinata cmd store by MahMUD
 </h1>
 
 
