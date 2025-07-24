@@ -21,7 +21,7 @@
 
 
 
-# Commands Store of MahMUD
+# Messenger Bot Commands Store — Created by MahMUD
 
 ## Description
 cmds is a command for GoatBot v2 that provides a paginated list of available commands stored in a remote JSON file. It allows users to search for commands by name, first letter, or page number. Users can also retrieve command URLs.
