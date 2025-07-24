@@ -20,20 +20,6 @@ If you find any issues, please report them!
 </h5>
  
 
-<div align="center">
-			<h3>𝐑𝐞𝐩𝐥𝐢𝐭:
-			<a href="naii" style="color: green;">@loading</a>
-				<br>
-	𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤: <a href="https://www.facebook.com/mahmud.x07" style="color: black;">MahMUD</a></h3></div>
-
-<img align="center" src="https://i.imgur.com/UM3ekFf.jpeg"/>
-
-
-🔹Ariyan Mahmud
-
-
-
-# Messenger Bot Commands Store — Created by MahMUD
 
 ## Description
 cmds is a command for GoatBot v2 that provides a paginated list of available commands stored in a remote JSON file. It allows users to search for commands by name, first letter, or page number. Users can also retrieve command URLs.
