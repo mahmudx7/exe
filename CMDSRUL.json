@@ -224,7 +224,18 @@
       "cmd": "sing2",
       "author": "MahMUD",
       "update": "19-05-2025"
+},
+    {
 
+      "cmd": "quote",
+      "author": "MahMUD",
+      "update": "24-07-2025"
+},
+    {
+
+      "cmd": "joke",
+      "author": "MahMUD",
+      "update": "24-07-2025"
     }
   ]
 }
