@@ -97,7 +97,7 @@ module.exports = {
       );
     } catch (error) {
       api.sendMessage(
-        "❌ Failed to load Free Fire character. Please try again later.",
+        "🥹error, contact MahMUD.",
         event.threadID,
         event.messageID
       );
