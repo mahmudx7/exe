@@ -5,6 +5,8 @@ const baseApiUrl = async () => {
   return base.data.mahmud;
 };
 
+const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); // "MahMUD"
+
 module.exports = {
   config: {
     name: "waifugame",
@@ -20,6 +22,10 @@ module.exports = {
   },
 
   onReply: async function ({ api, event, Reply, usersData }) {
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.\n", event.threadID, event.messageID);
+    }
+
     const { waifu, author, messageID } = Reply;
     const getCoin = 500;
     const getExp = 121;
@@ -45,6 +51,10 @@ module.exports = {
   },
 
   onStart: async function ({ api, event }) {
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.\n", event.threadID, event.messageID);
+    }
+
     try {
       const apiUrl = await baseApiUrl();
       const response = await axios.get(`${apiUrl}/api/waifu`);
@@ -66,7 +76,7 @@ module.exports = {
         (err, info) => {
           if (err) return;
           global.GoatBot.onReply.set(info.messageID, {
-            commandName: this.config.name,
+            commandName: module.exports.config.name,
             type: "reply",
             messageID: info.messageID,
             author: event.senderID,
