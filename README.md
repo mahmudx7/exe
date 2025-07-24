@@ -3,7 +3,7 @@ src="https://i.imgur.com/XN11Cm1.jpeg" alt="banner">
 
 <h1 align="center">
   <img src="https://i.imgur.com/ZfuZrPc.jpeg" width="22px" alt="icon">
-  Messenger Bot - Hinata Commands Store — Created by MahMUD
+  Messenger Bot Commands Store by MahMUD.
 </h1>
 
 
