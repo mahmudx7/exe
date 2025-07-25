@@ -242,6 +242,21 @@
       "cmd": "joke",
       "author": "MahMUD",
       "update": "24-07-2025"
+},
+    {
+
+      "cmd": "wlt",
+      "author": "NTKhang",
+      "update": "26-07-2025"
+},
+    {
+
+      "cmd": "whitelists-wl",
+      "author": "NTKhang",
+      "update": "26-07-2025"
+
+    
+    
     }
   ]
 }
