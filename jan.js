@@ -39,7 +39,7 @@ module.exports = {
       api.sendMessage(replyMessage, event.threadID, (err, info) => {
         if (!err) {
           global.GoatBot.onReply.set(info.messageID, {
-            commandName: "botx",
+            commandName: "bot",
             type: "reply",
             messageID: info.messageID,
             author: event.senderID,
