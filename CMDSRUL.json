@@ -260,9 +260,19 @@
       "cmd": "hadis",
       "author": "MahMUD",
       "update": "26-07-2025"
+},
+    {
 
+      "cmd": "imgur",
+      "author": "MahMUD",
+      "update": "10-08-2025"
+},
+    {
 
-    
+      "cmd": "ckban",
+      "author": "MahMUD",
+      "update": "10-08-2025"
+          
     
     }
   ]
