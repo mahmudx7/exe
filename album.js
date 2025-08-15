@@ -4,7 +4,7 @@ const path = require("path");
 
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.album;
+  return base.data.mahmud;
 };
 
 module.exports = { 
@@ -54,18 +54,18 @@ module.exports = {
           if (!imgurLink) throw new Error("Imgur upload failed");
 
           try {
-            const uploadResponse = await axios.post(`${apiUrl}/album/add`, {
+            const uploadResponse = await axios.post(`${apiUrl}/api/album/add`, {
               category,
               videoUrl: imgurLink,
             });
 
             return api.sendMessage(uploadResponse.data.message, event.threadID, event.messageID);
           } catch (error) {
-            return api.sendMessage(`${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
+            return api.sendMessage(`❌ Failed to upload video.\nError: ${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
           }
 
         } catch (error) {
-          return api.sendMessage(`${error.message}`, event.threadID, event.messageID);
+          return api.sendMessage(`❌ Failed to upload to Imgur.\nError: ${error.message}`, event.threadID, event.messageID);
         }
       }
 
@@ -75,29 +75,29 @@ module.exports = {
 
       const videoUrl = args[2];
       try {
-        const response = await axios.post(`${apiUrl}/album/add`, {
+        const response = await axios.post(`${apiUrl}/api/add`, {
           category,
           videoUrl,
         });
 
         return api.sendMessage(response.data.message, event.threadID, event.messageID);
       } catch (error) {
-        return api.sendMessage(`${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
+        return api.sendMessage(`❌ Error: ${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
       }
 
     } else if (args[0] === "list") {
       try {
-      const response = await axios.get(`${apiUrl}/album/list`);
+      const response = await axios.get(`${apiUrl}/api/album/list`);
       api.sendMessage(response.data.message, event.threadID, event.messageID);
      } catch (error) {
-      api.sendMessage(`${error.message}`, event.threadID, event.messageID);
+      api.sendMessage(`❌ Error: ${error.message}`, event.threadID, event.messageID);
       }
     } else {
       const displayNames = ["𝐅𝐮𝐧𝐧𝐲 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐈𝐬𝐥𝐚𝐦𝐢𝐜 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐒𝐚𝐝 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐀𝐧𝐢𝐦𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐋𝐨𝐅𝐈 𝐕𝐢𝐝𝐞𝐨 🎀",
        "𝐀𝐭𝐭𝐢𝐭𝐮𝐝𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐇𝐨𝐫𝐧𝐲 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐂𝐨𝐮𝐩𝐥𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐅𝐥𝐨𝐰𝐞𝐫 𝐕𝐢𝐝𝐞𝐨🎀", "𝐁𝐢𝐤𝐞 & 𝐂𝐚𝐫 𝐕𝐢𝐝𝐞𝐨 🎀",
        "𝐋𝐨𝐯𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐋𝐲𝐫𝐢𝐜𝐬 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐂𝐚𝐭 𝐕𝐢𝐝𝐞𝐨 🎀", "𝟏𝟖+ 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐅𝐫𝐞𝐞 𝐅𝐢𝐫𝐞 𝐕𝐢𝐝𝐞𝐨 🎀",
-       "𝐅𝐨𝐨𝐭𝐛𝐚𝐥𝐥 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐚𝐛𝐲 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐅𝐫𝐢𝐞𝐧𝐝𝐬 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐏𝐮𝐛𝐠 𝐯𝐢𝐝𝐞𝐨 🎀", "𝐀𝐞𝐬𝐭𝐡𝐞𝐭𝐢𝐜 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐍𝐚𝐫𝐮𝐭𝐨 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐃𝐫𝐚𝐠𝐨𝐧 𝐛𝐚𝐥𝐥 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐥𝐞𝐚𝐜𝐡 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐃𝐞𝐦𝐨𝐧 𝐬𝐲𝐥𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐉𝐮𝐣𝐮𝐭𝐬𝐮 𝐊𝐚𝐢𝐬𝐞𝐧 𝐯𝐢𝐝𝐞𝐨 🎀", "𝐒𝐨𝐥𝐨 𝐥𝐞𝐯𝐞𝐥𝐢𝐧𝐠 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐓𝐨𝐤𝐲𝐨 𝐫𝐞𝐯𝐞𝐧𝐠𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐥𝐮𝐞 𝐥𝐨𝐜𝐤 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐂𝐡𝐚𝐢𝐧𝐬𝐚𝐰 𝐦𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐃𝐞𝐚𝐭𝐡 𝐧𝐨𝐭𝐞 𝐯𝐢𝐝𝐞𝐨 🎀", "𝐎𝐧𝐞 𝐏𝐢𝐞𝐜𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐀𝐭𝐭𝐚𝐜𝐤 𝐨𝐧 𝐓𝐢𝐭𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐒𝐚𝐤𝐚𝐦𝐨𝐭𝐨 𝐃𝐚𝐲𝐬 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐰𝐢𝐧𝐝 𝐛𝐫𝐞𝐚𝐤𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐎𝐧𝐞 𝐩𝐮𝐧𝐜𝐡 𝐦𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐀𝐥𝐲𝐚 𝐑𝐮𝐬𝐬𝐢𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐥𝐮𝐞 𝐛𝐨𝐱 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐇𝐮𝐧𝐭𝐞𝐫 𝐱 𝐇𝐮𝐧𝐭𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐋𝐨𝐧𝐞𝐫 𝐥𝐢𝐟𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐇𝐚𝐧𝐢𝐦𝐞 𝐕𝐢𝐝𝐞𝐨 🎀"
-    ];    
+       "𝐅𝐨𝐨𝐭𝐛𝐚𝐥𝐥 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐚𝐛𝐲 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐅𝐫𝐢𝐞𝐧𝐝𝐬 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐏𝐮𝐛𝐠 𝐯𝐢𝐝𝐞𝐨 🎀", "𝐀𝐞𝐬𝐭𝐡𝐞𝐭𝐢𝐜 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐍𝐚𝐫𝐮𝐭𝐨 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐃𝐫𝐚𝐠𝐨𝐧 𝐛𝐚𝐥𝐥 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐥𝐞𝐚𝐜𝐡 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐃𝐞𝐦𝐨𝐧 𝐬𝐲𝐥𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐉𝐮𝐣𝐮𝐭𝐬𝐮 𝐊𝐚𝐢𝐬𝐞𝐧 𝐯𝐢𝐝𝐞𝐨 🎀", "𝐒𝐨𝐥𝐨 𝐥𝐞𝐯𝐞𝐥𝐢𝐧𝐠 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐓𝐨𝐤𝐲𝐨 𝐫𝐞𝐯𝐞𝐧𝐠𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐥𝐮𝐞 𝐥𝐨𝐜𝐤 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐂𝐡𝐚𝐢𝐧𝐬𝐚𝐰 𝐦𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐃𝐞𝐚𝐭𝐡 𝐧𝐨𝐭𝐞 𝐯𝐢𝐝𝐞𝐨 🎀", "𝐎𝐧𝐞 𝐏𝐢𝐞𝐜𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐀𝐭𝐭𝐚𝐜𝐤 𝐨𝐧 𝐓𝐢𝐭𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐒𝐚𝐤𝐚𝐦𝐨𝐭𝐨 𝐃𝐚𝐲𝐬 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐰𝐢𝐧𝐝 𝐛𝐫𝐞𝐚𝐤𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐎𝐧𝐞 𝐩𝐮𝐧𝐜𝐡 𝐦𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐀𝐥𝐲𝐚 𝐑𝐮𝐬𝐬𝐢𝐚𝐧 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐁𝐥𝐮𝐞 𝐛𝐨𝐱 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐇𝐮𝐧𝐭𝐞𝐫 𝐱 𝐇𝐮𝐧𝐭𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐋𝐨𝐧𝐞𝐫 𝐥𝐢𝐟𝐞 𝐕𝐢𝐝𝐞𝐨 🎀", "𝐇𝐚𝐧𝐢𝐦𝐞 𝐕𝐢𝐝𝐞𝐨 🎀","𝐍𝐞𝐲𝐦𝐚𝐫  𝐕𝐢𝐝𝐞𝐨🎀", "𝐌𝐞𝐬𝐬𝐢  𝐕𝐢𝐝𝐞𝐨🎀", "𝐑𝐨𝐧𝐚𝐥𝐝𝐨  𝐕𝐢𝐝𝐞𝐨🎀", "𝐕𝐢𝐧𝐢 𝐉𝐫 𝐕𝐢𝐝𝐞𝐨🎀", "𝐌𝐛𝐚𝐩𝐩𝐞  𝐕𝐢𝐝𝐞𝐨🎀", "𝐘𝐚𝐦𝐚𝐥  𝐕𝐢𝐝𝐞𝐨🎀", "𝐑𝐚𝐩𝐢𝐧𝐡𝐚  𝐕𝐢𝐝𝐞𝐨🎀", "𝐃𝐲𝐛𝐚𝐥𝐚  𝐕𝐢𝐝𝐞𝐨🎀", "𝐏𝐞𝐥𝐞  𝐕𝐢𝐝𝐞𝐨🎀", "𝐌𝐚𝐫𝐚𝐝𝐨𝐧𝐚  𝐕𝐢𝐝𝐞𝐨🎀", "𝐖𝐡𝐢𝐭𝐞 𝟒𝟒𝟒 𝐕𝐢𝐝𝐞𝐨🎀", "𝐑𝐮𝐨𝐤 𝐟𝐟 𝐕𝐢𝐝𝐞𝐨🎀","𝐁𝟐𝐤  𝐕𝐢𝐝𝐞𝐨🎀", "𝐁𝐧𝐥 𝐕𝐢𝐝𝐞𝐨🎀", "𝐕𝐢𝐧𝐜𝐞𝐧𝐳𝐨 𝐕𝐢𝐝𝐞𝐨🎀", "𝐒𝐲𝐛𝐥𝐮𝐬 𝐕𝐢𝐝𝐞𝐨🎀", "𝐑𝐚𝐢𝐬𝐭𝐚𝐫 𝐕𝐢𝐝𝐞𝐨🎀", "𝐒𝐦𝐨𝐨𝐭𝐡 𝟒𝟒𝟒 𝐕𝐢𝐝𝐞𝐨🎀", "𝐀𝐬𝐭𝐚𝐭𝐢𝐧𝐞 𝐕𝐢𝐝𝐞𝐨🎀", "𝐓𝐞𝐚𝐦 𝐄𝐱𝐞 𝐕𝐢𝐝𝐞𝐨🎀"
+    ];
       const itemsPerPage = 10;
       const page = parseInt(args[0]) || 1;
       const totalPages = Math.ceil(displayNames.length / itemsPerPage);
@@ -126,11 +126,11 @@ module.exports = {
       startIndex,
       displayNames,
       realCategories: 
-      ["funny", "islamic", "sad", "anime", "lofi", "attitude", "horny", "couple",
+["funny", "islamic", "sad", "anime", "lofi", "attitude", "horny", "couple",
       "flower", "bikecar", "love", "lyrics", "cat", "18+", "freefire",
-      "football", "baby", "friend", "pubg", "aesthetic", "naruto", "dragon", "bleach", "demon", "jjk", "solo", "tokyo", "bluelock", "cman", "deathnote", "onepiece", "attack", "sakamoto", "wind", "onepman", "alya", "bluebox", "hunter", "loner", "hanime"],
+      "football", "baby", "friend", "pubg", "aesthetic", "naruto", "dragon", "bleach", "demon", "jjk", "solo", "tokyo", "bluelock", "cman", "deathnote", "onepiece", "attack", "sakamoto", "wind", "onepman", "alya", "bluebox", "hunter", "loner", "hanime", "neymar", "messi", "ronaldo", "vini", "mbappe", "yamal", "rapinha", "dybala", "pele", "maradona","white", "ruok", "b2k", "bnl", "vincenzo", "syblus", "raistar", "smooth", "astatine", "teamexe"],
             captions: [
-   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐅𝐮𝐧𝐧𝐲 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <😺",
+"𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐅𝐮𝐧𝐧𝐲 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <😺",
    "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐈𝐬𝐥𝐚𝐦𝐢𝐜 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <✨",
    "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐒𝐚𝐝 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <😢",
    "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐀𝐧𝐢𝐦𝐞 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
@@ -169,7 +169,28 @@ module.exports = {
    "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐁𝐥𝐮𝐞 𝐛𝐨𝐱 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟", 
    "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐇𝐮𝐧𝐭𝐞𝐫 𝐱 𝐇𝐮𝐧𝐭𝐞𝐫 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",  
    "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐋𝐨𝐧𝐞𝐫 𝐥𝐢𝐟𝐞 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
-   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐇𝐚𝐧𝐢𝐦𝐞 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟"
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐇𝐚𝐧𝐢𝐦𝐞 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐍𝐞𝐲𝐦𝐚𝐫 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐌𝐞𝐬𝐬𝐢 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐑𝐨𝐧𝐚𝐥𝐝𝐨 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐕𝐢𝐧𝐢 𝐉𝐫 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐌𝐛𝐚𝐩𝐩𝐞 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐘𝐚𝐦𝐚𝐥 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐑𝐚𝐩𝐢𝐧𝐡𝐚 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐃𝐲𝐛𝐚𝐥𝐚 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐏𝐞𝐥𝐞 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐌𝐚𝐫𝐚𝐝𝐨𝐧𝐚 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐖𝐡𝐢𝐭𝐞 𝟒𝟒𝟒 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐑𝐮𝐨𝐤 𝐟𝐟 𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐁𝟐𝐤  𝐕𝐢𝐝𝐞𝐨 𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐁𝐧𝐥 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐕𝐢𝐧𝐜𝐞𝐧𝐳𝐨 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐒𝐲𝐛𝐥𝐮𝐬 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐑𝐚𝐢𝐬𝐭𝐚𝐫 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐒𝐦𝐨𝐨𝐭𝐡 𝟒𝟒𝟒 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐀𝐬𝐭𝐚𝐭𝐢𝐧𝐞 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟",
+   "𝐇𝐞𝐫𝐞 𝐲𝐨𝐮𝐫 𝐓𝐞𝐚𝐦 𝐄𝐱𝐞 𝐕𝐢𝐝𝐞𝐨   𝐁𝐚𝐛𝐲 <🌟"
+
     ]
         });
       }, event.messageID);
@@ -192,7 +213,7 @@ module.exports = {
 
     try {
     const apiUrl = await baseApiUrl();
-    const response = await axios.get(`${apiUrl}/videos/${category}?userID=${userID}`);
+    const response = await axios.get(`${apiUrl}/api/album/videos/${category}?userID=${userID}`);
 
     if (!response.data.success) {
     return api.sendMessage(response.data.message, event.threadID, event.messageID);
