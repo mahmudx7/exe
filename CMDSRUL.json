@@ -271,8 +271,13 @@
 
       "cmd": "ckban",
       "author": "MahMUD",
-      "update": "10-08-2025"
-          
+      "update": "16-10-2024"
+   },
+    {
+
+      "cmd": "pair",
+      "author": "MahMUD",
+      "update": "15-08-2025"       
     
     }
   ]
