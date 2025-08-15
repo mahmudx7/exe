@@ -48,7 +48,8 @@
 "whitelists-wl": "https://raw.githubusercontent.com/mahmudx7/exe/main/whitelists-wl.js",
   "hadis": "https://raw.githubusercontent.com/mahmudx7/exe/main/hadis.js",
   "imgur": "https://raw.githubusercontent.com/mahmudx7/exe/main/imgur.js",
-  "ckban": "https://raw.githubusercontent.com/mahmudx7/exe/main/ckban.js"
+  "ckban": "https://raw.githubusercontent.com/mahmudx7/exe/main/ckban.js",
+  "pair": "https://raw.githubusercontent.com/mahmudx7/exe/main/pair.js"
 
 
 }
