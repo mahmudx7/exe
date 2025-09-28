@@ -1,7 +1,11 @@
 const axios = require("axios");
 
-const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-const apiUrl = base.data.mahmud;
+const mahmud = async () => {
+  const base = await axios.get(
+    "https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json"
+  );
+  return base.data.mahmud;
+};
 
 module.exports = {
   config: {
@@ -25,24 +29,28 @@ module.exports = {
     }
 
     const prompt = args.join(" ");
-    if (!prompt) return api.sendMessage(
-      "❌ | Example: draw cyberpunk samurai",
-      event.threadID,
-      event.messageID
-    );
+    if (!prompt) {
+      return api.sendMessage(
+        "❌ | Example: draw cyberpunk samurai",
+        event.threadID,
+        event.messageID
+      );
+    }
 
     try {
+      const apiUrl = await mahmud();
       const response = await axios.post(`${apiUrl}/api/draw`, { prompt });
-      const imageUrl = response.data.image;
+      const attachment = await global.utils.getStreamFromURL(response.data.image);
 
-      await api.sendMessage({
-        body: `🎨 | Prompt: ${prompt}`,
-        attachment: await global.utils.getStreamFromURL(imageUrl)
-      }, event.threadID, event.messageID);
+      await api.sendMessage(
+        { body: `🎨 | Prompt: ${prompt}`, attachment },
+        event.threadID,
+        event.messageID
+      );
 
     } catch (error) {
       console.error(error);
-      api.sendMessage("🥹error, contact MahMUD.", event.threadID, event.messageID);
+      api.sendMessage("🥹 Error, contact MahMUD.", event.threadID, event.messageID);
     }
   }
 };
