@@ -278,7 +278,13 @@
       "cmd": "pair",
       "author": "MahMUD",
       "update": "15-08-2025"       
-    
+ },
+    {
+
+      "cmd": "draw",
+      "author": "MahMUD",
+      "update": "29-09-2025"       
+   
     }
   ]
 }
