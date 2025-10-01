@@ -34,7 +34,7 @@ module.exports = {
 const keyword = args.join(" ");
     if (!keyword) {
       return api.sendMessage(
-        "❌ Please provide a keyword.\nExample: {p}tikk gojo reels",
+        "❌ Please provide a keyword.\nExample: {p}tiktok anime video",
         event.threadID,
         event.messageID
       );
