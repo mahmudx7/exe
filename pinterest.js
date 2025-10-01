@@ -59,7 +59,7 @@ module.exports = {
 
     } catch (err) {
       console.error(err);
-      return message.reply(`❌ | Error fetching images: ${err.message}`);
+      return message.reply(`🥹error, contact MahMUD`);
     }
   }
 };
