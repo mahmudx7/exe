@@ -284,7 +284,12 @@
       "cmd": "draw",
       "author": "MahMUD",
       "update": "29-09-2025"       
-   
+  },
+    {
+
+      "cmd": "tiktok",
+      "author": "MahMUD",
+      "update": "01-10-2025" 
     }
   ]
 }
