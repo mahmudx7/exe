@@ -63,7 +63,7 @@ const keyword = args.join(" ");
       const videoStream = await getStreamFromURL(videoUrl);
       await api.sendMessage(
         {
-          body: `𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐭𝐢𝐤𝐭𝐨𝐤 𝐯𝐢𝐝𝐞𝐨 𝐛𝐚𝐛𝐲 😘>"${keyword}""}`,
+          body: `𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 𝐭𝐢𝐤𝐭𝐨𝐤 𝐯𝐢𝐝𝐞𝐨 𝐛𝐚𝐛𝐲 😘>`,
           attachment: videoStream,
         },
         event.threadID,
