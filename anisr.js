@@ -21,6 +21,7 @@ module.exports = {
     category: "anime",
     guide: {
       en: "{pn} <anime name>"
+    } 
   },
 
   onStart: async function ({ api, event, args }) {
@@ -32,7 +33,8 @@ module.exports = {
         event.messageID
       );
     }
-const keyword = args.join(" ");
+
+    const keyword = args.join(" ");
     if (!keyword) {
       return api.sendMessage(
         "❌ Please provide a keyword.\nExample: {p}anisr goku reels",
