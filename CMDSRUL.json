@@ -296,7 +296,12 @@
       "cmd": "kiss",
       "author": "MahMUD",
       "update": "05-10-2025"
-    
+ },
+    {
+
+      "cmd": "bankai",
+      "author": "MahMUD",
+      "update": "06-10-2025"   
     }
   ]
 }
