@@ -301,7 +301,13 @@
 
       "cmd": "bankai",
       "author": "MahMUD",
-      "update": "06-10-2025"   
+     "update": "06-10-2025"   
+},
+    {
+
+      "cmd": "anisr2",
+      "author": "MahMUD",
+      "update": "06-10-2025"
     }
   ]
 }
