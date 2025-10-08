@@ -30,7 +30,7 @@ module.exports = {
     const repliedImage = event.messageReply?.attachments?.[0];
 
     if (!prompt || !repliedImage || repliedImage.type !== "photo") {
-      return message.reply("❌ | Please reply to a photo with your prompt to edit it.");
+      return message.reply("🐤 | Please reply to a photo with your prompt to edit it.");
     }
 
     const cacheDir = path.join(__dirname, "cache");
