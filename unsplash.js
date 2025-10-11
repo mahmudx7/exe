@@ -48,7 +48,7 @@ module.exports = {
       fs.rmSync(cache, { recursive: true, force: true });
 
     } catch (e) {
-      api.sendMessage(`❌ Error: ${e.message}`, event.threadID, event.messageID);
+      api.sendMessage(`🥹error, contact MahMUD`, event.threadID, event.messageID);
     }
   }
 };
