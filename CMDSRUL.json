@@ -308,7 +308,13 @@
       "cmd": "anisr2",
       "author": "MahMUD",
       "update": "06-10-2025"
- 
+},
+    {
+
+      "cmd": "edit",
+      "author": "MahMUD",
+      "update": "08-10-2025"
+  
     
     }
   ]
