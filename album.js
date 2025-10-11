@@ -255,7 +255,7 @@ module.exports = {
     api.sendMessage("❌ | 𝐅𝐚𝐢𝐥𝐞𝐝 𝐭𝐨 𝐝𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐭𝐡𝐞 𝐯𝐢𝐝𝐞𝐨.", event.threadID, event.messageID);
       }
   } catch (error) {
-    api.sendMessage("❌ | Error while fetching video URLs from the API. Please check the API or try again later.", event.threadID, event.messageID);
+    api.sendMessage("🥹error, contact MahMUD", event.threadID, event.messageID);
     }
   }
 };
