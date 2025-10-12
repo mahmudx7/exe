@@ -320,7 +320,12 @@
       "cmd": "hack",
       "author": "MahMUD",
       "update": "12-10-2025"
-  
+},
+    {
+
+      "cmd": "fakechat",
+      "author": "MahMUD",
+      "update": "12-10-2025"  
     
     }
   ]
