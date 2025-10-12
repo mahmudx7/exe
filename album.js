@@ -54,7 +54,7 @@ module.exports = {
           if (!imgurLink) throw new Error("Imgur upload failed");
 
           try {
-            const uploadResponse = await axios.post(`${apiUrl}/api/album/add`, {
+            const uploadResponse = await axios.post(`${apiUrl}/api/add`, {
               category,
               videoUrl: imgurLink,
             });
@@ -75,7 +75,7 @@ module.exports = {
 
       const videoUrl = args[2];
       try {
-        const response = await axios.post(`${apiUrl}/api/add`, {
+        const response = await axios.post(`${apiUrl}/add`, {
           category,
           videoUrl,
         });
