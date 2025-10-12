@@ -314,6 +314,12 @@
       "cmd": "edit",
       "author": "MahMUD",
       "update": "08-10-2025"
+ },
+    {
+
+      "cmd": "hack",
+      "author": "MahMUD",
+      "update": "12-10-2025"
   
     
     }
