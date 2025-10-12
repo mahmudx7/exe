@@ -14,9 +14,9 @@ module.exports = {
     version: "1.7",
     role: 0,
     author: "MahMUD",
-    category: "media",
+    category: "anime",
     guide: {
-      en: "Use {pn} to get a random Bankai video."
+      en: "Use {pn} to get a random onepiece video."
     }
   },
 
