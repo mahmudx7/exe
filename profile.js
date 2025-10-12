@@ -20,6 +20,14 @@ module.exports = {
   },
 
   onStart: async function ({ event, message, usersData, args }) {
+   const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68);
+if (module.exports.config.author !== obfuscatedAuthor) {
+return api.sendMessage(
+"❌ | You are not authorized to change the author name.",
+event.threadID,
+event.messageID
+);
+}
     const getUserId = () => {
       const mentionedUid = Object.keys(event.mentions)[0];
       const repliedUid = event.messageReply ? event.messageReply.senderID : null;
