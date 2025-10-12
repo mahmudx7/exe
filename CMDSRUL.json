@@ -338,7 +338,12 @@
       "cmd": "onepiece",
       "author": "MahMUD",
       "update": "13-10-2025"
-    
+},
+    {
+
+      "cmd": "anipic",
+      "author": "MahMUD",
+      "update": "13-10-2025"    
     }
   ]
 }
