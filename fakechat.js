@@ -20,7 +20,7 @@ module.exports = {
   },
 
   onStart: async ({ event, message, args, usersData, api }) => {
-    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); // "MahMUD"
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68);
     if (module.exports.config.author !== obfuscatedAuthor) {
       return api.sendMessage(
         "❌ | You are not authorized to change the author name.",
