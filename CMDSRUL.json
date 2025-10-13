@@ -356,6 +356,12 @@
       "cmd": "bike",
       "author": "MahMUD",
       "update": "13-10-2025"
+      },
+    {
+
+      "cmd": "truthordare",
+      "author": "MahMUD",
+      "update": "13-10-2025"
     }
   ]
 }
