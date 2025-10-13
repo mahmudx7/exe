@@ -362,6 +362,12 @@
       "cmd": "truthordare",
       "author": "MahMUD",
       "update": "13-10-2025"
+      },
+    {
+
+      "cmd": "spamkick",
+      "author": "MahMUD",
+      "update": "14-10-2025"
     }
   ]
 }
