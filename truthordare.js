@@ -46,7 +46,7 @@ module.exports = {
         }
 
         const res = await axios.post(`${apiBase}/add`, { type, question });
-        return api.sendMessage(`✅ | ${res.data.message}`, event.threadID, event.messageID);
+        return api.sendMessage(`${res.data.message}`, event.threadID, event.messageID);
       }
 
       if (subCmd === "list") {
