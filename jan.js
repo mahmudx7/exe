@@ -1,8 +1,19 @@
 const axios = require("axios");
 
 const mahmud = [
-  "baby", "bby", "babu", "bbu", "jan", "bot", "জান", "জানু", "বেবি", "wifey", "hinata"
+  "baby",
+  "bby",
+  "babu",
+  "bbu",
+  "jan",
+  "bot",
+  "জান",
+  "জানু",
+  "বেবি",
+  "wifey",
+  "hinata"
 ];
+
 
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
@@ -16,22 +27,14 @@ module.exports = {
     author: "MahMUD",
     role: 0,
     category: "ai",
-    aliases: ["jan", "baby"],
-    cooldown: 3,
-    guide: [
-      "{pn}bot jan → Talk with the bot",
-      "{pn}jan I love you → Get bot response",
-      "Say any word from: baby, jan, babu etc., to trigger bot"
-    ]
+    guide: { en: "just type jan" },
   },
 
-  onStart: async function ({ reply }) {
-    reply("Hey jan 🥰! Just say something like 'jan I love you' or 'baby are you there?' and I’ll reply!");
-  },
+  onStart: async function () {},
 
   onReply: async function ({ api, event }) {
     if (event.type === "message_reply") {
-      const message = event.body?.toLowerCase() || "hi";
+      const message = event.body?.toLowerCase() || "lol";
 
       async function getBotResponse(message) {
         try {
@@ -44,7 +47,6 @@ module.exports = {
       }
 
       const replyMessage = await getBotResponse(message);
-
       api.sendMessage(replyMessage, event.threadID, (err, info) => {
         if (!err) {
           global.GoatBot.onReply.set(info.messageID, {
@@ -62,8 +64,8 @@ module.exports = {
   onChat: async function ({ api, event }) {
     const responses = [
       "babu khuda lagse🥺",
-      "Hop beda😾, Boss বল boss😼",  
-      "আমাকে ডাকলে , আমি কিন্তূ কিস করে দেবো😘",  
+      "Hop beda😾,Boss বল boss😼",  
+      "আমাকে ডাকলে ,আমি কিন্তূ কিস করে দেবো😘 ",  
       "🐒🐒🐒",
       "bye",
       "naw message daw m.me/mahmud.x07",
@@ -72,7 +74,7 @@ module.exports = {
       "গোলাপ ফুল এর জায়গায় আমি দিলাম তোমায় মেসেজ",
       "বলো কি বলবা, সবার সামনে বলবা নাকি?🤭🤏",  
       "𝗜 𝗹𝗼𝘃𝗲 𝘆𝗼𝘂__😘😘",
-      "__ফ্রী ফে'সবুক চালাই কা'রন ছেলেদের মুখ দেখা হারাম 😌",
+       "__ফ্রী ফে'সবুক চালাই কা'রন ছেলেদের মুখ দেখা হারাম 😌",
       "মন সুন্দর বানাও মুখের জন্য তো 'Snapchat' আছেই! 🌚"
     ];
 
@@ -103,7 +105,7 @@ module.exports = {
               type: "reply",
               messageID: info.messageID,
               author: event.senderID,
-              text: randomMsg,
+              link: randomMsg,
             });
           }
         }, event.messageID);
