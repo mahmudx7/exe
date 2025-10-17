@@ -12,9 +12,6 @@ module.exports = {
         author: "MahMUD",
         countDown: 5,
         role: 0,
-        description: {
-            en: "Blur Image using Mahmud Global API"
-        },
         category: "image",
         guide: {
             en: "{pn} [ImgReply/imgLink] [1-100]"
