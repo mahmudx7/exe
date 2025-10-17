@@ -368,6 +368,12 @@
       "cmd": "spamkick",
       "author": "MahMUD",
       "update": "14-10-2025"
+      },
+    {
+
+      "cmd": "blur",
+      "author": "MahMUD",
+      "update": "17-10-2025"
     }
   ]
 }
