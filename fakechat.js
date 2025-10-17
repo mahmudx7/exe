@@ -36,10 +36,12 @@ module.exports = {
       if (event.messageReply) {
         targetId = event.messageReply.senderID || event.messageReply.sender?.id;
       } else if (event.mentions && Object.keys(event.mentions).length > 0) {
+        
         targetId = Object.keys(event.mentions)[0];
         const mentionName = event.mentions[targetId];
         userText = args.join(" ").replace(new RegExp(`@?${mentionName}`, "gi"), "").trim();
       } else if (args.length > 0 && /^\d+$/.test(args[0])) {
+        
         targetId = args[0];
         userText = args.slice(1).join(" ").trim();
       } else {
