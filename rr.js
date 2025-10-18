@@ -851,8 +851,6 @@ class RankCard {
 
 		// --- VIP badge ---
 		if (isVip) {
-	try {
-		if (isVip) {
     try {
         const badgeSize = 200; 
         const vipLogoUrl = "https://i.imgur.com/h8riz1R.jpeg";
@@ -875,7 +873,7 @@ class RankCard {
         // Add RGB side glow/tint
         tempCtx.save();
         tempCtx.globalCompositeOperation = "source-atop"; // only affect image area
-        tempCtx.fillStyle = "rgba(255, 0, 0, 0.2)"; // red tint (you can change to rgb(x,y,z))
+        tempCtx.fillStyle = "rgba(255, 0, 0, 0.2)"; // red tint, change RGB as needed
         tempCtx.fillRect(0, 0, badgeSize, badgeSize);
         tempCtx.restore();
 
