@@ -855,8 +855,8 @@ class RankCard {
 		const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
 		const vipLogo = await Canvas.loadImage(vipLogoUrl);
 
-		const bx = width - badgeSize - 340; // more left
-		const by = height / 2 - badgeSize / 2 - 20; // slightly up
+		const bx = width - badgeSize - 740; // more left
+		const by = height / 2 - badgeSize / 2 - 50; // slightly up
 
 		ctx.save();
 		ctx.beginPath();
