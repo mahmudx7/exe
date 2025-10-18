@@ -851,12 +851,12 @@ class RankCard {
 
 	if (isVip) {
 	try {
-		const badgeSize = 190; 
+		const badgeSize = 180; 
 		const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
 		const vipLogo = await Canvas.loadImage(vipLogoUrl);
 
-		const bx = width - badgeSize - 680; // more left
-		const by = height / 2 - badgeSize / 2 - 80; // slightly up
+		const bx = width - badgeSize - 620; // more left
+		const by = height / 2 - badgeSize / 2 - 90; // slightly up
 
 		ctx.save();
 		ctx.beginPath();
