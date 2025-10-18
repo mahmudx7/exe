@@ -852,24 +852,40 @@ class RankCard {
 		// --- VIP badge ---
 		if (isVip) {
 	try {
-		const badgeSize = 200; 
-		const vipLogoUrl = "https://i.imgur.com/h8riz1R.jpeg";
-		const vipLogo = await Canvas.loadImage(vipLogoUrl);
+		if (isVip) {
+    try {
+        const badgeSize = 200; 
+        const vipLogoUrl = "https://i.imgur.com/h8riz1R.jpeg";
+        const vipLogo = await Canvas.loadImage(vipLogoUrl);
 
-		const bx = width - badgeSize - 340; // more left
-		const by = height / 2 - badgeSize / 2 - 20; // slightly up
+        const bx = width - badgeSize - 340; // left shift
+        const by = height / 2 - badgeSize / 2 - 20; // slightly up
 
-		ctx.save();
-		ctx.beginPath();
-		ctx.arc(bx + badgeSize / 2, by + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.clip();
-		ctx.drawImage(vipLogo, bx, by, badgeSize, badgeSize);
-		ctx.restore();
-	} catch (err) {
-		console.error("VIP badge load failed:", err);
-	}
-}
+        // Create offscreen canvas for clean circular clipping
+        const tempCanvas = Canvas.createCanvas(badgeSize, badgeSize);
+        const tempCtx = tempCanvas.getContext("2d");
+
+        // Draw circular VIP image
+        tempCtx.beginPath();
+        tempCtx.arc(badgeSize / 2, badgeSize / 2, badgeSize / 2, 0, Math.PI * 2);
+        tempCtx.closePath();
+        tempCtx.clip();
+        tempCtx.drawImage(vipLogo, 0, 0, badgeSize, badgeSize);
+
+        // Add RGB side glow/tint
+        tempCtx.save();
+        tempCtx.globalCompositeOperation = "source-atop"; // only affect image area
+        tempCtx.fillStyle = "rgba(255, 0, 0, 0.2)"; // red tint (you can change to rgb(x,y,z))
+        tempCtx.fillRect(0, 0, badgeSize, badgeSize);
+        tempCtx.restore();
+
+        // Draw final image onto main canvas
+        ctx.drawImage(tempCanvas, bx, by);
+
+    } catch (err) {
+        console.error("VIP badge load failed:", err);
+    }
+		}
 		// -----------------
 
 
