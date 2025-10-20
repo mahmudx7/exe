@@ -16,55 +16,62 @@ module.exports = {
     guide: "{pn} <question>"
   },
 
-  onStart: async function ({ api, event, args }) {
-    if (!args.length && !(event.type === "message_reply" && event.messageReply.attachments.length > 0)) {
-      return api.sendMessage("Please provide a question.", event.threadID, event.messageID);
+  onStart: async function({ api, event, args }) {
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
     }
+    if (!args.length) return api.sendMessage("Please provide a question.", event.threadID, event.messageID);
 
     const query = args.join(" ");
     const apiUrl = `${await baseApiUrl()}/api/gpt`;
 
-    const requestBody = {
-      question: query,
-      contents: [
-        {
-          parts: [{ text: query }]
-        }
-      ]
-    };
-
-    // Handle image reply
-    if (event.type === "message_reply" && event.messageReply.attachments.length > 0) {
-      const imageUrl = event.messageReply.attachments[0].url;
-      try {
-        const base64Image = await getImageBase64(imageUrl);
-        requestBody.contents[0].parts.push({
-          inlineData: { mimeType: "image/jpeg", data: base64Image },
-        });
-      } catch (err) {
-        return api.sendMessage("Failed to process image.", event.threadID, event.messageID);
-      }
-    }
-
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "author": module.exports.config.author
-        },
-        body: JSON.stringify(requestBody)
+      const response = await axios.post(apiUrl, {
+        question: query,
+        contents: [{ parts: [{ text: query }] }]
+      }, {
+        headers: { "Content-Type": "application/json" }
       });
 
-      const data = await response.json();
+      const replyText = response.data.response || "No response received.";
+      const info = await api.sendMessage(replyText, event.threadID, event.messageID);
 
-      if (data.error) {
-        return api.sendMessage(data.error, event.threadID, event.messageID);
-      }
+    
+      global.GoatBot.onReply.set(info.messageID, {
+        commandName: this.config.name,
+        author: event.senderID
+      });
 
-      api.sendMessage(data.response || "Sorry, I couldn't generate a response.", event.threadID, event.messageID);
     } catch (error) {
-      api.sendMessage("An error occurred while fetching the AI response.", event.threadID, event.messageID);
+      console.error(error);
+      api.sendMessage("🥹error, contact MahMUD", event.threadID, event.messageID);
+    }
+  },
+
+  onReply: async function({ api, event, args }) {
+    const replyInfo = global.GoatBot.onReply.get(event.messageReply?.messageID);
+    if (!replyInfo || replyInfo.author !== event.senderID) return;
+
+    const prompt = args.join(" ");
+    if (!prompt) return api.sendMessage("Please provide a question.", event.threadID, event.messageID);
+
+    const apiUrl = `${await baseApiUrl()}/api/gpt`;
+
+    try {
+      const response = await axios.post(apiUrl, {
+        question: prompt,
+        contents: [{ parts: [{ text: prompt }] }]
+      }, {
+        headers: { "Content-Type": "application/json" }
+      });
+
+      const replyText = response.data.response || "No response received.";
+      api.sendMessage(replyText, event.threadID, event.messageID);
+
+    } catch (error) {
+      console.error(error);
+      api.sendMessage("Error occurred, please try again later 🥹", event.threadID, event.messageID);
     }
   }
 };
