@@ -17,6 +17,11 @@ module.exports = {
   },
 
   onStart: async function ({ api, event, args }) {
+   const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
+    }
+    
     if (!args.length) {
       return api.sendMessage("Please provide a question", event.threadID, event.messageID);
     }
@@ -29,10 +34,7 @@ module.exports = {
         apiUrl,
         { question: query },
         {
-          headers: {
-            "Content-Type": "application/json",
-            "author": module.exports.config.author
-          }
+          headers: { "Content-Type": "application/json" }
         }
       );
 
