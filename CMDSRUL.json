@@ -374,6 +374,12 @@
       "cmd": "blur",
       "author": "MahMUD",
       "update": "17-10-2025"
+      },
+    {
+
+      "cmd": "llama",
+      "author": "MahMUD",
+      "update": "20-10-2025"
     }
   ]
 }
