@@ -69,7 +69,8 @@
   "llama": "https://raw.githubusercontent.com/mahmudx7/exe/main/llama.js",
   "deepseek": "https://raw.githubusercontent.com/mahmudx7/exe/main/deepseek.js",
 "gemma": "https://raw.githubusercontent.com/mahmudx7/exe/main/gemma.js",
-  "qwen": "https://raw.githubusercontent.com/mahmudx7/exe/main/qwen.js"
+  "qwen": "https://raw.githubusercontent.com/mahmudx7/exe/main/qwen.js",
+  "remini": "https://raw.githubusercontent.com/mahmudx7/exe/main/remini.js"
 
 }
 
