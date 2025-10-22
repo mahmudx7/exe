@@ -410,6 +410,12 @@
       "cmd": "cdpvip",
       "author": "MahMUD",
       "update": "22-10-2025"
+      },
+    {
+
+      "cmd": "anicdp",
+      "author": "MahMUD",
+      "update": "22-10-2025"
       
     }
   ]
