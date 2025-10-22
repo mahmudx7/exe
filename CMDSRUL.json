@@ -404,6 +404,12 @@
       "cmd": "remini",
       "author": "MahMUD",
       "update": "22-10-2025"
+      },
+    {
+
+      "cmd": "cdpvip",
+      "author": "MahMUD",
+      "update": "22-10-2025"
       
     }
   ]
