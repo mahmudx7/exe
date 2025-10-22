@@ -9,8 +9,8 @@ const mahmud = async () => {
 
 module.exports = {
   config: {
-    name: "bankai",
-    aliases: ["bankaivid"],
+    name: "horny",
+    aliases: ["hornyvid", "hvideo"],
     version: "1.7",
     role: 0,
     author: "MahMUD",
