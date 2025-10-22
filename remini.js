@@ -48,7 +48,6 @@ module.exports = {
       const apiUrl = `${await mahmud()}/api/remini?imgUrl=${encodeURIComponent(imgUrl)}`;
 
       const res = await axios.get(apiUrl, { responseType: "stream" });
-
       if (waitMsg?.messageID) message.unsend(waitMsg.messageID);
 
       message.reaction("✅", event.messageID);
