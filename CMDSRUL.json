@@ -398,6 +398,12 @@
       "cmd": "qwen",
       "author": "MahMUD",
       "update": "20-10-2025"
+      },
+    {
+
+      "cmd": "remini",
+      "author": "MahMUD",
+      "update": "22-10-2025"
       
     }
   ]
