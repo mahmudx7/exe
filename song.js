@@ -7,7 +7,7 @@ const mahmud = async () => {
 
 module.exports = {
     config: {
-        name: "sing",
+        name: "song",
         version: "1.7",
         author: "MahMUD", 
         countDown: 10,
