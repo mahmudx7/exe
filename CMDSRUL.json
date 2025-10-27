@@ -434,6 +434,12 @@
       "cmd": "memevid",
       "author": "MahMUD",
       "update": "26-10-2025"
+      },
+    {
+
+      "cmd": "song",
+      "author": "MahMUD",
+      "update": "26-10-2025"
       
       
     }
