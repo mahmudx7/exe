@@ -23,7 +23,7 @@ module.exports = {
     }
     
     if (!args[0]) {
-      return message.reply("❌ | Please provide a song name.\n\nExample: sing3 baby lofi");
+      return message.reply("❌ | Please provide a song name.\n\nExample: sing shape of you");
     }
 
     const query = encodeURIComponent(args.join(" "));
