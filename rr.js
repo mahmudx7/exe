@@ -851,12 +851,12 @@ class RankCard {
 
 	if (isVip) {
 	try {
-		const badgeSize = 180; 
+		const badgeSize = 170; 
 		const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
 		const vipLogo = await Canvas.loadImage(vipLogoUrl);
 
-		const bx = width - badgeSize - 620; // more left
-		const by = height / 2 - badgeSize / 2 - 90; // slightly up
+		const bx = width - badgeSize - 530; // more left
+		const by = height / 2 - badgeSize / 2 - 100; // slightly up
 
 		ctx.save();
 		ctx.beginPath();
@@ -1015,4 +1015,4 @@ function checkFormatColor(color, enableUrl = true) {
 		!Array.isArray(color)
 	)
 		throw new Error(`The color format must be a hex, rgb, rgba ${enableUrl ? ", url image" : ""} or an array of colors`);
-			}
+					  }
