@@ -90,9 +90,9 @@ const defaultDesignCard = {
 	alpha_subcard: 0.9,
 	exp_color: "#e1e1e1",
 	expNextLevel_color: "#3f3f3f",
-	text_color: "#000000"
+	text_color: "#000000",
+	line_color: "#FFD700"
 };
-
 async function makeRankCard(userID, usersData, deltaNext, api = global.GoatBot.fcaApi) {
 	const { exp } = await usersData.get(userID);
 	const levelUser = expToLevel(exp, deltaNext);
@@ -1015,4 +1015,4 @@ function checkFormatColor(color, enableUrl = true) {
 		!Array.isArray(color)
 	)
 		throw new Error(`The color format must be a hex, rgb, rgba ${enableUrl ? ", url image" : ""} or an array of colors`);
-        }
+			}
