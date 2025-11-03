@@ -47,7 +47,7 @@ module.exports = {
         if (err) return;
 
         global.GoatBot.onReply.set(info.messageID, {
-          commandName: "freefireqz2",
+          commandName: "ffqz2",
           author: event.senderID,
           correctAnswer,
           messageID: info.messageID
