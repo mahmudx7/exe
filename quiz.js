@@ -20,6 +20,11 @@ module.exports = {
   },
 
   onStart: async function ({ api, event, usersData, args }) {
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
+     if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.\n", event.threadID, event.messageID);
+     }
+    
     try {
       const input = args.join("").toLowerCase() || "bn";
       const category = input === "en" || input === "english" ? "english" : "bangla";
@@ -53,7 +58,7 @@ module.exports = {
       }, event.messageID);
     } catch (error) {
       console.error(error);
-      api.sendMessage("❌ Failed to fetch quiz. Please try again later.", event.threadID, event.messageID);
+      api.sendMessage("🥹error, contact MahMUD.", event.threadID, event.messageID);
     }
   },
 
