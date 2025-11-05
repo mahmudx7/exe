@@ -8,7 +8,7 @@ const mahmud = async () => {
 module.exports = {
   config: {
     name: "ffqz2",
-    aliases: ["ffqz2","freefire2", "freefireqz2"],
+    aliases: ["ffquiz2","freefire2", "freefireqz2"],
     version: "1.7",
     author: "MahMUD",
     countDown: 10,
