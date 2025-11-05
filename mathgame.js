@@ -23,6 +23,7 @@ module.exports = {
     if (module.exports.config.author !== obfuscatedAuthor) {
       return api.sendMessage("❌ You are not authorized to change the author name.", event.threadID, event.messageID);
     }
+
     const { senderID, threadID, messageID } = event;
 
     let quiz;
@@ -55,10 +56,6 @@ module.exports = {
         correctAnswer,
         answered: false
       });
-
-        setTimeout(() => {
-        api.unsendMessage(info.messageID);
-      }, 40000);
     }, messageID);
   },
 
@@ -73,14 +70,15 @@ module.exports = {
 
     Reply.answered = true;
 
-    const userAns = event.body.trim().toLowerCase();
+    const reply = event.body.trim().toLowerCase();
     const correctAns = correctAnswer.toLowerCase();
-    const userData = await usersData.get(author);
 
+    const userData = await usersData.get(author);
     const rewardCoins = 500;
     const rewardExp = 121;
 
-    if (userAns === correctAns) {
+    await api.unsendMessage(Reply.messageID);
+    if (reply === correctAns) {
       userData.money += rewardCoins;
       userData.exp += rewardExp;
       await usersData.set(author, userData);
