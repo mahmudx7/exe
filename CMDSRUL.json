@@ -445,19 +445,25 @@
 
       "cmd": "ffquiz2",
       "author": "MahMUD",
-      "update": "26-10-2025"
+      "update": "02-11-2025"
       },
     {
 
       "cmd": "football2",
       "author": "MahMUD",
-      "update": "26-10-2025"
+      "update": "03-11-2025"
       },
     {
 
       "cmd": "aniqz2",
       "author": "MahMUD",
-      "update": "26-10-2025"
+      "update": "03-11-2025"
+      },
+    {
+
+      "cmd": "mathgame",
+      "author": "MahMUD",
+      "update": "05-11-2025"
       
       
     }
