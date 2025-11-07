@@ -8,6 +8,7 @@ const baseApiUrl = async () => {
 module.exports = {
   config: {
     name: "gpt",
+    aliases: ["gpt4"],
     version: "1.7",
     author: "MahMUD",
     countDown: 5,
@@ -21,7 +22,8 @@ module.exports = {
     if (module.exports.config.author !== obfuscatedAuthor) {
       return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
     }
-    if (!args.length) return api.sendMessage("Please provide a question.", event.threadID, event.messageID);
+    if (!args.length)
+      return api.sendMessage("⚠️ Please provide a question.", event.threadID, event.messageID);
 
     const query = args.join(" ");
     const apiUrl = `${await baseApiUrl()}/api/gpt`;
@@ -35,28 +37,31 @@ module.exports = {
       });
 
       const replyText = response.data.response || "No response received.";
-      const info = await api.sendMessage(replyText, event.threadID, event.messageID);
-
-    
-      global.GoatBot.onReply.set(info.messageID, {
-        commandName: this.config.name,
-        author: event.senderID
-      });
+      
+      api.sendMessage({ body: replyText }, event.threadID, (error, info) => {
+        if (!error) {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: this.config.name,
+            type: "reply",
+            messageID: info.messageID,
+            author: event.senderID,
+            link: replyText,
+          });
+        }
+      }, event.messageID);
 
     } catch (error) {
-      console.error(error);
+      console.error("GPT command error:", error.response?.data || error.message);
       api.sendMessage("🥹error, contact MahMUD", event.threadID, event.messageID);
     }
   },
 
-  onReply: async function({ api, event, args }) {
-    const replyInfo = global.GoatBot.onReply.get(event.messageReply?.messageID);
-    if (!replyInfo || replyInfo.author !== event.senderID) return;
-
-    const prompt = args.join(" ");
-    if (!prompt) return api.sendMessage("Please provide a question.", event.threadID, event.messageID);
+  onReply: async function({ api, args, event, Reply }) {
+    if (Reply.author !== event.senderID) return;
 
     const apiUrl = `${await baseApiUrl()}/api/gpt`;
+    const prompt = args.join(" ");
+    if (!prompt) return;
 
     try {
       const response = await axios.post(apiUrl, {
@@ -67,11 +72,22 @@ module.exports = {
       });
 
       const replyText = response.data.response || "No response received.";
-      api.sendMessage(replyText, event.threadID, event.messageID);
+
+      api.sendMessage({ body: replyText }, event.threadID, (error, info) => {
+        if (!error) {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: this.config.name,
+            type: "reply",
+            messageID: info.messageID,
+            author: event.senderID,
+            link: replyText,
+          });
+        }
+      }, event.messageID);
 
     } catch (error) {
-      console.error(error);
-      api.sendMessage("Error occurred, please try again later 🥹", event.threadID, event.messageID);
+      console.error("GPT reply error:", error.response?.data || error.message);
+      api.sendMessage("🥹error, contact MahMUD", event.threadID, event.messageID);
     }
   }
 };
