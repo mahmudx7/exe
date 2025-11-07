@@ -464,6 +464,18 @@
       "cmd": "mathgame",
       "author": "MahMUD",
       "update": "05-11-2025"
+      },
+    {
+
+      "cmd": "myboy",
+      "author": "MahMUD",
+      "update": "07-11-2025"
+      },
+    {
+
+      "cmd": "mygirl",
+      "author": "MahMUD",
+      "update": "07-11-2025"
       
       
     }
