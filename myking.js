@@ -66,7 +66,7 @@ module.exports = {
 
       api.sendMessage(
         {
-          body: `👑 𝐌𝐲 𝐊𝐢𝐧𝐠 👑\n• ${name1}\n• ${name2}`,
+          body: `𝐊𝐢𝐧𝐠 𝐨𝐟 𝐦𝐲 𝐡𝐞𝐚𝐫𝐭, 𝐫𝐮𝐥𝐞𝐫 𝐨𝐟 𝐦𝐲 𝐰𝐨𝐫𝐥𝐝 👑\n• ${name1}\n• ${name2}`,
           attachment: fs.createReadStream(file),
         },
         event.threadID,
