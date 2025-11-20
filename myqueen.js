@@ -9,6 +9,11 @@ const baseApiUrl = async () => {
   return base.data.mahmud;
 };
 
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
+
 module.exports = {
   config: {
     name: "myqueen",
@@ -19,6 +24,10 @@ module.exports = {
   },
 
   onStart: async function ({ api, usersData, event }) {
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.\n", event.threadID, event.messageID);
+    }
     const senderID = event.senderID;
     const mention = Object.keys(event.mentions)[0];
 
@@ -55,7 +64,7 @@ module.exports = {
       );
 
     } catch (e) {
-      api.sendMessage("❌ Error: " + e.message, event.threadID, event.messageID);
+      api.sendMessage("🥹error, contact MahMUD." + e.message, event.threadID, event.messageID);
     }
   },
 };
