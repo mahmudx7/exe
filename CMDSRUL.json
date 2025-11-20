@@ -1,12 +1,12 @@
 {
   "cmdName": [
     {
-      "cmd": "jan",
+      "cmd": "hinata",
       "author": "MahMUD",
       "update": "21-03-2025"
     },
     {
-      "cmd": "jan-teach",
+      "cmd": "hinata-teach",
       "author": "MahMUD",
       "update": "21-03-2025"
     },
@@ -123,23 +123,23 @@
       "update": "20-04-2025"
    },
     {
-      "cmd": "ffquiz",
+      "cmd": "ffqz",
       "author": "MahMUD",
       "update": "20-07-2025"
     },
     {
-      "cmd": "football-game",
+      "cmd": "football",
       "author": "MahMUD",
       "update": "20-07-2025"
       },
     {
-      "cmd": "cricket-game",
+      "cmd": "cricket",
       "author": "MahMUD",
       "update": "21-07-2025"
     
     },
     {      
-      "cmd": "wordguess",
+      "cmd": "wordgame",
       "author": "MahMUD",
       "update": "20-04-2025"
        },
