@@ -481,13 +481,19 @@
 
       "cmd": "myking",
       "author": "MahMUD",
-      "update": "07-20-2025"
+      "update": "20-11-2025"
       },
     {
 
       "cmd": "myqueen",
       "author": "MahMUD",
-      "update": "07-20-2025"
+      "update": "20-11-2025"
+      },
+    {
+
+      "cmd": "actor",
+      "author": "MahMUD",
+      "update": "21-11-2025"
       
       
     }
