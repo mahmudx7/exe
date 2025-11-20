@@ -54,7 +54,7 @@ module.exports = {
 
     try {
       const apiUrl = await baseApiUrl();
-      const url = `${apiUrl}/api/tokai?user=${id}`;
+      const url = `${apiUrl}/api/cockroach?user=${id}`;
 
       const response = await axios.get(url, { responseType: "arraybuffer" });
       const filePath = path.join(__dirname, `cockroach_${id}.png`);
