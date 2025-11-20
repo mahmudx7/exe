@@ -494,6 +494,12 @@
       "cmd": "actor",
       "author": "MahMUD",
       "update": "21-11-2025"
+      },
+    {
+
+      "cmd": "toilet",
+      "author": "MahMUD",
+      "update": "21-11-2025"
       
       
     }
