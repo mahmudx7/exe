@@ -5,10 +5,15 @@ const baseApiUrl = async () => {
   return base.data.mahmud;
 };
 
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
+
 module.exports = {
   config: {
-    name: "wordguess",
-    aliases: ["wordgame", "wdgame"],
+    name: "wordgame",
+    aliases: ["wordguss", "word"],
     version: "1.0",
     author: "MahMUD",
     role: 0,
