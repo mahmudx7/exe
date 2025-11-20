@@ -17,7 +17,7 @@ const baseApiUrl = async () => {
 module.exports = {
   config: {
     name: "myqueen",
-    version: "1.1",
+    version: "1.7",
     author: "MahMUD",
     category: "love",
     guide: "{pn} @mention | reply | UID",
