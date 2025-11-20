@@ -7,6 +7,11 @@ const mahmud = async () => {
   return response.data.mahmud;
 };
 
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
+
 module.exports = {
   config: {
     name: "anime",
