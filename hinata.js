@@ -14,10 +14,9 @@ const mahmud = [
   "hinata"
 ];
 
-
 const baseApiUrl = async () => {
   const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
-  return base.data.jan;
+  return base.data.mahmud;
 };
 
 module.exports = {
@@ -27,20 +26,21 @@ module.exports = {
     author: "MahMUD",
     role: 0,
     category: "ai",
-    guide: { en: "just type jan" },
+    guide: {
+      en: "just type jan" 
+    },
   },
 
   onStart: async function () {},
-
+ 
   onReply: async function ({ api, event }) {
     if (event.type === "message_reply") {
       const message = event.body?.toLowerCase() || "lol";
 
       async function getBotResponse(message) {
         try {
-          const base = await baseApiUrl();
-          const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(message)}`);
-          return response.data?.message;
+          const mahmud = (await axios.get(`${await baseApiUrl()}/api/hinata?text=${encodeURIComponent(message)}&style=3`)).data.message;
+          return mahmud;
         } catch {
           return "error janu🥹";
         }
@@ -74,7 +74,7 @@ module.exports = {
       "গোলাপ ফুল এর জায়গায় আমি দিলাম তোমায় মেসেজ",
       "বলো কি বলবা, সবার সামনে বলবা নাকি?🤭🤏",  
       "𝗜 𝗹𝗼𝘃𝗲 𝘆𝗼𝘂__😘😘",
-       "__ফ্রী ফে'সবুক চালাই কা'রন ছেলেদের মুখ দেখা হারাম 😌",
+      "__ফ্রী ফে'সবুক চালাই কা'রন ছেলেদের মুখ দেখা হারাম 😌",
       "মন সুন্দর বানাও মুখের জন্য তো 'Snapchat' আছেই! 🌚"
     ];
 
@@ -87,10 +87,9 @@ module.exports = {
       api.sendTypingIndicator(event.threadID, true);
 
       async function getBotResponse(message) {
-        try {
-          const base = await baseApiUrl();
-          const response = await axios.get(`${base}/jan/font3/${encodeURIComponent(message)}`);
-          return response.data?.message;
+       try {
+      const mahmud = (await axios.get(`${await baseApiUrl()}/api/hinata?text=${encodeURIComponent(message)}&style=3`)).data.message;
+          return mahmud;
         } catch {
           return "error janu🥹";
         }
