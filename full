@@ -76,6 +76,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       return api.sendMessage(response.data.message, event.threadID, event.messageID);
     }
 
+
     if (args[0] === "edit") {
       const editContent = userMessage.replace("edit ", "");
       const [oldTrigger, ...newArr] = editContent.split(" - ");
