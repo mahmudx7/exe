@@ -247,11 +247,8 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 module.exports.onReply = async ({ api, event }) => {
   try {
     let message = event.body?.trim(); if (!message) return;
-    const commandWords = ["teach", "remove", "list", "edit", "msg"];
-    if (commandWords.some(cmd => message.toLowerCase().includes(cmd))) return;
-    const prefix = global.GoatBot?.prefix || "!"; 
-    if (message.startsWith(prefix)) message = message.slice(prefix.length).trimStart();
-
+    const commandWords = ["teach", "remove", "list", "edit", "msg"]; if (commandWords.some(cmd => message.toLowerCase().includes(cmd))) return;
+    const prefix = global.GoatBot?.prefix || "!";  if (message.startsWith(prefix)) message = message.slice(prefix.length).trimStart();
     const responseMessage = (await axios.get(`${await baseApiUrl()}/api/hinata?text=${encodeURIComponent(message)}&style=3`)).data.message;
     api.sendMessage(responseMessage, event.threadID, (err, info) => {
       if (!err) {
