@@ -1,0 +1,176 @@
+const axios = require("axios");
+
+const mahmud = [
+  "baby",
+  "bby",
+  "babu",
+  "bbu",
+  "jan",
+  "bot",
+  "জান",
+  "জানু",
+  "বেবি",
+  "wifey",
+  "hinata",
+  "hina"
+];
+
+const baseApiUrl = async () => {
+  const base = await axios.get(
+    "https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json"
+  );
+  return base.data.mahmud;
+};
+
+module.exports.config = {
+  name: "hinata",
+  aliases: ["baby", "bby", "jan", "janu", "hinata", "wifey", "bot"],
+  version: "1.7",
+  author: "MahMUD",
+  countDown: 0,
+  role: 0,
+  category: "ai",
+  guide: { 
+    en: "{pn} [message] OR teach [question] - [response1, response2,...] OR remove [question] - [index] OR list OR list all OR edit [question] - [newResponse] OR msg [question]" },
+};
+
+module.exports.onStart = async ({ api, event, args, usersData }) => {
+  try {
+    const userMessage = args.join(" ").toLowerCase();
+    const uid = event.senderID;
+    const apiUrl = await baseApiUrl();
+
+    if (args[0] === "teach") {
+      const teachContent = userMessage.replace("teach ", "");
+      const [trigger, ...responsesArr] = teachContent.split(" - ");
+      const responses = responsesArr.join(" - ");
+      if (!trigger || !responses) return api.sendMessage("❌ | teach [question] - [response1, response2,...]", event.threadID, event.messageID);
+      const response = await axios.post(`${await baseApiUrl()}/api/jan/teach2`, {
+      trigger, responses, userID: uid, });
+      const userName = (await usersData.getName(uid)) || "Unknown User";
+      return api.sendMessage(
+     `✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID
+      );
+    }
+
+
+    if (args[0] === "remove") {
+      const removeContent = userMessage.replace("remove ", "");
+      const [trigger, index] = removeContent.split(" - ");
+      if (!trigger || !index || isNaN(index))
+      return api.sendMessage("❌ | remove [question] - [index]", event.threadID, event.messageID);
+      const response = await axios.delete(`${await baseApiUrl()}/api/jan/remove`, {
+      data: { trigger, index: parseInt(index, 10) },});
+      return api.sendMessage(response.data.message, event.threadID, event.messageID);
+    }
+
+
+    if (args[0] === "list") {
+      const endpoint = args[1] === "all" ? "/list/all" : "/list";
+      const response = await axios.get(`$${await baseApiUrl()}/api/jan${endpoint}`);
+      if (args[1] === "all") {
+      let message = "👑 List of Hinata teachers:\n\n";
+      const data = Object.entries(response.data.data).sort((a, b) => b[1] - a[1]).slice(0, 15);
+      for (let i = 0; i < data.length; i++) {
+      const [userID, count] = data[i];const name = (await usersData.getName(userID)) || "Unknown"; message += `${i + 1}. ${name}: ${count}\n`;} return api.sendMessage(message, event.threadID, event.messageID);}
+      return api.sendMessage(response.data.message, event.threadID, event.messageID);
+    }
+
+    if (args[0] === "edit") {
+      const editContent = userMessage.replace("edit ", "");
+      const [oldTrigger, ...newArr] = editContent.split(" - ");
+      const newResponse = newArr.join(" - ");if (!oldTrigger || !newResponse)
+      return api.sendMessage("❌ | Format: edit [question] - [newResponse]", event.threadID, event.messageID);
+      await axios.put(`${await baseApiUrl()}/api/jan/edit2`, { oldTrigger, newResponse });
+      return api.sendMessage(`✅ Edited "${oldTrigger}" to "${newResponse}"`, event.threadID, event.messageID);
+    }
+
+
+    if (args[0] === "msg") {
+      const searchTrigger = args.slice(1).join(" ");
+      if (!searchTrigger) return api.sendMessage("Please provide a message to search.", event.threadID, event.messageID);
+      try {
+      const response = await axios.get(`${await baseApiUrl()}/api/jan/msg`, {
+      params: { userMessage: `msg ${searchTrigger}` }, });return api.sendMessage(response.data.message || "No message found.", event.threadID, event.messageID); } catch (error) {
+      const errorMessage = error.response?.data?.error || error.message || "error";
+      return api.sendMessage(errorMessage, event.threadID, event.messageID);
+      }
+    }
+
+  } catch (err) {
+    console.error(err);
+    api.sendMessage("🥹error baby", event.threadID, event.messageID);
+  }
+};
+
+  module.exports.onChat = async ({ api, event }) => {
+    let body = event.body?.toLowerCase(); if (!body) return;
+    const prefix = global.GoatBot?.prefix || "!"; if (body.startsWith(prefix)) body = body.slice(prefix.length).trimStart();
+    const commandWords = ["teach", "remove", "list", "edit", "msg"];
+    if (commandWords.some(cmd => body.includes(cmd))) return;
+    if (!mahmud.some(word => body.startsWith(word))) return;
+    api.setMessageReaction("🪽", event.messageID, () => {}, true); api.sendTypingIndicator(event.threadID, true);
+
+   const message = body.split(" ").slice(1).join(" ").trim(); if (!message) {
+    const randomReplies = [
+      "😚",
+      "Yes 😀",
+      "I am here",
+      "What's up?",
+      "Bolo jaan ki korte panmr jonno"
+    ];
+  
+    return api.sendMessage(
+     randomReplies[Math.floor(Math.random() * randomReplies.length)],
+      event.threadID,
+      (err, info) => {
+        if (!err) {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: "hinata",
+            type: "reply",
+            messageID: info.messageID,
+            author: event.senderID,
+          });
+        }
+      },
+      event.messageID
+    );
+  }
+
+  try {
+    const mahmud = ( await axios.get(`${await baseApiUrl()}/api/hinata?text=${encodeURIComponent(message)}&style=3`)).data.message;
+    api.sendMessage(mahmud, event.threadID, (err, info) => { if (!err) {
+          global.GoatBot.onReply.set(info.messageID, {
+          commandName: "hinata",
+          type: "reply",
+          messageID: info.messageID,
+          author: event.senderID,
+        });
+      }
+    }, event.messageID);
+  } catch {
+    api.sendMessage("🥹error baby", event.threadID, event.messageID);
+  }
+};
+
+module.exports.onReply = async ({ api, event }) => {
+  try {
+    let message = event.body?.trim(); if (!message) return;
+    const commandWords = ["teach", "remove", "list", "edit", "msg"]; if (commandWords.some(cmd => message.toLowerCase().includes(cmd))) return;
+    const prefix = global.GoatBot?.prefix || "!"; if (message.startsWith(prefix)) message = message.slice(prefix.length).trimStart();
+
+    const mahmud = ( await axios.get(`${await baseApiUrl()}/api/hinata?text=${encodeURIComponent(message)}&style=3`) ).data.message;
+    api.sendMessage(mahmud, event.threadID, (err, info) => {
+      if (!err) {
+        global.GoatBot.onReply.set(info.messageID, {
+          commandName: "hinata",
+          type: "reply",
+          messageID: info.messageID,
+          author: event.senderID,
+        });
+      }
+    }, event.messageID);
+  } catch {
+    api.sendMessage("🥹error, contact MahMUD.", event.threadID, event.messageID);
+  }
+};
