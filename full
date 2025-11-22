@@ -67,7 +67,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
     if (args[0] === "list") {
       const endpoint = args[1] === "all" ? "/list/all" : "/list";
-      const response = await axios.get(`$${await baseApiUrl()}/api/jan${endpoint}`);
+      const response = await axios.get(`${await baseApiUrl()}/api/jan${endpoint}`);
       if (args[1] === "all") {
       let message = "👑 List of Hinata teachers:\n\n";
       const data = Object.entries(response.data.data).sort((a, b) => b[1] - a[1]).slice(0, 15);
@@ -99,9 +99,9 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
   } catch (err) {
     console.error(err);
-    api.sendMessage("🥹error baby", event.threadID, event.messageID);
-  }
-};
+    api.sendMessage(`${err.response?.data || err.message}`, event.threadID, event.messageID);
+ }
+},
 
   module.exports.onChat = async ({ api, event }) => {
     let body = event.body?.toLowerCase(); if (!body) return;
