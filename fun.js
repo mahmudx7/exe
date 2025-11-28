@@ -16,8 +16,9 @@ return base.data.mahmud;
 
 module.exports = {
 config: {
-name: "dig",
-version: "2.1",
+name: "fun",
+aliases: ["dig", "funny"],
+version: "1.7",
 author: "MahMUD",
 role: 0,
 category: "fun",
