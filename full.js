@@ -58,7 +58,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const response = await axios.post(`${await baseApiUrl()}/api/jan/teach2`, { trigger, responses, userID: uid,  });
       const userName = (await usersData.getName(uid)) || "Unknown User";
       return api.sendMessage( `✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID  );
-    }
+   }
 
     
     if (args[0] === "remove") {
@@ -68,7 +68,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const response = await axios.delete(`${await baseApiUrl()}/api/jan/remove`, {
       data: { trigger, index: parseInt(index, 10) }, });
       return api.sendMessage(response.data.message, event.threadID, event.messageID);
-    }
+   }
 
     
     if (args[0] === "list") {
@@ -79,7 +79,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const [userID, count] = data[i];
       const name = (await usersData.getName(userID)) || "Unknown"; message += `${i + 1}. ${name}: ${count}\n`; } return api.sendMessage(message, event.threadID, event.messageID); }
       return api.sendMessage(response.data.message, event.threadID, event.messageID);
-    }
+   }
 
     
     if (args[0] === "edit") {
@@ -89,7 +89,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       return api.sendMessage("❌ | Format: edit [question] - [newResponse]", event.threadID, event.messageID);
       await axios.put(`${await baseApiUrl()}/api/jan/edit2`, { oldTrigger, newResponse });
       return api.sendMessage(`✅ Edited "${oldTrigger}" to "${newResponse}"`, event.threadID, event.messageID);
-    }
+   }
 
     
     if (args[0] === "msg") {
@@ -98,22 +98,14 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const response = await axios.get(`${await baseApiUrl()}/api/jan/msg`, {  params: { userMessage: `msg ${searchTrigger}` }, });
       return api.sendMessage(response.data.message || "No message found.", event.threadID, event.messageID);  } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || "error";
-      return api.sendMessage(errorMessage, event.threadID, event.messageID);
-      }
-    }
+      return api.sendMessage(errorMessage, event.threadID, event.messageID);   }
+   }
 
     
-    const getBotResponse = async (text, attachments) => {
-      try {
-        const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
-        return res.data.message;
-      } catch {
-        return "error janu🥹";
-      }
-    };
-
-    const botResponse = await getBotResponse(msg, event.attachments || []);
-    api.sendMessage(botResponse, event.threadID, (err, info) => {
+    const getBotResponse = async (text, attachments) => { try { 
+      const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments }); return res.data.message; } catch { return "error janu🥹"; } };
+      const botResponse = await getBotResponse(msg, event.attachments || []);
+      api.sendMessage(botResponse, event.threadID, (err, info) => {
       if (!err) {
         global.GoatBot.onReply.set(info.messageID, {
           commandName: "hinata",
@@ -133,16 +125,8 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
 
 module.exports.onReply = async ({ api, event }) => {
-    if (event.type !== "message_reply") return; try {
-    const getBotResponse = async (text, attachments) => {
-      try {
-        const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
-        return res.data.message;
-      } catch {
-        return "error janu🥹";
-      }
-    };
-
+   if (event.type !== "message_reply") return; try { const getBotResponse = async (text, attachments) => {  try {
+    const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments }); return res.data.message; } catch {  return "error janu🥹"; } };
     const replyMessage = await getBotResponse(event.body?.toLowerCase() || "meow", event.attachments || []);
     api.sendMessage(replyMessage, event.threadID, (err, info) => {
       if (!err) {
@@ -167,16 +151,11 @@ module.exports.onChat = async ({ api, event }) => {
     const attachments = event.attachments || [];
 
     if (
-      event.type !== "message_reply" &&
-      mahmud.some(word => message.startsWith(word)) && !["!", ".", "/", "`"].some(ch => message.startsWith(ch))  ) { api.setMessageReaction("🪽", event.messageID, () => {}, true);
-      api.sendTypingIndicator(event.threadID, true);
+      event.type !== "message_reply" && mahmud.some(word => message.startsWith(word)) && !["!", ".", "/", "`"].some(ch => message.startsWith(ch))  ) { api.setMessageReaction("🪽", event.messageID, () => {}, true);api.sendTypingIndicator(event.threadID, true);
       const messageParts = message.trim().split(/\s+/);
       const getBotResponse = async (text, attachments) => {
-        try {
-          const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
-          return res.data.message;
-        } catch {
-          return "error janu🥹";
+      try {
+      const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });  return res.data.message; } catch {  return "error janu🥹";
         }
       };
 
@@ -203,12 +182,9 @@ module.exports.onChat = async ({ api, event }) => {
             });
           }
         }, event.messageID);
-      } else {
-        let userText = message;
-        for (const prefix of mahmud) {
-          if (message.startsWith(prefix)) {
-            userText = message.substring(prefix.length).trim();
-            break;
+      } else { let userText = message; for (const prefix of mahmud) {
+          if (message.startsWith(prefix)) { userText = message.substring(prefix.length).trim();
+          break;
           }
         }
 
