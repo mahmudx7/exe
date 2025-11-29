@@ -21,9 +21,14 @@ const baseApiUrl = async () => {
   return base.data.mahmud;
 };
 
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
+
 module.exports.config = {
   name: "hinata",
-  aliases: ["baby", "bby", "jan", "janu", "wifey", "bot"],
+  aliases: ["baby", "bby", "bbu", "jan", "janu", "wifey", "bot"],
   version: "1.7",
   author: "MahMUD",
   role: 0,
@@ -34,8 +39,9 @@ module.exports.config = {
 };
 
 module.exports.onStart = async ({ api, event, args, usersData }) => {
-  const msg = args.join(" ").toLowerCase();
-  const uid = event.senderID;
+      const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68);  if (module.exports.config.author !== obfuscatedAuthor) {  return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID); }
+      const msg = args.join(" ").toLowerCase();
+      const uid = event.senderID;
 
   try {
     if (!args[0]) {
@@ -43,6 +49,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       return api.sendMessage(ran[Math.floor(Math.random() * ran.length)], event.threadID, event.messageID);
     }
 
+ 
     if (args[0] === "teach") {
       const mahmud = msg.replace("teach ", "");
       const [trigger, ...responsesArr] = mahmud.split(" - ");
@@ -50,8 +57,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       if (!trigger || !responses) return api.sendMessage("❌ | teach [question] - [response1, response2,...]", event.threadID, event.messageID);
       const response = await axios.post(`${await baseApiUrl()}/api/jan/teach2`, { trigger, responses, userID: uid,  });
       const userName = (await usersData.getName(uid)) || "Unknown User";
-      return api.sendMessage( `✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID
-      );
+      return api.sendMessage( `✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID  );
     }
 
     
@@ -88,11 +94,9 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
     
     if (args[0] === "msg") {
       const searchTrigger = args.slice(1).join(" ");
-      if (!searchTrigger) return api.sendMessage("Please provide a message to search.", event.threadID, event.messageID);
-      try {
+      if (!searchTrigger) return api.sendMessage("Please provide a message to search.", event.threadID, event.messageID); try {
       const response = await axios.get(`${await baseApiUrl()}/api/jan/msg`, {  params: { userMessage: `msg ${searchTrigger}` }, });
-      return api.sendMessage(response.data.message || "No message found.", event.threadID, event.messageID);
-    } catch (error) {
+      return api.sendMessage(response.data.message || "No message found.", event.threadID, event.messageID);  } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || "error";
       return api.sendMessage(errorMessage, event.threadID, event.messageID);
       }
@@ -129,9 +133,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
 
 module.exports.onReply = async ({ api, event }) => {
-  if (event.type !== "message_reply") return;
-
-  try {
+    if (event.type !== "message_reply") return; try {
     const getBotResponse = async (text, attachments) => {
       try {
         const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });
