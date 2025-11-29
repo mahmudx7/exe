@@ -155,7 +155,7 @@
       "update": "19-04-2025"
     },
     {
-"cmd": "xlnub",
+     "cmd": "xlnub",
       "author": "MahMUD",
       "update": "05-05-2025"
     },
@@ -296,7 +296,13 @@
       "cmd": "kiss",
       "author": "MahMUD",
       "update": "05-10-2025"
- },
+      },
+    {
+
+      "cmd": "kiss2",
+      "author": "MahMUD",
+      "update": "05-10-2025"
+   },
     {
 
       "cmd": "bankai",
