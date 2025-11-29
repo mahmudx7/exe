@@ -11,7 +11,7 @@ const mahmud = [
   "জানু",
   "বেবি",
   "wifey",
-  "hinata"
+  "hinata",
 ];
 
 const baseApiUrl = async () => {
@@ -44,8 +44,8 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
     }
 
     if (args[0] === "teach") {
-      const teachContent = msg.replace("teach ", "");
-      const [trigger, ...responsesArr] = teachContent.split(" - ");
+      const mahmud = msg.replace("teach ", "");
+      const [trigger, ...responsesArr] = mahmud.split(" - ");
       const responses = responsesArr.join(" - ");
       if (!trigger || !responses) return api.sendMessage("❌ | teach [question] - [response1, response2,...]", event.threadID, event.messageID);
       const response = await axios.post(`${await baseApiUrl()}/api/jan/teach2`, { trigger, responses, userID: uid,  });
@@ -56,8 +56,8 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
     
     if (args[0] === "remove") {
-      const removeContent = msg.replace("remove ", "");
-      const [trigger, index] = removeContent.split(" - ");
+      const mahmud = msg.replace("remove ", "");
+      const [trigger, index] = mahmud.split(" - ");
       if (!trigger || !index || isNaN(index)) return api.sendMessage("❌ | remove [question] - [index]", event.threadID, event.messageID);
       const response = await axios.delete(`${await baseApiUrl()}/api/jan/remove`, {
       data: { trigger, index: parseInt(index, 10) }, });
@@ -77,8 +77,8 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
     
     if (args[0] === "edit") {
-      const editContent = msg.replace("edit ", "");
-      const [oldTrigger, ...newArr] = editContent.split(" - ");
+      const mahmud = msg.replace("edit ", "");
+      const [oldTrigger, ...newArr] = mahmud.split(" - ");
       const newResponse = newArr.join(" - ");  if (!oldTrigger || !newResponse)
       return api.sendMessage("❌ | Format: edit [question] - [newResponse]", event.threadID, event.messageID);
       await axios.put(`${await baseApiUrl()}/api/jan/edit2`, { oldTrigger, newResponse });
@@ -166,11 +166,8 @@ module.exports.onChat = async ({ api, event }) => {
 
     if (
       event.type !== "message_reply" &&
-      mahmudPrefixes.some(word => message.startsWith(word)) &&
-      !["!", ".", "/", "`"].some(ch => message.startsWith(ch))  ) {
-      api.setMessageReaction("🪽", event.messageID, () => {}, true);
+      mahmud.some(word => message.startsWith(word)) && !["!", ".", "/", "`"].some(ch => message.startsWith(ch))  ) { api.setMessageReaction("🪽", event.messageID, () => {}, true);
       api.sendTypingIndicator(event.threadID, true);
-
       const messageParts = message.trim().split(/\s+/);
       const getBotResponse = async (text, attachments) => {
         try {
@@ -181,7 +178,7 @@ module.exports.onChat = async ({ api, event }) => {
         }
       };
 
-      const randomMessage = [
+       const randomMessage = [
           "babu khuda lagse🥺",
           "Hop beda😾,Boss বল boss😼",
           "আমাকে ডাকলে ,আমি কিন্তূ কিস করে দেবো😘",
@@ -190,6 +187,7 @@ module.exports.onChat = async ({ api, event }) => {
           "naw amr boss k message daw m.me/mahmud0x7",
           "mb ney bye"
         ];
+                                                                                                                    
         const hinataMessage = randomMessage[Math.floor(Math.random() * randomMessage.length)];
         if (messageParts.length === 1 && attachments.length === 0) {
         api.sendMessage(hinataMessage, event.threadID, (err, info) => {
