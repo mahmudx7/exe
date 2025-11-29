@@ -16,12 +16,11 @@ const baseApiUrl = async () => {
 
 module.exports.config = {
   name: "flux",
-  version: "2.1",
+  version: "1.7",
   role: 0,
   author: "MahMUD",
   description: "Flux Image Generator with random seed",
   category: "Image gen",
-  premium: true,
   guide: "{pn} [prompt]",
   countDown: 15,
 };
