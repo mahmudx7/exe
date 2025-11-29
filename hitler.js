@@ -1,0 +1,45 @@
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
+
+const baseApiUrl = async () => {
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  return base.data.mahmud;
+};
+
+module.exports = {
+  config: {
+    name: "hitler",
+    version: "1.7",
+    author: "MahMUD",
+    role: 0,
+    category: "fun",
+    cooldown: 10,
+    guide: "hitler [mention-reply-UID]",
+  },
+
+  onStart: async function ({ api, event, args }) {
+    const obfuscatedAuthor = String.fromCharCode(77,97,104,77,85,68);
+    if (module.exports.config.author !== obfuscatedAuthor)
+      return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);
+
+    const { threadID, messageID, messageReply, mentions } = event;
+    let id2 = messageReply?.senderID || Object.keys(mentions)[0] || args[0];
+    if (!id2) return api.sendMessage("Mention, reply, or provide UID of the target.", threadID, messageID);
+
+    try {
+      const url = `${await baseApiUrl()}/api/dig?type=hitler&user=${id2}`;
+      const img = await axios.get(url, { responseType: "arraybuffer" });
+      const file = path.join(__dirname, `hitler_${id2}.png`);
+      fs.writeFileSync(file, img.data);
+
+      api.sendMessage({
+        body: "Effect hitler successful.",
+        attachment: fs.createReadStream(file)
+      }, threadID, () => fs.unlinkSync(file), messageID);
+
+    } catch {
+      api.sendMessage("🥹error, contact MahMUD.", threadID, messageID);
+    }
+  }
+};
