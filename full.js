@@ -27,16 +27,16 @@ const baseApiUrl = async () => {
 */
 
 module.exports.config = {
-  name: "hinata",
-  aliases: ["baby", "bby", "bbu", "jan", "janu", "wifey", "bot"],
-  version: "1.7",
-  author: "MahMUD",
-  role: 0,
-  category: "chat",
-  guide: {
-    en: "{pn} [message] OR teach [question] - [response1, response2,...] OR remove [question] - [index] OR list OR list all OR edit [question] - [newResponse] OR msg [question]"
-  }
-};
+   name: "hinata",
+   aliases: ["baby", "bby", "bbu", "jan", "janu", "wifey", "bot"],
+   version: "1.7",
+   author: "MahMUD",
+   role: 0,
+   category: "chat",
+   guide: {
+     en: "{pn} [message] OR teach [question] - [response1, response2,...] OR remove [question] - [index] OR list OR list all OR edit [question] - [newResponse] OR msg [question]"
+   }
+ };
 
 module.exports.onStart = async ({ api, event, args, usersData }) => {
       const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68);  if (module.exports.config.author !== obfuscatedAuthor) {  return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID); }
@@ -150,9 +150,8 @@ module.exports.onChat = async ({ api, event }) => {
     const message = event.body?.toLowerCase() || "";
     const attachments = event.attachments || [];
 
-    if (
-      event.type !== "message_reply" && mahmud.some(word => message.startsWith(word)) && !["!", ".", "/", "`"].some(ch => message.startsWith(ch))  ) { api.setMessageReaction("🪽", event.messageID, () => {}, true);api.sendTypingIndicator(event.threadID, true);
-      const messageParts = message.trim().split(/\s+/);
+    if (event.type !== "message_reply" && mahmud.some(word => message.startsWith(word))) {
+      api.setMessageReaction("🪽", event.messageID, () => {}, true); api.sendTypingIndicator(event.threadID, true);   const messageParts = message.trim().split(/\s+/);
       const getBotResponse = async (text, attachments) => {
       try {
       const res = await axios.post(`${await baseApiUrl()}/api/hinata`, { text, style: 3, attachments });  return res.data.message; } catch {  return "error janu🥹";
