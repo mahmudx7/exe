@@ -44,12 +44,11 @@
       "cmd": "cdp",
       "author": "MahMUD",
       "update": "24-03-2025"
-  },
+    },
     {
       "cmd": "cdp2",
       "author": "MahMUD",
       "update": "24-03-2025"
-    
     },
     {
       "cmd": "sing",
@@ -105,23 +104,22 @@
       "cmd": "unsplash",
       "author": "MahMUD",
       "update": "07-04-2025"
-  },
+    },
     {
       "cmd": "flag",
       "author": "MahMUD",
-      "update": "12-04-2025"  
+      "update": "12-04-2025"
     },
     {
       "cmd": "quiz",
       "author": "MahMUD",
       "update": "27-04-2025"
-
     },
     {
       "cmd": "waifu",
       "author": "MahMUD",
       "update": "20-04-2025"
-   },
+    },
     {
       "cmd": "ffqz",
       "author": "MahMUD",
@@ -131,23 +129,21 @@
       "cmd": "football",
       "author": "MahMUD",
       "update": "20-07-2025"
-      },
+    },
     {
       "cmd": "cricket",
       "author": "MahMUD",
       "update": "21-07-2025"
-    
     },
-    {      
+    {
       "cmd": "wordgame",
       "author": "MahMUD",
       "update": "20-04-2025"
-       },
-      {      
+    },
+    {
       "cmd": "prompt",
       "author": "MahMUD",
       "update": "16-04-2025"
-
     },
     {
       "cmd": "fluxpro",
@@ -155,365 +151,379 @@
       "update": "19-04-2025"
     },
     {
-     "cmd": "xlnub",
+      "cmd": "xlnub",
       "author": "MahMUD",
       "update": "05-05-2025"
     },
     {
-
       "cmd": "gpt",
       "author": "MahMUD",
       "update": "20-04-2025"
     },
     {
-
       "cmd": "meme",
       "author": "MahMUD",
       "update": "05-05-2025"
-},
+    },
     {
-
       "cmd": "inbox",
       "author": "MahMUD",
       "update": "05-05-2025"
-},
+    },
     {
-
       "cmd": "caption",
       "author": "MahMUD",
       "update": "07-05-2025"
-},
+    },
     {
-
       "cmd": "anime",
       "author": "MahMUD",
       "update": "08-05-2025"
-},
+    },
     {
-
       "cmd": "removebg",
       "author": "MahMUD",
       "update": "13-05-2025"
-},
+    },
     {
-
       "cmd": "profile",
       "author": "MahMUD",
       "update": "13-05-2025"
-},
+    },
     {
-
       "cmd": "ffvideo",
       "author": "MahMUD",
       "update": "14-05-2025"
-},
+    },
     {
-
       "cmd": "cat-image",
       "author": "MahMUD",
       "update": "17-05-2025"
-},
+    },
     {
-
       "cmd": "cat-video",
       "author": "MahMUD",
       "update": "17-05-2025"
-},
+    },
     {
-
       "cmd": "uptime",
       "author": "MahMUD",
       "update": "17-05-2025"
- },
+    },
     {
-
       "cmd": "sing2",
       "author": "MahMUD",
       "update": "19-05-2025"
-},
+    },
     {
-
       "cmd": "quote",
       "author": "MahMUD",
       "update": "24-07-2025"
-},
+    },
     {
-
       "cmd": "joke",
       "author": "MahMUD",
       "update": "24-07-2025"
-},
+    },
     {
-
       "cmd": "wlt",
       "author": "NTKhang",
       "update": "26-07-2025"
-},
+    },
     {
-
       "cmd": "whitelists-wl",
       "author": "NTKhang",
       "update": "26-07-2025"
-},
+    },
     {
-
       "cmd": "hadis",
       "author": "MahMUD",
       "update": "26-07-2025"
-},
+    },
     {
-
       "cmd": "imgur",
       "author": "MahMUD",
       "update": "10-08-2025"
-},
+    },
     {
-
       "cmd": "ckban",
       "author": "MahMUD",
       "update": "16-10-2024"
-   },
+    },
     {
-
       "cmd": "pair",
       "author": "MahMUD",
-      "update": "15-08-2025"       
- },
+      "update": "15-08-2025"
+    },
     {
-
       "cmd": "draw",
       "author": "MahMUD",
-      "update": "29-09-2025"       
-  },
+      "update": "29-09-2025"
+    },
     {
-
       "cmd": "tiktok",
       "author": "MahMUD",
-      "update": "01-10-2025" 
-},
+      "update": "01-10-2025"
+    },
     {
-
       "cmd": "kiss",
       "author": "MahMUD",
       "update": "05-10-2025"
-      },
+    },
     {
-
       "cmd": "kiss2",
       "author": "MahMUD",
       "update": "05-10-2025"
-   },
+    },
     {
-
       "cmd": "bankai",
       "author": "MahMUD",
-     "update": "06-10-2025"   
-},
+      "update": "06-10-2025"
+    },
     {
-
       "cmd": "anisr2",
       "author": "MahMUD",
       "update": "06-10-2025"
-},
+    },
     {
-
       "cmd": "edit",
       "author": "MahMUD",
       "update": "08-10-2025"
- },
+    },
     {
-
       "cmd": "hack",
       "author": "MahMUD",
       "update": "12-10-2025"
-},
+    },
     {
-
       "cmd": "fakechat",
       "author": "MahMUD",
       "update": "12-10-2025"
-      },
+    },
     {
-
       "cmd": "write",
       "author": "MahMUD",
       "update": "13-10-2025"
-      },
+    },
     {
-
       "cmd": "onepiece",
       "author": "MahMUD",
       "update": "13-10-2025"
-},
+    },
     {
-
       "cmd": "anipic",
       "author": "MahMUD",
-      "update": "13-10-2025"    
-},
+      "update": "13-10-2025"
+    },
     {
-
       "cmd": "car",
       "author": "MahMUD",
       "update": "13-10-2025"
-      },
+    },
     {
-
       "cmd": "bike",
       "author": "MahMUD",
       "update": "13-10-2025"
-      },
+    },
     {
-
       "cmd": "truthordare",
       "author": "MahMUD",
       "update": "13-10-2025"
-      },
+    },
     {
-
       "cmd": "spamkick",
       "author": "MahMUD",
       "update": "14-10-2025"
-      },
+    },
     {
-
       "cmd": "blur",
       "author": "MahMUD",
       "update": "17-10-2025"
-      },
+    },
     {
-
       "cmd": "llama",
       "author": "MahMUD",
       "update": "20-10-2025"
-      },
+    },
     {
-
       "cmd": "deepseek",
       "author": "MahMUD",
       "update": "20-10-2025"
-      },
+    },
     {
-
       "cmd": "gemma",
       "author": "MahMUD",
       "update": "20-10-2025"
-      },
+    },
     {
-
       "cmd": "qwen",
       "author": "MahMUD",
       "update": "20-10-2025"
-      },
+    },
     {
-
       "cmd": "remini",
       "author": "MahMUD",
       "update": "22-10-2025"
-      },
+    },
     {
-
       "cmd": "cdpvip",
       "author": "MahMUD",
       "update": "22-10-2025"
-      },
+    },
     {
-
       "cmd": "anicdp",
       "author": "MahMUD",
       "update": "22-10-2025"
-      },
+    },
     {
-
       "cmd": "horny",
       "author": "MahMUD",
       "update": "23-10-2025"
-      },
+    },
     {
-
       "cmd": "4k",
       "author": "MahMUD",
       "update": "26-10-2025"
-      },
+    },
     {
-
       "cmd": "memevid",
       "author": "MahMUD",
       "update": "26-10-2025"
-      },
+    },
     {
-
       "cmd": "song",
       "author": "MahMUD",
       "update": "26-10-2025"
-      },
+    },
     {
-
       "cmd": "ffquiz2",
       "author": "MahMUD",
       "update": "02-11-2025"
-      },
+    },
     {
-
       "cmd": "football2",
       "author": "MahMUD",
       "update": "03-11-2025"
-      },
+    },
     {
-
       "cmd": "aniqz2",
       "author": "MahMUD",
       "update": "03-11-2025"
-      },
+    },
     {
-
       "cmd": "mathgame",
       "author": "MahMUD",
       "update": "05-11-2025"
-      },
+    },
     {
-
       "cmd": "myboy",
       "author": "MahMUD",
       "update": "07-11-2025"
-      },
+    },
     {
-
       "cmd": "mygirl",
       "author": "MahMUD",
       "update": "07-11-2025"
-      },
+    },
     {
-
       "cmd": "myking",
       "author": "MahMUD",
       "update": "20-11-2025"
-      },
+    },
     {
-
       "cmd": "myqueen",
       "author": "MahMUD",
       "update": "20-11-2025"
-      },
+    },
     {
-
       "cmd": "actor",
       "author": "MahMUD",
       "update": "21-11-2025"
-      },
+    },
     {
-
       "cmd": "toilet",
       "author": "MahMUD",
       "update": "21-11-2025"
-      },
+    },
     {
-
       "cmd": "fun",
       "author": "MahMUD",
       "update": "29-11-2025"
-      
-      
+    },
+    {
+      "cmd": "trash",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "trash2",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "triggered",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "hitler",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "wanted",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "ads",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "karaba",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "tatoo",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "clown",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "stonk",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "rip",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "gay",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "slap",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "buttslap",
+      "author": "MahMUD",
+      "update": "29-11-2025"
+    },
+    {
+      "cmd": "flux",
+      "author": "MahMUD",
+      "update": "29-11-2025"
     }
   ]
 }
