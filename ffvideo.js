@@ -3,9 +3,14 @@ const fs = require("fs");
 const path = require("path");
 
 const mahmud = async () => {
-  const response = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+const response = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
   return response.data.mahmud;
 };
+
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
 
 module.exports = {
   config: {
