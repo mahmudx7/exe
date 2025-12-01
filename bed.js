@@ -44,7 +44,7 @@ module.exports = {
       const targetID = mention[0];
 
       const base = await mahmud();
-      const apiURL = `${base}/api/kiss`;
+      const apiURL = `${base}/api/bed`;
 
       message.reply("💞 Generating your image, please wait...");
 
