@@ -53,7 +53,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const [trigger, ...responsesArr] = mahmud.split(" - ");
       const responses = responsesArr.join(" - ");
       if (!trigger || !responses) return api.sendMessage("❌ | teach [question] - [response1, response2,...]", event.threadID, event.messageID);
-      const response = await axios.post(`${await baseApiUrl()}/api/jan/teach2`, { trigger, responses, userID: uid,  });
+      const response = await axios.post(`${await baseApiUrl()}/api/jan/teach`, { trigger, responses, userID: uid,  });
       const userName = (await usersData.getName(uid)) || "Unknown User";
       return api.sendMessage( `✅ Replies added: "${responses}" to "${trigger}"\n• 𝐓𝐞𝐚𝐜𝐡𝐞𝐫: ${userName}\n• 𝐓𝐨𝐭𝐚𝐥: ${response.data.count || 0}`, event.threadID, event.messageID  );
    }
@@ -85,7 +85,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
       const [oldTrigger, ...newArr] = mahmud.split(" - ");
       const newResponse = newArr.join(" - ");  if (!oldTrigger || !newResponse)
       return api.sendMessage("❌ | Format: edit [question] - [newResponse]", event.threadID, event.messageID);
-      await axios.put(`${await baseApiUrl()}/api/jan/edit2`, { oldTrigger, newResponse });
+      await axios.put(`${await baseApiUrl()}/api/jan/edit`, { oldTrigger, newResponse });
       return api.sendMessage(`✅ Edited "${oldTrigger}" to "${newResponse}"`, event.threadID, event.messageID);
    }
 
