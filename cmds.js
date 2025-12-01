@@ -1,5 +1,5 @@
 const axios = require("axios");
-const availableCmdsUrl = "https://raw.githubusercontent.com/mahmudx7/exe/main/CMDSRUL.json";
+const availableCmdsUrl = "https://raw.githubusercontent.com/mahmudx7/HINATA/main/CMDSRUL.json";
 const cmdUrlsJson = "https://raw.githubusercontent.com/mahmudx7/HINATA/main/CMDS.json";
 const ITEMS_PER_PAGE = 10;
 
@@ -56,7 +56,7 @@ module.exports.onStart = async function ({ api, event, args }) {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const cmdsToShow = finalArray.slice(startIndex, endIndex);
 
-    let msg = `╭─‣ 𝐇𝐈𝐍𝐀𝐓𝐀 𝐒𝐓𝐎𝐑𝐄 🎀\n├‣ 𝐀𝐝𝐦𝐢𝐧: 𝐌𝐚𝐡𝐌𝐔𝐃\n├‣ 𝐓𝐨𝐭𝐚𝐥 𝐂𝐨𝐦𝐦𝐚𝐧𝐝𝐬: ${finalArray.length}\n╰────────────◊\n`;
+    let msg = `╭─‣ 𝐇𝐈𝐍𝐀𝐓𝐀 𝐒𝐓𝐎𝐑𝐄 🎀\n├‣ 𝐀𝐃𝐌𝐈𝐍: 𝐌𝐚𝐡𝐌𝐔𝐃\n├‣ 𝐓𝐎𝐓𝐀𝐋 𝐂𝐎𝐌𝐌𝐀𝐍𝐃𝐒: ${finalArray.length}\n╰────────────◊\n`;
 
     cmdsToShow.forEach((cmd, index) => {
       msg += `╭─‣ ${startIndex + index + 1}: ${cmd.cmd}\n├‣ Author: ${cmd.author}\n├‣ Update: ${cmd.update}\n╰────────────◊\n`;
