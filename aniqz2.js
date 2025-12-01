@@ -5,6 +5,11 @@ const mahmud = async () => {
   return base.data.mahmud;
 };
 
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
+
 module.exports = {
   config: {
     name: "aniqz2",
