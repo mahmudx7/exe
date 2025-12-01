@@ -529,6 +529,11 @@
       "cmd": "bed",
       "author": "MahMUD",
       "update": "01-12-2025"
+      },
+    {
+      "cmd": "cs",
+      "author": "MahMUD",
+      "update": "25-03-2025"
     }
   ]
 }
