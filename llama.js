@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const getBaseApi = async () => {
-  const res = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  const res = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return res.data.mahmud;
 };
 
