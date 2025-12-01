@@ -58,7 +58,7 @@ module.exports = {
       fs.writeFileSync(imgPath, Buffer.from(response.data, "binary"));
 
       message.reply({
-        body: "💋 Here’s your image,
+        body: "Here’s your image😘",
         attachment: fs.createReadStream(imgPath)
       });
 
