@@ -44,8 +44,8 @@ module.exports = {
         if (!imgurLink) throw new Error("Imgur upload failed");  try {
         const uploadResponse = await axios.post(`${apiUrl}/api/album/add`, {  category,  videoUrl: imgurLink,  });
         return api.sendMessage(uploadResponse.data.message, event.threadID, event.messageID);  } catch (error) {
-        return api.sendMessage(`❌ Failed to upload video.\nError: ${error.response?.data?.error || error.message}`, event.threadID, event.messageID);   }    } catch (error) {
-        return api.sendMessage(`❌ Failed to upload to Imgur.\nError: ${error.message}`, event.threadID, event.messageID);   }
+        return api.sendMessage(`Failed to upload video.\n${error.response?.data?.error || error.message}`, event.threadID, event.messageID);   }    } catch (error) {
+        return api.sendMessage(`Failed to upload to Imgur.\n${error.message}`, event.threadID, event.messageID);   }
       }
 
         
@@ -54,14 +54,14 @@ module.exports = {
        const videoUrl = args[2];   try {
        const response = await axios.post(`${apiUrl}/api/add`, {    category,    videoUrl,  });
        return api.sendMessage(response.data.message, event.threadID, event.messageID);  } catch (error) {
-       return api.sendMessage(`❌ Error: ${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
+       return api.sendMessage(`${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
      }
 
         
      } else if (args[0] === "list") {try {
        const response = await axios.get(`${apiUrl}/api/album/list`);
        api.sendMessage(response.data.message, event.threadID, event.messageID); } catch (error) {
-       api.sendMessage(`❌ Error: ${error.message}`, event.threadID, event.messageID);  } } else {
+       api.sendMessage(`${error.message}`, event.threadID, event.messageID);  } } else {
        const displayNames = 
         [
   "𝐅𝐮𝐧𝐧𝐲 𝐕𝐢𝐝𝐞𝐨 🎀",
