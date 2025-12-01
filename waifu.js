@@ -1,11 +1,11 @@
 const axios = require("axios");
 
 const baseApiUrl = async () => {
-  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return base.data.mahmud;
 };
 
-const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); // "MahMUD"
+const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
 
 module.exports = {
   config: {
