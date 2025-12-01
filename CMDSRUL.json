@@ -524,6 +524,11 @@
       "cmd": "flux",
       "author": "MahMUD",
       "update": "29-11-2025"
+      },
+    {
+      "cmd": "bed",
+      "author": "MahMUD",
+      "update": "01-12-2025"
     }
   ]
 }
