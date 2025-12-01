@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const mahmhd = async () => {
-  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return base.data.mahmud;
 };
 
@@ -16,7 +16,7 @@ module.exports = {
   config: {
     name: "hack",
     author: "MahMUD",
-    version: "1.8",
+    version: "1.7",
     role: 0,
     countDown: 5,
     category: "fun",
