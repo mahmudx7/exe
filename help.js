@@ -57,7 +57,7 @@ module.exports = {
       const totalCommands = commands.size;
       msg += `\n\n⭔Bot has ${totalCommands} commands\n⭔Type ${prefix}𝐡𝐞𝐥𝐩 <𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚗𝚊𝚖𝚎> to learn Usage.\n`;
       msg += ``;
-      msg += `\n╭─✦ADMIN: MahMUD彡\n├‣ FACEBOOK\n╰‣:m.me/mahmud.x07`; // customize this section if needed
+      msg += `\n╭─✦ADMIN: MahMUD彡\n├‣ FACEBOOK\n╰‣:m.me/mahmud0x7`; // customize this section if needed
 
       try {
         const hh = await message.reply({ body: msg });
