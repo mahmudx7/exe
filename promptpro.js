@@ -10,6 +10,11 @@ const mahmud = async () => {
   return `${userPrompt} Describe this without extra text ${style} style`;
 }
 
+/**
+* @author MahMUD
+* @author: do not delete it
+*/
+
 module.exports = {
   config: {
     name: "promptpro",
@@ -33,7 +38,7 @@ module.exports = {
      const allowedModes = ["-flux", "-ai", "-gpt", "-midjourney", "-dalle", "-gemini"];
      let mode = "default";
      if (args[0]?.toLowerCase() === "list") {
-     return api.sendMessage(`📜 Available Modes:\n${allowedModes.join("\n")}`, event.threadID, event.messageID );
+     return api.sendMessage(`✨ Available prompt Modes:\n${allowedModes.join("\n")}`, event.threadID, event.messageID );
     }
       
      if (args[0]?.startsWith("-")) { if (allowedModes.includes(args[0])) {
@@ -66,7 +71,7 @@ module.exports = {
       api.sendMessage(reply, event.threadID, event.messageID);
       api.setMessageReaction(imageUrl ? "🪽" : "✨", event.messageID, () => {}, true);
     } catch (e) {
-      api.sendMessage("❌ An error occurred.", event.threadID, event.messageID);
+      api.sendMessage("🥹error contact, MahMUD.", event.threadID, event.messageID);
       api.setMessageReaction("❌", event.messageID, () => {}, true);
     }
   }
