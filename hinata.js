@@ -1,3 +1,5 @@
+//Note: The most updated all-in-one Simi Chat
+
 const axios = require("axios");
 
 const mahmud = [
@@ -45,7 +47,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
   try {
     if (!args[0]) {
-      const ran = ["Bolo baby", "hum", "type help baby", "type !baby hi"];
+      const ran = ["Bolo baby", "I love you😘", "type !bby hi"];
       return api.sendMessage(ran[Math.floor(Math.random() * ran.length)], event.threadID, event.messageID);
     }
 
