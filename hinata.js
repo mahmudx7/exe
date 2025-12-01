@@ -1,5 +1,3 @@
-//Note: The most updated all-in-one Simi Chat
-
 const axios = require("axios");
 
 const mahmud = [
@@ -17,9 +15,7 @@ const mahmud = [
 ];
 
 const baseApiUrl = async () => {
-  const base = await axios.get(
-    "https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json"
-  );
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return base.data.mahmud;
 };
 
@@ -36,7 +32,7 @@ module.exports.config = {
    role: 0,
    category: "chat",
    guide: {
-     en: "{pn} [message] OR teach [question] - [response1, response2,...] OR remove [question] - [index] OR list OR list all OR edit [question] - [newResponse] OR msg [question]"
+     en: "{pn} [message] OR teach [question] - [response1, response2,...] OR remove [question] - [index] OR list OR list all OR edit [question] - [newResponse] OR msg [question]\nNote: The most updated and fastest all-in-one Simi Chat."
    }
  };
 
@@ -47,7 +43,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
   try {
     if (!args[0]) {
-      const ran = ["Bolo baby", "I love you😘", "type !bby hi"];
+      const ran = ["Bolo baby", "I love you", "type !bby hi"];
       return api.sendMessage(ran[Math.floor(Math.random() * ran.length)], event.threadID, event.messageID);
     }
 
