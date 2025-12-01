@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const mahmud = async () => {
-  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return base.data.mahmud;
 };
 
@@ -20,6 +20,8 @@ module.exports = {
   },
 
   onStart: async function ({ message, event }) {
+  const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68);   if (module.exports.config.author !== obfuscatedAuthor) {
+    return api.sendMessage("You are not authorized to change the author name.", event.threadID, event.messageID);  }
     try {
       if (event.type !== "message_reply")
         return message.reply("❌ | Please reply to an image.");
