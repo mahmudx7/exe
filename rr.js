@@ -10,7 +10,7 @@ function formatMoney(num) {
 }
 
 const baseApiUrl = async () => {
-  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/exe/main/baseApiUrl.json");
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return base.data.mahmud;
 };
 
@@ -45,68 +45,96 @@ module.exports = {
     const apiUrl = await baseApiUrl();
 
     if (args[0] === "add") {
-      if (!args[1]) {
-        return api.sendMessage("❌ Please specify a category. Usage: !a add [category]", event.threadID, event.messageID);
-      }
+  if (!args[1]) {
+    return api.sendMessage(
+      "❌ Please specify a category. Usage: !a add [category]",
+      event.threadID,
+      event.messageID
+    );
+  }
 
-      const category = args[1].toLowerCase();
+  const category = args[1].toLowerCase();
 
-      if (event.messageReply && event.messageReply.attachments && event.messageReply.attachments.length > 0) {
-        const attachment = event.messageReply.attachments[0];
-        
-        if (attachment.type !== "video") {
-          return api.sendMessage("❌ Only video attachments are allowed.", event.threadID, event.messageID);
-        }
+  // --- Function: Upload to Imgur (base64) ---
+  async function uploadToImgur(url) {
+    const file = await axios.get(url, { responseType: "arraybuffer" });
+    const base64 = Buffer.from(file.data).toString("base64");
 
-        try {
-          const response = await axios.post(
-            "https://api.imgur.com/3/image",
-            {
-              image: attachment.url,
-              type: "url"
-            },
-            {
-              headers: {
-                Authorization: "Client-ID 137256035dcfdcc"
-              }
-            }
-          );
-
-          const imgurLink = response.data?.data?.link;
-          if (!imgurLink) throw new Error("Imgur upload failed");
-
-          try {
-            const uploadResponse = await axios.post(`${apiUrl}/api/album/add`, {
-              category,
-              videoUrl: imgurLink,
-            });
-
-            return api.sendMessage(uploadResponse.data.message, event.threadID, event.messageID);
-          } catch (error) {
-            return api.sendMessage(`❌ Failed to upload video.\nError: ${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
-          }
-
-        } catch (error) {
-          return api.sendMessage(`❌ Failed to upload to Imgur.\nError: ${error.message}`, event.threadID, event.messageID);
+    const imgur = await axios.post(
+      "https://api.imgur.com/3/image",
+      { image: base64, type: "base64" },
+      {
+        headers: {
+          Authorization: "Client-ID 137256035dcfdcc"
         }
       }
+    );
 
-      if (!args[2]) {
-        return api.sendMessage("❌ Please provide a video URL or reply to a video message.", event.threadID, event.messageID);
+    return imgur.data.data.link;
+  }
+
+  // --- Case 1: Reply video attachment ---
+  if (event.messageReply && event.messageReply.attachments?.length > 0) {
+    const attachment = event.messageReply.attachments[0];
+
+    if (attachment.type !== "video") {
+      return api.sendMessage(
+        "❌ Only video attachments are allowed.",
+        event.threadID,
+        event.messageID
+      );
+    }
+
+    try {
+      // Upload video to Imgur
+      const imgurLink = await uploadToImgur(attachment.url);
+
+      // Send to API
+      const uploadResponse = await axios.post(`${apiUrl}/api/album/add`, {
+        category,
+        videoUrl: imgurLink,
+      });
+
+      return api.sendMessage(
+        uploadResponse.data.message,
+        event.threadID,
+        event.messageID
+      );
+
+    } catch (error) {
+      return api.sendMessage(
+        `❌ Upload error:\n${error.response?.data?.data?.error || error.message}`,
+        event.threadID,
+        event.messageID
+      );
+    }
+  }
+
+  // --- Case 2: Direct URL ---
+  if (!args[2]) {
+    return api.sendMessage(
+      "❌ Please provide a video URL or reply to a video message.",
+      event.threadID,
+      event.messageID
+    );
+  }
+
+  const videoUrl = args[2];
+
+  try {
+    const response = await axios.post(`${apiUrl}/api/album/add`, {
+      category,
+      videoUrl,
+    });
+
+    return api.sendMessage(response.data.message, event.threadID, event.messageID);
+
+  } catch (error) {
+    return api.sendMessage(
+      `❌ Error: ${error.response?.data?.error || error.message}`,
+      event.threadID,
+      event.messageID
       }
-
-      const videoUrl = args[2];
-      try {
-        const response = await axios.post(`${apiUrl}/api/album/add`, {
-          category,
-          videoUrl,
-        });
-
-        return api.sendMessage(response.data.message, event.threadID, event.messageID);
-      } catch (error) {
-        return api.sendMessage(`❌ Error: ${error.response?.data?.error || error.message}`, event.threadID, event.messageID);
-      }
-
     } else if (args[0] === "list") {
       try {
       const response = await axios.get(`${apiUrl}/api/album/list`);
