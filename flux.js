@@ -51,9 +51,7 @@ module.exports.config = {
       setTimeout(() => fs.unlinkSync(filePath), 5000);
     } catch (err) {
       console.error(err);
-      api.sendMessage("🥹error contact, MahMUD. " + err.message,
-        event.threadID, event.messageID
-      );
+      api.sendMessage("🥹error contact, MahMUD. " + err.message,event.threadID, event.messageID);
     }
   } catch (e) {
     console.error(e);
