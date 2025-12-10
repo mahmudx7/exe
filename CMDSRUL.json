@@ -539,6 +539,11 @@
       "cmd": "help",
       "author": "MahMUD",
       "update": "02-12-2025"
+      },
+    {
+      "cmd": "my",
+      "author": "MahMUD",
+      "update": "10-12-2025"
     }
   ]
 }
