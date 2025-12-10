@@ -3,9 +3,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 const baseApiUrl = async () => {
-  const base = await axios.get(
-    "https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json"
-  );
+  const base = await axios.get("https://raw.githubusercontent.com/mahmudx7/HINATA/main/baseApiUrl.json");
   return base.data.mahmud;
 };
 
@@ -47,10 +45,10 @@ module.exports = {
     }
 
     if (!["boy", "girl", "bf", "gf", "king", "queen"].includes(type)) {
-      return api.sendMessage("Use: my boy/girl/queen/king/bf/gf @tag | reply | uid\nUse: my list", event.threadID ); }
+      return api.sendMessage("Use: my boy/girl/queen/king/bf/gf @tag | reply | uid\nUse: my list", event.threadID, event.messageID ); }
       const mention = Object.keys(event.mentions)[0];
       let target = mention || (event.messageReply && event.messageReply.senderID) || (args[1] && /^\d+$/.test(args[1]) ? args[1] : null);if (!target)
-      return api.sendMessage("Tag, reply, or give UID.", event.threadID);
+      return api.sendMessage("Tag, reply, or give UID.", event.threadID, event.messageID);
 
     const captionText = {
       boy: "𝐓𝐇𝐀𝐓'𝐒 𝐌𝐘 𝐁𝐎𝐘 🖤",
