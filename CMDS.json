@@ -106,5 +106,6 @@
   "flux": "https://raw.githubusercontent.com/mahmudx7/HINATA/main/flux.js",
   "bed": "https://raw.githubusercontent.com/mahmudx7/HINATA/main/bed.js",
   "cs": "https://raw.githubusercontent.com/mahmudx7/HINATA/main/cs.js",
-  "help": "https://raw.githubusercontent.com/mahmudx7/HINATA/main/help.js"
+  "help": "https://raw.githubusercontent.com/mahmudx7/HINATA/main/help.js",
+  "my": "https://raw.githubusercontent.com/mahmudx7/HINATA/main/my.js"
 }
