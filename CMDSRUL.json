@@ -544,6 +544,16 @@
       "cmd": "my",
       "author": "MahMUD",
       "update": "10-12-2025"
+      },
+    {
+      "cmd": "brother",
+      "author": "MahMUD",
+      "update": "12-12-2025"
+      },
+    {
+      "cmd": "sister",
+      "author": "MahMUD",
+      "update": "12-12-2025"
     }
   ]
 }
