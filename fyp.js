@@ -12,7 +12,7 @@ const baseApiUrl = async () => {
 module.exports = {
   config: {
     name: "fyp",
-    version: "1.3",
+    version: "1.7",
     author: "MahMUD",
     category: "media",
     countDown: 5,
