@@ -554,6 +554,11 @@
       "cmd": "sister",
       "author": "MahMUD",
       "update": "12-12-2025"
+      },
+    {
+      "cmd": "fyp",
+      "author": "MahMUD",
+      "update": "14-12-2025"
     }
   ]
 }
