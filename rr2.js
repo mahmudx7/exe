@@ -35,7 +35,7 @@ const levelToExp = (level, deltaNextLevel = deltaNext) => Math.floor(((Math.pow(
 
 module.exports = {
     config: {
-        name: "rank",
+        name: "rank2",
         version: "2.0",
         author: "NTKhang & Gemini",
         countDown: 5,
