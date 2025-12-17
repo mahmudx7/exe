@@ -292,19 +292,26 @@ class RankCard {
 		ctx.fillText(`Exp ${exp}/${expNextLevel}`, 47.5 * percentage(widthCard), 61.4 * percentage(heightCard));
 
 		if (isVip) {
-			const badgeSize = 170;
-			const vipLogo = await Canvas.loadImage("https://i.imgur.com/zNzNEpN.jpeg");
-			ctx.drawImage(vipLogo, widthCard - 700, heightCard / 2 - 185, badgeSize, badgeSize);
-		}
+	try {
+		const badgeSize = 170; 
+		const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
+		const vipLogo = await Canvas.loadImage(vipLogoUrl);
 
-		ctx.globalCompositeOperation = "destination-over";
-		ctx.fillStyle = checkGradientColor(ctx, main_color, 0, 0, widthCard, heightCard);
-		drawSquareRounded(ctx, 0, 0, widthCard, heightCard, radius, main_color);
-		
-		return canvas.createPNGStream();
+		const bx = width - badgeSize - 530; // more left
+		const by = height / 2 - badgeSize / 2 - 100; // slightly up
+
+		ctx.save();
+		ctx.beginPath();
+		ctx.arc(bx + badgeSize / 2, by + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.clip();
+		ctx.drawImage(vipLogo, bx, by, badgeSize, badgeSize);
+		ctx.restore();
+	} catch (err) {
+		console.error("VIP badge load failed:", err);
 	}
-}
-
+				}
+		
 // --- Essential Helpers ---
 async function checkColorOrImageAndDraw(xStart, yStart, width, height, ctx, colorOrImage, r) {
 	if (!colorOrImage.match?.(/^https?:\/\//)) {
