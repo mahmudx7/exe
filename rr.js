@@ -40,7 +40,7 @@ const defaultDesignCard = {
 
 module.exports = {
 	config: {
-		name: "rank",
+		name: "rank2",
 		version: "1.9",
 		author: "NTKhang",
 		countDown: 5,
