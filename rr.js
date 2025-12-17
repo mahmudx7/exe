@@ -1,5 +1,4 @@
 const Canvas = require("canvas");
-const { uploadZippyshare } = global.utils;
 const mongoose = require('mongoose');
 
 // --- VIP Schema --- 
@@ -33,7 +32,6 @@ Canvas.registerFont(defaultPathFontName, {
 let deltaNext;
 const expToLevel = (exp, deltaNextLevel = deltaNext) => Math.floor((1 + Math.sqrt(1 + 8 * exp / deltaNextLevel)) / 2);
 const levelToExp = (level, deltaNextLevel = deltaNext) => Math.floor(((Math.pow(level, 2) - level) * deltaNextLevel) / 2);
-global.client.makeRankCard = makeRankCard;
 
 module.exports = {
 	config: {
@@ -43,7 +41,7 @@ module.exports = {
 		countDown: 5,
 		role: 0,
 		description: {
-			vi: "Xem level của bạn hoặc người được tag. Có thể tag banyak người",
+			vi: "Xem level của bạn hoặc người được tag. Có thể tag nhiều người",
 			en: "View your level or the level of the tagged person. You can tag many people"
 		},
 		category: "rank",
@@ -67,19 +65,21 @@ module.exports = {
 			targetUsers = arrayMentions;
 
 		const rankCards = await Promise.all(targetUsers.map(async userID => {
-			const rankCard = await makeRankCard(userID, deltaNext, api); 
-			rankCard.path = `${randomString(10)}.png`;
-			return rankCard;
+			const rankCardBuffer = await makeRankCard(userID, deltaNext, api); 
+			return {
+				body: "",
+				attachment: rankCardBuffer,
+				path: `${randomString(10)}.png`
+			};
 		}));
 
-		return message.reply({
-			attachment: rankCards
-		});
+		for (const card of rankCards) {
+			await message.reply(card);
+		}
 	},
 
 	onChat: async function ({ event }) { 
 		try {
-            // This only increments EXP. Name update logic has been removed.
 			await Users.updateOne(
                 { userID: event.senderID }, 
                 { $inc: { exp: 1 } }, 
@@ -106,26 +106,19 @@ const defaultDesignCard = {
 
 async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
     let userData = null;
-
     try {
         userData = await Users.findOne({ userID: userID }).lean();
-        
         if (!userData) {
              let name = "Unknown";
              try {
-                name = (await api.getUserInfo(userID))[userID].name || "Unknown";
+                const info = await api.getUserInfo(userID);
+                name = info[userID].name || "Unknown";
              } catch (e) {
                 console.warn(`[RANK MAKE] Failed to fetch name for new user ${userID}`);
              }
-             
-            userData = {
-                userID: userID,
-                exp: 0,
-                name: name
-            };
+            userData = { userID: userID, exp: 0, name: name };
             await Users.create(userData);
         }
-        
     } catch (error) {
         console.error("Error fetching user data for rank card:", error);
         throw new Error("Failed to retrieve user data.");
@@ -148,15 +141,8 @@ async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
 		console.error("Error fetching VIP status:", error);
 	}
     
-    const graphUrl = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
-    let avatarUrl = graphUrl;
+    const avatarUrl = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
     
-    try {
-        await Canvas.loadImage(graphUrl);
-    } catch (e) {
-        avatarUrl = "https://i.imgur.com/eB3V1XN.png";
-    }
-
 	const dataLevel = {
 		exp: currentExp,
 		expNextLevel,
@@ -167,15 +153,8 @@ async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
 		isVip: isVip
 	};
 
-	const configRankCard = { ...defaultDesignCard };
-	const checkImagKey = ["main_color", "sub_color", "line_color", "exp_color", "expNextLevel_color"];
-
-	for (const key of checkImagKey) {
-		if (!isNaN(configRankCard[key]))
-			configRankCard[key] = await api.resolvePhotoUrl(configRankCard[key]);
-	}
-
-	const image = new RankCard({ ...configRankCard, ...dataLevel });
+	const configRankCard = { ...defaultDesignCard, ...dataLevel };
+	const image = new RankCard(configRankCard);
 	return await image.buildCard();
 }
 
@@ -199,9 +178,9 @@ class RankCard {
 	async buildCard() {
 		let { widthCard, heightCard } = this;
 		const {
-			main_color, sub_color, alpha_subcard, exp_color, expNextLevel_color,
-			text_color, name_color, level_color, rank_color, line_color,
-			exp_text_color, exp, expNextLevel, name, level, rank, avatar, isVip 
+			sub_color, alpha_subcard, exp_color,
+			text_color, rank_color, line_color,
+			exp, expNextLevel, name, level, rank, avatar, isVip 
 		} = this;
 
 		const canvas = Canvas.createCanvas(widthCard, heightCard);
@@ -209,7 +188,7 @@ class RankCard {
 
 		const alignRim = 3 * percentage(widthCard);
 		ctx.globalAlpha = parseFloat(alpha_subcard || 0);
-		await checkColorOrImageAndDraw(alignRim, alignRim, widthCard - alignRim * 2, heightCard - alignRim * 2, ctx, sub_color, 20, alpha_subcard);
+		await checkColorOrImageAndDraw(alignRim, alignRim, widthCard - alignRim * 2, heightCard - alignRim * 2, ctx, sub_color, 20);
 		ctx.globalAlpha = 1;
 
 		ctx.globalCompositeOperation = "destination-out";
@@ -218,7 +197,7 @@ class RankCard {
 		const widthLineBetween = 58 * percentage(widthCard);
 		const heightLineBetween = 2 * percentage(heightCard);
 		const angleLineCenter = 40;
-		const edge = heightCard / 2 * Math.tan(angleLineCenter * Math.PI / 180);
+		const edge = (heightCard / 2) * Math.tan((angleLineCenter * Math.PI) / 180);
 
 		if (line_color) {
 			if (!isUrl(line_color)) {
@@ -234,7 +213,7 @@ class RankCard {
 				ctx.rect(xyAvatar + resizeAvatar / 2, heightCard / 2 - heightLineBetween / 2, widthLineBetween, heightLineBetween);
 				ctx.fill();
 				ctx.translate(xyAvatar + resizeAvatar / 2 + widthLineBetween + edge, 0);
-				ctx.rotate(angleLineCenter * Math.PI / 180);
+				ctx.rotate((angleLineCenter * Math.PI) / 180);
 				ctx.rect(0, 0, heightLineBetween, 1000);
 				ctx.fill();
 				ctx.restore();
@@ -264,7 +243,13 @@ class RankCard {
 		const xStartExp = (25 + 1.5) * percentage(widthCard), yStartExp = 67 * percentage(heightCard), widthExp = 40.5 * percentage(widthCard), heightExp = radius * 2;
 		ctx.globalCompositeOperation = "source-over";
 		
-		centerImage(ctx, await Canvas.loadImage(avatar), xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
+        try {
+            const avatarImg = await Canvas.loadImage(avatar);
+            centerImage(ctx, avatarImg, xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
+        } catch(e) {
+            const fallback = await Canvas.loadImage("https://i.imgur.com/eB3V1XN.png");
+            centerImage(ctx, fallback, xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
+        }
 
 		const widthExpCurrent = (100 / expNextLevel * exp) * percentage(widthExp);
 		ctx.fillStyle = checkGradientColor(ctx, exp_color, xStartExp, yStartExp, xStartExp + widthExp, yStartExp);
@@ -292,29 +277,30 @@ class RankCard {
 		ctx.fillText(`Exp ${exp}/${expNextLevel}`, 47.5 * percentage(widthCard), 61.4 * percentage(heightCard));
 
 		if (isVip) {
-	try {
-		const badgeSize = 170; 
-		const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
-		const vipLogo = await Canvas.loadImage(vipLogoUrl);
-
-		const bx = width - badgeSize - 530; // more left
-		const by = height / 2 - badgeSize / 2 - 100; // slightly up
-
-		ctx.save();
-		ctx.beginPath();
-		ctx.arc(bx + badgeSize / 2, by + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.clip();
-		ctx.drawImage(vipLogo, bx, by, badgeSize, badgeSize);
-		ctx.restore();
-	} catch (err) {
-		console.error("VIP badge load failed:", err);
+			try {
+				const badgeSize = 170; 
+				const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
+				const vipLogo = await Canvas.loadImage(vipLogoUrl);
+				const bx = widthCard - badgeSize - 530; 
+				const by = heightCard / 2 - badgeSize / 2 - 100;
+				ctx.save();
+				ctx.beginPath();
+				ctx.arc(bx + badgeSize / 2, by + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2, true);
+				ctx.closePath();
+				ctx.clip();
+				ctx.drawImage(vipLogo, bx, by, badgeSize, badgeSize);
+				ctx.restore();
+			} catch (err) {
+				console.error("VIP badge load failed:", err);
+			}
+		}
+        return canvas.toBuffer();
 	}
-				}
-		
+}
+
 // --- Essential Helpers ---
 async function checkColorOrImageAndDraw(xStart, yStart, width, height, ctx, colorOrImage, r) {
-	if (!colorOrImage.match?.(/^https?:\/\//)) {
+	if (typeof colorOrImage !== 'string' || !colorOrImage.match(/^https?:\/\//)) {
 		drawSquareRounded(ctx, xStart, yStart, width, height, r, colorOrImage);
 	} else {
 		const imageLoad = await Canvas.loadImage(colorOrImage);
@@ -381,6 +367,7 @@ function checkGradientColor(ctx, color, x1, y1, x2, y2) {
 }
 
 function isUrl(string) {
+    if (typeof string !== 'string') return false;
 	try { return Boolean(new URL(string)); }
 	catch (err) { return false; }
 }
