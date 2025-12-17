@@ -41,13 +41,13 @@ const defaultDesignCard = {
 module.exports = {
 	config: {
 		name: "rank2",
-		version: "1.9",
+		version: "2.0",
 		author: "NTKhang",
 		countDown: 5,
 		role: 0,
 		description: {
-			vi: "Xem level. Sử dụng Facebook Graph API để lấy avatar nhanh hơn.",
-			en: "View level. Uses Facebook Graph API for faster avatar loading."
+			vi: "Xem level. Sửa lỗi getAll và tối ưu tốc độ.",
+			en: "View level. Fixed getAll error and speed optimized."
 		},
 		category: "rank",
 		guide: {
@@ -59,18 +59,27 @@ module.exports = {
 		}
 	},
 
-	onStart: async function ({ message, event, commandName, envCommands, api }) {
-		const { usersData } = global.GoatBot;
+	onStart: async function (args) {
+		const { message, event, commandName, envCommands, api } = args;
+		
+		// FAIL-SAFE: Try multiple ways to find usersData
+		const usersData = args.usersData || global.GoatBot?.usersData || global.client?.usersData;
+		
+		if (!usersData) {
+			return message.reply("Could not initialize usersData. Please check bot version.");
+		}
+
 		deltaNext = envCommands[commandName].deltaNext;
 		
 		const arrayMentions = Object.keys(event.mentions);
 		const targetUsers = arrayMentions.length == 0 ? [event.senderID] : arrayMentions;
 
+		// Pre-fetch data efficiently
 		const allUsers = await usersData.getAll();
 		allUsers.sort((a, b) => (b.exp || 0) - (a.exp || 0));
 
 		const rankCards = await Promise.all(targetUsers.map(async userID => {
-			const rankCard = await makeRankCard(userID, allUsers, deltaNext, api);
+			const rankCard = await makeRankCard(userID, allUsers, usersData, deltaNext, api);
 			rankCard.path = `${randomString(10)}.png`;
 			return rankCard;
 		}));
@@ -87,8 +96,7 @@ module.exports = {
 	}
 };
 
-async function makeRankCard(userID, allUser, deltaNext, api = global.GoatBot.fcaApi) {
-	const { usersData } = global.GoatBot;
+async function makeRankCard(userID, allUser, usersData, deltaNext, api) {
 	const userData = allUser.find(u => u.userID == userID) || await usersData.get(userID);
 	const exp = userData.exp || 0;
 	
@@ -115,7 +123,6 @@ async function makeRankCard(userID, allUser, deltaNext, api = global.GoatBot.fca
 		);
 		avatarImg = await Canvas.loadImage(Buffer.from(response.data, "binary"));
 	} catch (e) {
-		// Fallback to default method if Graph API fails
 		const url = await usersData.getAvatarUrl(userID);
 		avatarImg = await Canvas.loadImage(url);
 	}
