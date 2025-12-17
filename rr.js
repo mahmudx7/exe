@@ -1,14 +1,22 @@
 const Canvas = require("canvas");
-const axios = require("axios");
+const { uploadZippyshare } = global.utils;
 const mongoose = require('mongoose');
 
-// --- VIP Schema ---
+// --- VIP Schema --- 
 const vipSchema = new mongoose.Schema({
   uid: { type: String, required: true, unique: true },
   expiredAt: { type: Date, required: true }
 });
 const VipUser = mongoose.models.VipUser || mongoose.model("VipUser", vipSchema);
-// ------------------
+
+// --- USERS Schema --- 
+const userSchema = new mongoose.Schema({
+  userID: { type: String, required: true, unique: true },
+  name: { type: String, default: "Unknown" }, 
+  exp: { type: Number, default: 0, index: true }
+});
+userSchema.index({ exp: -1, userID: 1 });
+const Users = mongoose.models.Users || mongoose.model("Users", userSchema);
 
 const defaultFontName = "BeVietnamPro-SemiBold";
 const defaultPathFontName = `${__dirname}/assets/font/BeVietnamPro-SemiBold.ttf`;
@@ -25,6 +33,64 @@ Canvas.registerFont(defaultPathFontName, {
 let deltaNext;
 const expToLevel = (exp, deltaNextLevel = deltaNext) => Math.floor((1 + Math.sqrt(1 + 8 * exp / deltaNextLevel)) / 2);
 const levelToExp = (level, deltaNextLevel = deltaNext) => Math.floor(((Math.pow(level, 2) - level) * deltaNextLevel) / 2);
+global.client.makeRankCard = makeRankCard;
+
+module.exports = {
+	config: {
+		name: "rank",
+		version: "1.7",
+		author: "NTKhang",
+		countDown: 5,
+		role: 0,
+		description: {
+			vi: "Xem level của bạn hoặc người được tag. Có thể tag banyak người",
+			en: "View your level or the level of the tagged person. You can tag many people"
+		},
+		category: "rank",
+		guide: {
+			vi: "   {pn} [để trống | @tags]",
+			en: "   {pn} [empty | @tags]"
+		},
+		envConfig: {
+			deltaNext: 5
+		}
+	},
+    
+	onStart: async function ({ message, event, commandName, envCommands, api }) {
+		deltaNext = envCommands[commandName].deltaNext;
+		let targetUsers;
+		const arrayMentions = Object.keys(event.mentions);
+
+		if (arrayMentions.length == 0)
+			targetUsers = [event.senderID];
+		else
+			targetUsers = arrayMentions;
+
+		const rankCards = await Promise.all(targetUsers.map(async userID => {
+			const rankCard = await makeRankCard(userID, deltaNext, api); 
+			rankCard.path = `${randomString(10)}.png`;
+			return rankCard;
+		}));
+
+		return message.reply({
+			attachment: rankCards
+		});
+	},
+
+	onChat: async function ({ event }) { 
+		try {
+            // This only increments EXP. Name update logic has been removed.
+			await Users.updateOne(
+                { userID: event.senderID }, 
+                { $inc: { exp: 1 } }, 
+                { upsert: true }
+            );
+		}
+		catch (e) { 
+            console.error("Error in onChat updating EXP:", e); 
+        }
+	}
+};
 
 const defaultDesignCard = {
 	widthCard: 2000,
@@ -38,106 +104,78 @@ const defaultDesignCard = {
 	line_color: "#FFD700"
 };
 
-module.exports = {
-	config: {
-		name: "rank2",
-		version: "2.0",
-		author: "NTKhang",
-		countDown: 5,
-		role: 0,
-		description: {
-			vi: "Xem level. Sửa lỗi getAll và tối ưu tốc độ.",
-			en: "View level. Fixed getAll error and speed optimized."
-		},
-		category: "rank",
-		guide: {
-			vi: "   {pn} [để trống | @tags]",
-			en: "   {pn} [empty | @tags]"
-		},
-		envConfig: {
-			deltaNext: 5
-		}
-	},
+async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
+    let userData = null;
 
-	onStart: async function (args) {
-		const { message, event, commandName, envCommands, api } = args;
-		
-		// FAIL-SAFE: Try multiple ways to find usersData
-		const usersData = args.usersData || global.GoatBot?.usersData || global.client?.usersData;
-		
-		if (!usersData) {
-			return message.reply("Could not initialize usersData. Please check bot version.");
-		}
-
-		deltaNext = envCommands[commandName].deltaNext;
-		
-		const arrayMentions = Object.keys(event.mentions);
-		const targetUsers = arrayMentions.length == 0 ? [event.senderID] : arrayMentions;
-
-		// Pre-fetch data efficiently
-		const allUsers = await usersData.getAll();
-		allUsers.sort((a, b) => (b.exp || 0) - (a.exp || 0));
-
-		const rankCards = await Promise.all(targetUsers.map(async userID => {
-			const rankCard = await makeRankCard(userID, allUsers, usersData, deltaNext, api);
-			rankCard.path = `${randomString(10)}.png`;
-			return rankCard;
-		}));
-
-		return message.reply({ attachment: rankCards });
-	},
-
-	onChat: async function ({ usersData, event }) {
-		let { exp } = await usersData.get(event.senderID);
-		if (isNaN(exp) || typeof exp != "number") exp = 0;
-		try {
-			await usersData.set(event.senderID, { exp: exp + 1 });
-		} catch (e) { }
-	}
-};
-
-async function makeRankCard(userID, allUser, usersData, deltaNext, api) {
-	const userData = allUser.find(u => u.userID == userID) || await usersData.get(userID);
-	const exp = userData.exp || 0;
-	
+    try {
+        userData = await Users.findOne({ userID: userID }).lean();
+        
+        if (!userData) {
+             let name = "Unknown";
+             try {
+                name = (await api.getUserInfo(userID))[userID].name || "Unknown";
+             } catch (e) {
+                console.warn(`[RANK MAKE] Failed to fetch name for new user ${userID}`);
+             }
+             
+            userData = {
+                userID: userID,
+                exp: 0,
+                name: name
+            };
+            await Users.create(userData);
+        }
+        
+    } catch (error) {
+        console.error("Error fetching user data for rank card:", error);
+        throw new Error("Failed to retrieve user data.");
+    }
+    
+    const { exp, name } = userData;
 	const levelUser = expToLevel(exp, deltaNext);
 	const expNextLevel = levelToExp(levelUser + 1, deltaNext) - levelToExp(levelUser, deltaNext);
 	const currentExp = expNextLevel - (levelToExp(levelUser + 1, deltaNext) - exp);
-
-	const rank = allUser.findIndex(user => user.userID == userID) + 1;
+    
+    const totalUsers = await Users.countDocuments();
+    const rankUsers = await Users.countDocuments({ exp: { $gt: exp } });
+    const rank = rankUsers + 1;
 
 	let isVip = false;
 	try {
-		const vip = await VipUser.findOne({ uid: userID, expiredAt: { $gt: new Date() } }).lean();
+		const vip = await VipUser.findOne({ uid: userID, expiredAt: { $gt: new Date() } });
 		if (vip) isVip = true;
 	} catch (error) {
 		console.error("Error fetching VIP status:", error);
 	}
-
-	// Fetch Avatar using Graph API
-	let avatarImg;
-	try {
-		const response = await axios.get(
-			`https://graph.facebook.com/${userID}/picture?width=256&height=256&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
-			{ responseType: "arraybuffer" }
-		);
-		avatarImg = await Canvas.loadImage(Buffer.from(response.data, "binary"));
-	} catch (e) {
-		const url = await usersData.getAvatarUrl(userID);
-		avatarImg = await Canvas.loadImage(url);
-	}
+    
+    const graphUrl = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+    let avatarUrl = graphUrl;
+    
+    try {
+        await Canvas.loadImage(graphUrl);
+    } catch (e) {
+        avatarUrl = "https://i.imgur.com/eB3V1XN.png";
+    }
 
 	const dataLevel = {
 		exp: currentExp,
 		expNextLevel,
-		name: userData.name || "User",
-		rank: `#${rank}/${allUser.length}`,
+		name: name, 
+		rank: `#${rank}/${totalUsers}`,
 		level: levelUser,
-		avatarImg: avatarImg,
+		avatar: avatarUrl,
 		isVip: isVip
 	};
 
-	const image = new RankCard({ ...defaultDesignCard, ...dataLevel });
+	const configRankCard = { ...defaultDesignCard };
+	const checkImagKey = ["main_color", "sub_color", "line_color", "exp_color", "expNextLevel_color"];
+
+	for (const key of checkImagKey) {
+		if (!isNaN(configRankCard[key]))
+			configRankCard[key] = await api.resolvePhotoUrl(configRankCard[key]);
+	}
+
+	const image = new RankCard({ ...configRankCard, ...dataLevel });
 	return await image.buildCard();
 }
 
@@ -160,14 +198,18 @@ class RankCard {
 
 	async buildCard() {
 		let { widthCard, heightCard } = this;
-		const { main_color, sub_color, alpha_subcard, exp_color, expNextLevel_color, text_color, name_color, level_color, rank_color, line_color, exp_text_color, exp, expNextLevel, name, level, rank, avatarImg, isVip } = this;
+		const {
+			main_color, sub_color, alpha_subcard, exp_color, expNextLevel_color,
+			text_color, name_color, level_color, rank_color, line_color,
+			exp_text_color, exp, expNextLevel, name, level, rank, avatar, isVip 
+		} = this;
 
 		const canvas = Canvas.createCanvas(widthCard, heightCard);
 		const ctx = canvas.getContext("2d");
 
 		const alignRim = 3 * percentage(widthCard);
 		ctx.globalAlpha = parseFloat(alpha_subcard || 0);
-		await checkColorOrImageAndDraw(alignRim, alignRim, widthCard - alignRim * 2, heightCard - alignRim * 2, ctx, sub_color, 20);
+		await checkColorOrImageAndDraw(alignRim, alignRim, widthCard - alignRim * 2, heightCard - alignRim * 2, ctx, sub_color, 20, alpha_subcard);
 		ctx.globalAlpha = 1;
 
 		ctx.globalCompositeOperation = "destination-out";
@@ -179,34 +221,50 @@ class RankCard {
 		const edge = heightCard / 2 * Math.tan(angleLineCenter * Math.PI / 180);
 
 		if (line_color) {
-			ctx.globalCompositeOperation = "source-over";
-			ctx.fillStyle = ctx.strokeStyle = checkGradientColor(ctx, Array.isArray(line_color) ? line_color : [line_color], xyAvatar - resizeAvatar / 2 - heightLineBetween, 0, xyAvatar + resizeAvatar / 2 + widthLineBetween + edge, 0);
-			ctx.beginPath();
-			ctx.arc(xyAvatar, xyAvatar, resizeAvatar / 2 + heightLineBetween, 0, 2 * Math.PI);
-			ctx.fill();
+			if (!isUrl(line_color)) {
+				ctx.fillStyle = ctx.strokeStyle = checkGradientColor(ctx, Array.isArray(line_color) ? line_color : [line_color], xyAvatar - resizeAvatar / 2 - heightLineBetween, 0, xyAvatar + resizeAvatar / 2 + widthLineBetween + edge, 0);
+				ctx.globalCompositeOperation = "source-over";
+			} else {
+				ctx.save();
+				const img = await Canvas.loadImage(line_color);
+				ctx.globalCompositeOperation = "source-over";
+				ctx.beginPath();
+				ctx.arc(xyAvatar, xyAvatar, resizeAvatar / 2 + heightLineBetween, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.rect(xyAvatar + resizeAvatar / 2, heightCard / 2 - heightLineBetween / 2, widthLineBetween, heightLineBetween);
+				ctx.fill();
+				ctx.translate(xyAvatar + resizeAvatar / 2 + widthLineBetween + edge, 0);
+				ctx.rotate(angleLineCenter * Math.PI / 180);
+				ctx.rect(0, 0, heightLineBetween, 1000);
+				ctx.fill();
+				ctx.restore();
+			}
 		}
-		
+
 		ctx.beginPath();
-		ctx.rect(xyAvatar + resizeAvatar / 2, heightCard / 2 - heightLineBetween / 2, widthLineBetween, heightLineBetween);
+		if (!isUrl(line_color)) ctx.rect(xyAvatar + resizeAvatar / 2, heightCard / 2 - heightLineBetween / 2, widthLineBetween, heightLineBetween);
 		ctx.fill();
-		
+
+		ctx.beginPath();
+		if (!isUrl(line_color)) {
+			ctx.moveTo(xyAvatar + resizeAvatar / 2 + widthLineBetween + edge, 0);
+			ctx.lineTo(xyAvatar + resizeAvatar / 2 + widthLineBetween - edge, heightCard);
+			ctx.lineWidth = heightLineBetween;
+			ctx.stroke();
+		}
+
+		ctx.beginPath();
+		if (!isUrl(line_color)) ctx.arc(xyAvatar, xyAvatar, resizeAvatar / 2 + heightLineBetween, 0, 2 * Math.PI);
+		ctx.fill();
 		ctx.globalCompositeOperation = "destination-out";
 		ctx.fillRect(0, 0, widthCard, alignRim);
 		ctx.fillRect(0, heightCard - alignRim, widthCard, alignRim);
 
-		ctx.globalCompositeOperation = "source-over";
-		centerImage(ctx, avatarImg, xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
-
 		const radius = 6 * percentage(heightCard);
 		const xStartExp = (25 + 1.5) * percentage(widthCard), yStartExp = 67 * percentage(heightCard), widthExp = 40.5 * percentage(widthCard), heightExp = radius * 2;
-
-		ctx.beginPath();
-		ctx.fillStyle = checkGradientColor(ctx, expNextLevel_color, xStartExp, yStartExp, xStartExp + widthExp, yStartExp);
-		ctx.arc(xStartExp, yStartExp + radius, radius, 1.5 * Math.PI, 0.5 * Math.PI, true);
-		ctx.fill();
-		ctx.fillRect(xStartExp, yStartExp, widthExp, heightExp);
-		ctx.arc(xStartExp + widthExp, yStartExp + radius, radius, 1.5 * Math.PI, 0.5 * Math.PI, false);
-		ctx.fill();
+		ctx.globalCompositeOperation = "source-over";
+		
+		centerImage(ctx, await Canvas.loadImage(avatar), xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
 
 		const widthExpCurrent = (100 / expNextLevel * exp) * percentage(widthExp);
 		ctx.fillStyle = checkGradientColor(ctx, exp_color, xStartExp, yStartExp, xStartExp + widthExp, yStartExp);
@@ -219,39 +277,35 @@ class RankCard {
 		ctx.fill();
 
 		ctx.textAlign = "end";
-		ctx.font = autoSizeFont(18.4 * percentage(widthCard), 4 * percentage(widthCard), rank, ctx, this.fontName);
+		ctx.font = autoSizeFont(18.4 * percentage(widthCard), 4 * percentage(widthCard) + this.textSize, rank, ctx, this.fontName);
 		ctx.fillStyle = rank_color || text_color;
 		ctx.fillText(rank, 94 * percentage(widthCard), 76 * percentage(heightCard));
 
-		ctx.font = autoSizeFont(9.8 * percentage(widthCard), 3.25 * percentage(widthCard), `Lv ${level}`, ctx, this.fontName);
-		ctx.fillStyle = level_color || text_color;
+		ctx.font = autoSizeFont(9.8 * percentage(widthCard), 3.25 * percentage(widthCard) + this.textSize, `Lv ${level}`, ctx, this.fontName);
 		ctx.fillText(`Lv ${level}`, 94 * percentage(widthCard), 32 * percentage(heightCard));
 
 		ctx.textAlign = "center";
-		ctx.font = autoSizeFont(52.1 * percentage(widthCard), 4 * percentage(widthCard), name, ctx, this.fontName);
-		ctx.fillStyle = name_color || text_color;
+		ctx.font = autoSizeFont(52.1 * percentage(widthCard), 4 * percentage(widthCard) + this.textSize, name, ctx, this.fontName);
 		ctx.fillText(name, 47.5 * percentage(widthCard), 40 * percentage(heightCard));
 
-		ctx.font = autoSizeFont(49 * percentage(widthCard), 2 * percentage(widthCard), `Exp ${exp}/${expNextLevel}`, ctx, this.fontName);
-		ctx.fillStyle = exp_text_color || text_color;
+		ctx.font = autoSizeFont(49 * percentage(widthCard), 2 * percentage(widthCard) + this.textSize, `Exp ${exp}/${expNextLevel}`, ctx, this.fontName);
 		ctx.fillText(`Exp ${exp}/${expNextLevel}`, 47.5 * percentage(widthCard), 61.4 * percentage(heightCard));
 
 		if (isVip) {
-			try {
-				const badgeSize = 170;
-				const vipLogo = await Canvas.loadImage("https://i.imgur.com/zNzNEpN.jpeg");
-				ctx.drawImage(vipLogo, widthCard - badgeSize - 530, heightCard / 2 - badgeSize / 2 - 100, badgeSize, badgeSize);
-			} catch (e) {}
+			const badgeSize = 170;
+			const vipLogo = await Canvas.loadImage("https://i.imgur.com/zNzNEpN.jpeg");
+			ctx.drawImage(vipLogo, widthCard - 700, heightCard / 2 - 185, badgeSize, badgeSize);
 		}
 
 		ctx.globalCompositeOperation = "destination-over";
 		ctx.fillStyle = checkGradientColor(ctx, main_color, 0, 0, widthCard, heightCard);
 		drawSquareRounded(ctx, 0, 0, widthCard, heightCard, radius, main_color);
-
+		
 		return canvas.createPNGStream();
 	}
 }
 
+// --- Essential Helpers ---
 async function checkColorOrImageAndDraw(xStart, yStart, width, height, ctx, colorOrImage, r) {
 	if (!colorOrImage.match?.(/^https?:\/\//)) {
 		drawSquareRounded(ctx, xStart, yStart, width, height, r, colorOrImage);
@@ -320,5 +374,6 @@ function checkGradientColor(ctx, color, x1, y1, x2, y2) {
 }
 
 function isUrl(string) {
-	try { new URL(string); return true; } catch (err) { return false; }
+	try { return Boolean(new URL(string)); }
+	catch (err) { return false; }
 }
