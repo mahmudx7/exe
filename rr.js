@@ -1,4 +1,5 @@
 const Canvas = require("canvas");
+const { uploadZippyshare } = global.utils;
 const mongoose = require('mongoose');
 
 // --- VIP Schema --- 
@@ -32,6 +33,7 @@ Canvas.registerFont(defaultPathFontName, {
 let deltaNext;
 const expToLevel = (exp, deltaNextLevel = deltaNext) => Math.floor((1 + Math.sqrt(1 + 8 * exp / deltaNextLevel)) / 2);
 const levelToExp = (level, deltaNextLevel = deltaNext) => Math.floor(((Math.pow(level, 2) - level) * deltaNextLevel) / 2);
+global.client.makeRankCard = makeRankCard;
 
 module.exports = {
 	config: {
@@ -41,7 +43,7 @@ module.exports = {
 		countDown: 5,
 		role: 0,
 		description: {
-			vi: "Xem level của bạn hoặc người được tag. Có thể tag nhiều người",
+			vi: "Xem level của bạn hoặc người được tag. Có thể tag banyak người",
 			en: "View your level or the level of the tagged person. You can tag many people"
 		},
 		category: "rank",
@@ -65,21 +67,19 @@ module.exports = {
 			targetUsers = arrayMentions;
 
 		const rankCards = await Promise.all(targetUsers.map(async userID => {
-			const rankCardBuffer = await makeRankCard(userID, deltaNext, api); 
-			return {
-				body: "",
-				attachment: rankCardBuffer,
-				path: `${randomString(10)}.png`
-			};
+			const rankCard = await makeRankCard(userID, deltaNext, api); 
+			rankCard.path = `${randomString(10)}.png`;
+			return rankCard;
 		}));
 
-		for (const card of rankCards) {
-			await message.reply(card);
-		}
+		return message.reply({
+			attachment: rankCards
+		});
 	},
 
 	onChat: async function ({ event }) { 
 		try {
+            // This only increments EXP. Name update logic has been removed.
 			await Users.updateOne(
                 { userID: event.senderID }, 
                 { $inc: { exp: 1 } }, 
@@ -106,19 +106,26 @@ const defaultDesignCard = {
 
 async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
     let userData = null;
+
     try {
         userData = await Users.findOne({ userID: userID }).lean();
+        
         if (!userData) {
              let name = "Unknown";
              try {
-                const info = await api.getUserInfo(userID);
-                name = info[userID].name || "Unknown";
+                name = (await api.getUserInfo(userID))[userID].name || "Unknown";
              } catch (e) {
                 console.warn(`[RANK MAKE] Failed to fetch name for new user ${userID}`);
              }
-            userData = { userID: userID, exp: 0, name: name };
+             
+            userData = {
+                userID: userID,
+                exp: 0,
+                name: name
+            };
             await Users.create(userData);
         }
+        
     } catch (error) {
         console.error("Error fetching user data for rank card:", error);
         throw new Error("Failed to retrieve user data.");
@@ -141,8 +148,15 @@ async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
 		console.error("Error fetching VIP status:", error);
 	}
     
-    const avatarUrl = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+    const graphUrl = `https://graph.facebook.com/${userID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
+    let avatarUrl = graphUrl;
     
+    try {
+        await Canvas.loadImage(graphUrl);
+    } catch (e) {
+        avatarUrl = "https://i.imgur.com/eB3V1XN.png";
+    }
+
 	const dataLevel = {
 		exp: currentExp,
 		expNextLevel,
@@ -153,8 +167,15 @@ async function makeRankCard(userID, deltaNext, api = global.GoatBot.fcaApi) {
 		isVip: isVip
 	};
 
-	const configRankCard = { ...defaultDesignCard, ...dataLevel };
-	const image = new RankCard(configRankCard);
+	const configRankCard = { ...defaultDesignCard };
+	const checkImagKey = ["main_color", "sub_color", "line_color", "exp_color", "expNextLevel_color"];
+
+	for (const key of checkImagKey) {
+		if (!isNaN(configRankCard[key]))
+			configRankCard[key] = await api.resolvePhotoUrl(configRankCard[key]);
+	}
+
+	const image = new RankCard({ ...configRankCard, ...dataLevel });
 	return await image.buildCard();
 }
 
@@ -178,9 +199,9 @@ class RankCard {
 	async buildCard() {
 		let { widthCard, heightCard } = this;
 		const {
-			sub_color, alpha_subcard, exp_color,
-			text_color, rank_color, line_color,
-			exp, expNextLevel, name, level, rank, avatar, isVip 
+			main_color, sub_color, alpha_subcard, exp_color, expNextLevel_color,
+			text_color, name_color, level_color, rank_color, line_color,
+			exp_text_color, exp, expNextLevel, name, level, rank, avatar, isVip 
 		} = this;
 
 		const canvas = Canvas.createCanvas(widthCard, heightCard);
@@ -188,7 +209,7 @@ class RankCard {
 
 		const alignRim = 3 * percentage(widthCard);
 		ctx.globalAlpha = parseFloat(alpha_subcard || 0);
-		await checkColorOrImageAndDraw(alignRim, alignRim, widthCard - alignRim * 2, heightCard - alignRim * 2, ctx, sub_color, 20);
+		await checkColorOrImageAndDraw(alignRim, alignRim, widthCard - alignRim * 2, heightCard - alignRim * 2, ctx, sub_color, 20, alpha_subcard);
 		ctx.globalAlpha = 1;
 
 		ctx.globalCompositeOperation = "destination-out";
@@ -197,7 +218,7 @@ class RankCard {
 		const widthLineBetween = 58 * percentage(widthCard);
 		const heightLineBetween = 2 * percentage(heightCard);
 		const angleLineCenter = 40;
-		const edge = (heightCard / 2) * Math.tan((angleLineCenter * Math.PI) / 180);
+		const edge = heightCard / 2 * Math.tan(angleLineCenter * Math.PI / 180);
 
 		if (line_color) {
 			if (!isUrl(line_color)) {
@@ -213,7 +234,7 @@ class RankCard {
 				ctx.rect(xyAvatar + resizeAvatar / 2, heightCard / 2 - heightLineBetween / 2, widthLineBetween, heightLineBetween);
 				ctx.fill();
 				ctx.translate(xyAvatar + resizeAvatar / 2 + widthLineBetween + edge, 0);
-				ctx.rotate((angleLineCenter * Math.PI) / 180);
+				ctx.rotate(angleLineCenter * Math.PI / 180);
 				ctx.rect(0, 0, heightLineBetween, 1000);
 				ctx.fill();
 				ctx.restore();
@@ -243,13 +264,7 @@ class RankCard {
 		const xStartExp = (25 + 1.5) * percentage(widthCard), yStartExp = 67 * percentage(heightCard), widthExp = 40.5 * percentage(widthCard), heightExp = radius * 2;
 		ctx.globalCompositeOperation = "source-over";
 		
-        try {
-            const avatarImg = await Canvas.loadImage(avatar);
-            centerImage(ctx, avatarImg, xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
-        } catch(e) {
-            const fallback = await Canvas.loadImage("https://i.imgur.com/eB3V1XN.png");
-            centerImage(ctx, fallback, xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
-        }
+		centerImage(ctx, await Canvas.loadImage(avatar), xyAvatar, xyAvatar, resizeAvatar, resizeAvatar);
 
 		const widthExpCurrent = (100 / expNextLevel * exp) * percentage(widthExp);
 		ctx.fillStyle = checkGradientColor(ctx, exp_color, xStartExp, yStartExp, xStartExp + widthExp, yStartExp);
@@ -278,29 +293,30 @@ class RankCard {
 
 		if (isVip) {
 			try {
-				const badgeSize = 170; 
-				const vipLogoUrl = "https://i.imgur.com/zNzNEpN.jpeg";
-				const vipLogo = await Canvas.loadImage(vipLogoUrl);
-				const bx = widthCard - badgeSize - 530; 
-				const by = heightCard / 2 - badgeSize / 2 - 100;
-				ctx.save();
+				const badgeSize = 170;
+				const vipLogo = await Canvas.loadImage("https://i.imgur.com/zNzNEpN.jpeg");
+				
+				// Position coordinates
+				const bx = widthCard - 700;
+				const by = heightCard / 2 - 185;
+
+				ctx.save(); // Save current state
 				ctx.beginPath();
+				// Create a circle (x, y, radius, startAngle, endAngle)
 				ctx.arc(bx + badgeSize / 2, by + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2, true);
 				ctx.closePath();
-				ctx.clip();
+				ctx.clip(); // Clip to the circle
+				
 				ctx.drawImage(vipLogo, bx, by, badgeSize, badgeSize);
-				ctx.restore();
+				ctx.restore(); // Restore state so clipping doesn't affect other drawings
 			} catch (err) {
-				console.error("VIP badge load failed:", err);
+				console.error("Failed to load VIP badge:", err);
 			}
 		}
-        return canvas.toBuffer();
-	}
-}
-
+		
 // --- Essential Helpers ---
 async function checkColorOrImageAndDraw(xStart, yStart, width, height, ctx, colorOrImage, r) {
-	if (typeof colorOrImage !== 'string' || !colorOrImage.match(/^https?:\/\//)) {
+	if (!colorOrImage.match?.(/^https?:\/\//)) {
 		drawSquareRounded(ctx, xStart, yStart, width, height, r, colorOrImage);
 	} else {
 		const imageLoad = await Canvas.loadImage(colorOrImage);
@@ -367,7 +383,6 @@ function checkGradientColor(ctx, color, x1, y1, x2, y2) {
 }
 
 function isUrl(string) {
-    if (typeof string !== 'string') return false;
 	try { return Boolean(new URL(string)); }
 	catch (err) { return false; }
 }
