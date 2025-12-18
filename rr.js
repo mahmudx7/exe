@@ -38,13 +38,13 @@ global.client.makeRankCard = makeRankCard;
 module.exports = {
 	config: {
 		name: "rank",
-		version: "1.7",
-		author: "NTKhang",
+		version: "1.8",
+		author: "Gemini",
 		countDown: 5,
 		role: 0,
 		description: {
-			vi: "Xem level của bạn hoặc người được tag. Có thể tag banyak người",
-			en: "View your level or the level of the tagged person. You can tag many people"
+			vi: "Xem level của bạn hoặc người được tag.",
+			en: "View your level or the level of the tagged person."
 		},
 		category: "rank",
 		guide: {
@@ -79,7 +79,7 @@ module.exports = {
 
 	onChat: async function ({ event }) { 
 		try {
-            // This only increments EXP. Name update logic has been removed.
+            // শুধুমাত্র EXP আপডেট হবে, নাম নয়।
 			await Users.updateOne(
                 { userID: event.senderID }, 
                 { $inc: { exp: 1 } }, 
@@ -291,29 +291,34 @@ class RankCard {
 		ctx.font = autoSizeFont(49 * percentage(widthCard), 2 * percentage(widthCard) + this.textSize, `Exp ${exp}/${expNextLevel}`, ctx, this.fontName);
 		ctx.fillText(`Exp ${exp}/${expNextLevel}`, 47.5 * percentage(widthCard), 61.4 * percentage(heightCard));
 
+		// --- CIRCLE VIP BADGE ---
 		if (isVip) {
 			try {
 				const badgeSize = 170;
 				const vipLogo = await Canvas.loadImage("https://i.imgur.com/zNzNEpN.jpeg");
-				
-				// Position coordinates
 				const bx = widthCard - 700;
 				const by = heightCard / 2 - 185;
 
-				ctx.save(); // Save current state
+				ctx.save();
 				ctx.beginPath();
-				// Create a circle (x, y, radius, startAngle, endAngle)
 				ctx.arc(bx + badgeSize / 2, by + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2, true);
 				ctx.closePath();
-				ctx.clip(); // Clip to the circle
-				
+				ctx.clip();
 				ctx.drawImage(vipLogo, bx, by, badgeSize, badgeSize);
-				ctx.restore(); // Restore state so clipping doesn't affect other drawings
+				ctx.restore();
 			} catch (err) {
-				console.error("Failed to load VIP badge:", err);
+				console.error("VIP badge load failed:", err);
 			}
 		}
+
+		ctx.globalCompositeOperation = "destination-over";
+		ctx.fillStyle = checkGradientColor(ctx, main_color, 0, 0, widthCard, heightCard);
+		drawSquareRounded(ctx, 0, 0, widthCard, heightCard, radius, main_color);
 		
+		return canvas.createPNGStream();
+	}
+}
+
 // --- Essential Helpers ---
 async function checkColorOrImageAndDraw(xStart, yStart, width, height, ctx, colorOrImage, r) {
 	if (!colorOrImage.match?.(/^https?:\/\//)) {
