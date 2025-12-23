@@ -39,8 +39,8 @@ module.exports = {
 		countDown: 5,
 		role: 0,
 		description: {
-			vi: "Xem level của bạn (Đã tắt tự động tăng EXP)",
-			en: "View your level (EXP auto-gain disabled)"
+			vi: "Xem level của bạn (Đã tắt tự động tăng EXP/Delta)",
+			en: "View your level (EXP auto-gain and Delta removed)"
 		},
 		category: "rank",
 		guide: {
@@ -60,7 +60,7 @@ module.exports = {
 
 		return message.reply({ attachment: rankCards });
 	}
-    // onChat removed to stop EXP gain
+    // onChat removed fully to stop any automated EXP updates
 };
 
 const defaultDesignCard = {
@@ -75,6 +75,9 @@ const defaultDesignCard = {
 	line_color: "#FFD700"
 };
 
+/**
+ * @description Creates the rank card with static level logic (Delta-free).
+ */
 async function makeRankCard(userID, api = global.GoatBot.fcaApi) {
     let userData = await Users.findOne({ userID: userID }).lean();
     
@@ -90,7 +93,8 @@ async function makeRankCard(userID, api = global.GoatBot.fcaApi) {
     
     const { exp, name } = userData;
     
-    // Delta removed: Using simple static level (1 level per 1000 exp)
+    // --- DELTA REMOVED ---
+    // Using a fixed requirement of 1000 EXP per level for visual display
     const levelUser = Math.floor(exp / 1000); 
     const expNextLevel = (levelUser + 1) * 1000;
     const currentExp = exp;
@@ -175,6 +179,7 @@ class RankCard {
 		ctx.fillStyle = checkGradientColor(ctx, expNextLevel_color, xStartExp, yStartExp, xStartExp + widthExp, yStartExp);
 		drawSquareRounded(ctx, xStartExp, yStartExp, widthExp, heightExp, radius, expNextLevel_color, true);
 
+		// Progress logic: percentage of exp relative to the next milestone
 		const widthExpCurrent = (exp / expNextLevel) * widthExp;
 		ctx.fillStyle = checkGradientColor(ctx, exp_color, xStartExp, yStartExp, xStartExp + widthExp, yStartExp);
 		drawSquareRounded(ctx, xStartExp, yStartExp, widthExpCurrent, heightExp, radius, exp_color, true);
@@ -211,7 +216,7 @@ class RankCard {
 	}
 }
 
-// Helper Functions
+// --- Helper Functions ---
 async function checkColorOrImageAndDraw(x, y, w, h, ctx, res, r) {
 	if (!isUrl(res)) {
 		ctx.fillStyle = checkGradientColor(ctx, res, x, y, x + w, y + h);
